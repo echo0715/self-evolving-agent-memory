@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memsys"
+version = "0.1.0"
+description = "Memory systems (reflection / rule / procedural skill) for the self-evolving agent study"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+# Core has zero dependencies on purpose; these are only for real experiment runs.
+llm = ["openai>=1.30"]
+embed = ["sentence-transformers>=3.0"]
+tokens = ["tiktoken>=0.7"]
+
+[tool.setuptools]
+packages = ["memsys"]

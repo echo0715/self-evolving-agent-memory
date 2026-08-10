@@ -170,7 +170,37 @@ class Evolver:
         return out
 
     def flush(self) -> None:
-        """Induce over the trailing partial batch, which the cadence would otherwise skip."""
+        """Induce over the trailing partial batch, which the cadence would otherwise skip.
+
+        The resulting ops are logged like any other step. They must be: the
+        induction writer may APPEND consolidated entries and DELETE the ones they
+        subsume, and `store.remove()` is a hard delete. Dropping this report on
+        the floor -- as this method used to -- left the final store unexplainable
+        from the log (four appends recorded, two entries actually present) and
+        made `op_distribution()` undercount every delete and induced append.
+        """
         for sys_ in [self.system] + list(getattr(self.system, "systems", {}).values()):
-            if sys_.policy.batch_induction and getattr(sys_, "_buffer", None):
-                sys_.run_batch_induction()
+            if not (sys_.policy.batch_induction and getattr(sys_, "_buffer", None)):
+                continue
+            p0, c0, n0 = _usage_snapshot(self.system)
+            report = sys_.run_batch_induction()
+            p1, c1, n1 = _usage_snapshot(self.system)
+            self.logger.log(
+                StepRecord(
+                    step=self.step,
+                    task_id=f"__flush_induction__:{sys_.type_name}",
+                    rollout_rewards=[],
+                    retrieved_ids=[],
+                    injected_tokens=0,
+                    writer_ops=report.applied,
+                    rejected=report.rejected,
+                    evicted=report.evicted,
+                    writer_prompt_tokens=p1 - p0,
+                    writer_completion_tokens=c1 - c0,
+                    writer_calls=n1 - n0,
+                    store_size=_store_size(self.system),
+                    outcome="flush_induction",
+                    extra=report.extra,
+                ).to_dict()
+            )
+            self.step += 1

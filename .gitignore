@@ -6,3 +6,7 @@ runs/
 *.jsonl
 !examples/**/*.jsonl
 .venv/
+# `appworld download data` defaults --root to the CWD, so a stray invocation
+# drops ~160 MB of benchmark payload here. Benchmark data belongs on scratch.
+data/
+results/

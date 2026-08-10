@@ -4,7 +4,8 @@ Implementation of the three memory systems in `memory_strategy_design.md` —
 **Reflection**, **Rule**, **Procedural Skill** — plus the **Raw Trajectory** baseline
 and the `"all"` composite.
 
-No benchmark integration yet: the systems consume `Episode` objects from anywhere.
+The core is benchmark-agnostic: the systems consume `Episode` objects from
+anywhere. Adapters for ALFWorld and WebShop live in `memsys/adapters/`.
 
 ```
 pip install -e .        # optional; the core has zero dependencies
@@ -133,8 +134,52 @@ system = build_system("skill", llm=llm, config=config, store=store)
 `HashingEmbedder` is the default so the package runs anywhere; it is fine for dedup
 thresholds and tests but should not be used for the reported experiments.
 
+## Benchmark adapters
+
+An adapter runs a ReAct agent against a benchmark with a memory block injected
+and returns `Episode` objects, so everything above stays benchmark-agnostic.
+Two exist.
+
+**ALFWorld** (`memsys/adapters/alfworld.py`) drives an exact compiled gamefile
+in-process.
+
+```bash
+bash scripts/serve_qwen.sh 0 8000 --background     # Qwen3.5-9B via vLLM
+python scripts/build_manifests.py --data-root "$ALFWORLD_DATA" --out manifests
+bash scripts/run_sweep.sh full                     # all arms, evolve -> frozen eval
+python scripts/summarize.py --root .../memsys_results/full
+```
+
+**WebShop** (`memsys/adapters/webshop.py`) is an HTTP client for
+`scripts/webshop_server.py`, which holds the 1.18M-product catalogue. The split
+is forced — WebShop is pinned to python 3.8 / `transformers 4.19` and memsys
+needs a current `sentence-transformers` — and it also means the catalogue is
+loaded once for a whole sweep instead of once per worker.
+
+```bash
+bash scripts/webshop_build_index.sh full           # one-time, ~7 min
+bash scripts/serve_webshop.sh 2 full               # env servers on :7000, :7001
+python scripts/build_webshop_manifests.py --server http://localhost:7000
+bash scripts/run_webshop_sweep.sh full
+```
+
+Runbooks: [RUN_ALFWORLD.md](RUN_ALFWORLD.md) and [RUN_WEBSHOP.md](RUN_WEBSHOP.md),
+each with the traps that cost real time (scaffold fidelity and PDDL thread-safety
+for ALFWorld; goal non-determinism and corpus/index pairing for WebShop).
+Results: [RESULTS_ALFWORLD.md](RESULTS_ALFWORLD.md),
+[RESULTS_WEBSHOP.md](RESULTS_WEBSHOP.md).
+
+Two differences in how WebShop results must be read. Its reward is **graded**, so
+`summarize.py` reports score alongside the strict success rate — an arm that buys
+plausible-but-wrong items faster raises one and lowers the other. And its
+scaffold has **no external reference point**: the ALFWorld prompt is
+byte-identical to SAGE's, pinning that baseline to an independently measured
+58–60%, while the WebShop prompt was written here. The `none` arm is the only
+reference that means anything.
+
 ## Not implemented yet
 
-Benchmark adapters (ALFWorld / WebShop / AppWorld), the agent loop itself, the
-difficulty-filtering and repeat-evolving dataset builders from §6, and failing-step
-attribution for skills (currently read from `episode.meta`, not inferred).
+The AppWorld *adapter* (its environment installs via `scripts/setup_appworld.sh`,
+but nothing yet turns it into `Episode`s), the difficulty-filtering and
+repeat-evolving dataset builders from §6, and failing-step attribution for skills
+(currently read from `episode.meta`, not inferred).

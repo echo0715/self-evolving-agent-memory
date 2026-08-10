@@ -677,6 +677,25 @@ class RunnerTest(unittest.TestCase):
         Evolver(sysm, config=cfg).run([episode(i) for i in range(3)])
         self.assertEqual(llm.usage.by_tag.get("rule.induce"), 1)
 
+    def test_flush_induction_is_logged(self):
+        """The flush report must reach the log, not just the store.
+
+        The induction writer can APPEND consolidated entries and DELETE the ones
+        they subsume, and `store.remove` is a hard delete. When flush() dropped
+        its report, the log said "4 appends" while the store held 2 items and
+        nothing explained the difference.
+        """
+        cfg = MemoryConfig(policy=WritePolicy.full(batch_every=10))
+        sysm = build_system("rule", llm=StubWriterLLM(), config=cfg)
+        ev = Evolver(sysm, config=cfg)
+        ev.run([episode(i) for i in range(3)])
+        flush_recs = [r for r in ev.logger.records if r["outcome"] == "flush_induction"]
+        self.assertEqual(len(flush_recs), 1)
+        rec = flush_recs[0]
+        self.assertTrue(rec["task_id"].startswith("__flush_induction__"))
+        self.assertGreater(rec["writer_calls"], 0)
+        self.assertEqual(rec["store_size"], len(sysm.store))
+
     def test_retrieval_can_be_disabled_during_evolving(self):
         cfg = MemoryConfig(retrieve_during_evolving=False, policy=WritePolicy.minimal())
         sysm = build_system("reflection", llm=StubWriterLLM(), config=cfg)

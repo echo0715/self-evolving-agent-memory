@@ -257,6 +257,14 @@ class MemorySystem:
                 if op.target_id and op.target_id in self.store:
                     self.store.remove(op.target_id)
                     rep.applied.append({"op": DELETE, "id": op.target_id, "reason": op.reason})
+                else:
+                    # A DELETE naming an entry that is not in the store used to
+                    # vanish silently. Record it: a writer that mostly emits
+                    # unresolvable ids is malfunctioning, and the only evidence
+                    # is the gap between ops proposed and ops applied.
+                    rep.rejected.append(
+                        {"content": None, "errors": [f"DELETE target not in store: {op.target_id!r}"]}
+                    )
                 continue
 
             if op.op == REVISE:

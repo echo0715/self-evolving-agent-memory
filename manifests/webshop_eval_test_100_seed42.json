@@ -1,0 +1,721 @@
+{
+  "schema_version": 2,
+  "benchmark": "WebShop",
+  "split": "test",
+  "seed": 42,
+  "selection": "prefix_of_seeded_permutation_of_the_split_index_range",
+  "available_count": 500,
+  "selected_count": 100,
+  "task_ids_sha256": "17bee695c04b1ca251aadb188d1fc55192e5f16597fbf1aed46362499be75016",
+  "server": {
+    "scale": "full",
+    "corpus": "items_shuffle.json",
+    "index": "indexes_full",
+    "n_products": 1181430,
+    "n_goals": 12087,
+    "human_goals": true,
+    "seed": 42
+  },
+  "tasks": [
+    {
+      "task_id": "test:4",
+      "split": "test",
+      "goal_index": 4,
+      "category": "electronics",
+      "instruction": "find me a high speed dual style package with  12\" power amplifier car subwoofer, and price lower than 190.00 dollars"
+    },
+    {
+      "task_id": "test:6",
+      "split": "test",
+      "goal_index": 6,
+      "category": "garden",
+      "instruction": "i'm looking for a queen size bedspread set in the color redwood, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:7",
+      "split": "test",
+      "goal_index": 7,
+      "category": "beauty",
+      "instruction": "i'm looking for a styling cream that is cruelty free and for short hair, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:11",
+      "split": "test",
+      "goal_index": 11,
+      "category": "fashion",
+      "instruction": "i am looking to buy a woman's us size 5 high heel shoe with a rubber sole and color patent-beige, and price lower than 90.00 dollars"
+    },
+    {
+      "task_id": "test:21",
+      "split": "test",
+      "goal_index": 21,
+      "category": "grocery",
+      "instruction": "can you find me a shelf stable potato side dish?  i want something that i can cook in the microwave, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:26",
+      "split": "test",
+      "goal_index": 26,
+      "category": "electronics",
+      "instruction": "i would like a 20m digital 4g lte coaxial cable that's male to female, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:37",
+      "split": "test",
+      "goal_index": 37,
+      "category": "garden",
+      "instruction": "i am looking for a pendant light to go in my dining room with dimmer switch, and price lower than 120.00 dollars"
+    },
+    {
+      "task_id": "test:41",
+      "split": "test",
+      "goal_index": 41,
+      "category": "electronics",
+      "instruction": "i'm trying to find white bluetooth speakers that are not only water resistant but also come with stereo sound, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:45",
+      "split": "test",
+      "goal_index": 45,
+      "category": "electronics",
+      "instruction": "i am looking for some easy to install gold plated banana plugs for speaker wire, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:50",
+      "split": "test",
+      "goal_index": 50,
+      "category": "beauty",
+      "instruction": "i want to find a women's gift set that contains long-lasting edt spray and body cream, and price lower than 110.00 dollars"
+    },
+    {
+      "task_id": "test:53",
+      "split": "test",
+      "goal_index": 53,
+      "category": "beauty",
+      "instruction": "i need a beige or green shower brush with a long handle, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:59",
+      "split": "test",
+      "goal_index": 59,
+      "category": "grocery",
+      "instruction": "i am looking for non gmo sesame pretzels that come in a 12 pack, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "test:68",
+      "split": "test",
+      "goal_index": 68,
+      "category": "fashion",
+      "instruction": "i would like a pair of brown size 7 shoes with a rubber sole, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:72",
+      "split": "test",
+      "goal_index": 72,
+      "category": "fashion",
+      "instruction": "i am looking for easy spirit traveltime529 mule shoes with arch support, rubber soles and in size 7.5 wide, and price lower than 110.00 dollars"
+    },
+    {
+      "task_id": "test:74",
+      "split": "test",
+      "goal_index": 74,
+      "category": "garden",
+      "instruction": "i would like a pink ottoman with a solid wooden frame, and price lower than 350.00 dollars"
+    },
+    {
+      "task_id": "test:77",
+      "split": "test",
+      "goal_index": 77,
+      "category": "beauty",
+      "instruction": "i would like a pink cosmetic bag that is easy to clean, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:88",
+      "split": "test",
+      "goal_index": 88,
+      "category": "fashion",
+      "instruction": "i'm looking for women's bootcut pants in the brand of tapata, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "test:89",
+      "split": "test",
+      "goal_index": 89,
+      "category": "fashion",
+      "instruction": "i need khaki steel toe shoes in size 11 women, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:92",
+      "split": "test",
+      "goal_index": 92,
+      "category": "garden",
+      "instruction": "i would like a blue 2.95 foot wire pendent light for my living room, and price lower than 210.00 dollars"
+    },
+    {
+      "task_id": "test:93",
+      "split": "test",
+      "goal_index": 93,
+      "category": "electronics",
+      "instruction": "i am looking for wireless bluetooth speakers in the color a, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "test:94",
+      "split": "test",
+      "goal_index": 94,
+      "category": "fashion",
+      "instruction": "i am looking for a x- large casual dresses with long sleeves, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:95",
+      "split": "test",
+      "goal_index": 95,
+      "category": "grocery",
+      "instruction": "i would like to have a kosher gelato, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "test:96",
+      "split": "test",
+      "goal_index": 96,
+      "category": "fashion",
+      "instruction": "i want to find a pink women's quilted puffy vest that i can machine wash. the size needs to be extra large, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:100",
+      "split": "test",
+      "goal_index": 100,
+      "category": "electronics",
+      "instruction": "i want a rca cable that is high def, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:120",
+      "split": "test",
+      "goal_index": 120,
+      "category": "garden",
+      "instruction": "i am looking for a satin brass and frosted hallway light fixtures, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:127",
+      "split": "test",
+      "goal_index": 127,
+      "category": "beauty",
+      "instruction": "i want to buy a skin cream which is fragrance free and it is for smoothing eye contour, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:129",
+      "split": "test",
+      "goal_index": 129,
+      "category": "beauty",
+      "instruction": "i need some teeth whitening that also freshens breath, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:131",
+      "split": "test",
+      "goal_index": 131,
+      "category": "garden",
+      "instruction": "i am looking for super soft and fleece throw blanket in multi 10 color, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:139",
+      "split": "test",
+      "goal_index": 139,
+      "category": "fashion",
+      "instruction": "i am looking for dark denim color ethylene vinyl ultra train of size 10, 3rd generation for  men, and price lower than 180.00 dollars"
+    },
+    {
+      "task_id": "test:141",
+      "split": "test",
+      "goal_index": 141,
+      "category": "electronics",
+      "instruction": "i want something that will let me use my cell phone hands free and has the kansas city chiefs' logo on it. it should allow for wireless charging, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:151",
+      "split": "test",
+      "goal_index": 151,
+      "category": "garden",
+      "instruction": "i want machine washable dream catcher light proof curtains that is 55\" w x 45\" l, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:154",
+      "split": "test",
+      "goal_index": 154,
+      "category": "fashion",
+      "instruction": "i need a fleece jacket that is regular fit size 3x in the color of sea salt, and price lower than 100.00 dollars"
+    },
+    {
+      "task_id": "test:155",
+      "split": "test",
+      "goal_index": 155,
+      "category": "beauty",
+      "instruction": "i'm looking for 20 inch double sided tape hair extensions of balayage color, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:156",
+      "split": "test",
+      "goal_index": 156,
+      "category": "electronics",
+      "instruction": "i'm looking for a sturdy and solid dummy camera that's portable and made of stainless steel. also, choose the one that's easy to install, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:160",
+      "split": "test",
+      "goal_index": 160,
+      "category": "electronics",
+      "instruction": "i am looking for a blue, fast charging usb cord that is compatible with apple and is 16 feet long, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:162",
+      "split": "test",
+      "goal_index": 162,
+      "category": "grocery",
+      "instruction": "i want to find gluten free maple syrup that comes in a 32 fluid ounce bottle, and price lower than 170.00 dollars"
+    },
+    {
+      "task_id": "test:163",
+      "split": "test",
+      "goal_index": 163,
+      "category": "fashion",
+      "instruction": "i am looking for  a lace closure water booties & socks of red color, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:164",
+      "split": "test",
+      "goal_index": 164,
+      "category": "fashion",
+      "instruction": "i'm looking for breastfeeding shits maternity cloths double layer postpartum shirt, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "test:170",
+      "split": "test",
+      "goal_index": 170,
+      "category": "beauty",
+      "instruction": "i need an alcohol free hair fragrance that is island vanilla scent, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:175",
+      "split": "test",
+      "goal_index": 175,
+      "category": "grocery",
+      "instruction": "i want cheese pretzelhaus soft individually wrapped bavarian baked pretzels, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:177",
+      "split": "test",
+      "goal_index": 177,
+      "category": "garden",
+      "instruction": "i'm looking for wall art for hanging through the wall, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:180",
+      "split": "test",
+      "goal_index": 180,
+      "category": "beauty",
+      "instruction": "i'm looking for a lip pencil high pigmented for long lasting and melrose place color, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:182",
+      "split": "test",
+      "goal_index": 182,
+      "category": "electronics",
+      "instruction": "i'm looking for d17(dedicated right, back) high performance 3-way tower speaker made with carbon fiber"
+    },
+    {
+      "task_id": "test:184",
+      "split": "test",
+      "goal_index": 184,
+      "category": "beauty",
+      "instruction": "i am looking to buy a paraben free makeup remover containing hyaluronic acid, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "test:187",
+      "split": "test",
+      "goal_index": 187,
+      "category": "garden",
+      "instruction": "i'm looking for a dining room table that's made out of solid wood and easy to assemble, and price lower than 240.00 dollars"
+    },
+    {
+      "task_id": "test:188",
+      "split": "test",
+      "goal_index": 188,
+      "category": "garden",
+      "instruction": "i am looking for a wall mounted mid-century sconce that preferably has a plug in 2 pack, and price lower than 180.00 dollars"
+    },
+    {
+      "task_id": "test:199",
+      "split": "test",
+      "goal_index": 199,
+      "category": "grocery",
+      "instruction": "i would like some old fashioned summer sausage, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:207",
+      "split": "test",
+      "goal_index": 207,
+      "category": "garden",
+      "instruction": "i need a ready to hang wall mirror in a champagne sunburst color, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:209",
+      "split": "test",
+      "goal_index": 209,
+      "category": "electronics",
+      "instruction": "i am looking for a 6x9 ft backgrounds for digital photography, and price lower than 120.00 dollars"
+    },
+    {
+      "task_id": "test:210",
+      "split": "test",
+      "goal_index": 210,
+      "category": "grocery",
+      "instruction": "i'm looking for a meals with zero added sugar and also free from gluten and bpa. also, choose applesauce flavored one, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:211",
+      "split": "test",
+      "goal_index": 211,
+      "category": "garden",
+      "instruction": "i want to buy a mid-back drafting chair that has an adjustable height and lumbar support. look for a blue one, and price lower than 160.00 dollars"
+    },
+    {
+      "task_id": "test:213",
+      "split": "test",
+      "goal_index": 213,
+      "category": "electronics",
+      "instruction": "i want a 24w led light with high power lamp. it should mount on a wall, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "test:215",
+      "split": "test",
+      "goal_index": 215,
+      "category": "beauty",
+      "instruction": "i need a fluoride free toothpaste for fresh breath. i will need a pack of 4 in 3.5 ounce size, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:217",
+      "split": "test",
+      "goal_index": 217,
+      "category": "garden",
+      "instruction": "i want to buy canvas prints for the living room preferably having airplanes on them, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "test:223",
+      "split": "test",
+      "goal_index": 223,
+      "category": "grocery",
+      "instruction": "i'm looking for a topper for a birthday cake, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "test:227",
+      "split": "test",
+      "goal_index": 227,
+      "category": "beauty",
+      "instruction": "i am looking fort a travel size skincare kit with tea tree toner, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:228",
+      "split": "test",
+      "goal_index": 228,
+      "category": "grocery",
+      "instruction": "i'm looking for cake toppers for a birthday party, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:245",
+      "split": "test",
+      "goal_index": 245,
+      "category": "garden",
+      "instruction": "i'm looking for a ottoman 6 seater sofa"
+    },
+    {
+      "task_id": "test:246",
+      "split": "test",
+      "goal_index": 246,
+      "category": "garden",
+      "instruction": "i would like a solid wood sideboard, and price lower than 980.00 dollars"
+    },
+    {
+      "task_id": "test:249",
+      "split": "test",
+      "goal_index": 249,
+      "category": "fashion",
+      "instruction": "get me some black lounge pants with an elastic waistband, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "test:251",
+      "split": "test",
+      "goal_index": 251,
+      "category": "garden",
+      "instruction": "i'm looking for a queen size bed with a box spring, and price lower than 580.00 dollars"
+    },
+    {
+      "task_id": "test:262",
+      "split": "test",
+      "goal_index": 262,
+      "category": "fashion",
+      "instruction": "i want a pair of black men's work shoes that are slip resistant. they must come in a size 9.5 and be extra wide, and price lower than 160.00 dollars"
+    },
+    {
+      "task_id": "test:278",
+      "split": "test",
+      "goal_index": 278,
+      "category": "electronics",
+      "instruction": "i'm looking for plug play electronics for computer components and need to buy it, and price lower than 190.00 dollars"
+    },
+    {
+      "task_id": "test:289",
+      "split": "test",
+      "goal_index": 289,
+      "category": "garden",
+      "instruction": "i want to find a wooden table that i can put in my dining room, and price lower than 290.00 dollars"
+    },
+    {
+      "task_id": "test:292",
+      "split": "test",
+      "goal_index": 292,
+      "category": "fashion",
+      "instruction": "i am looking for brown color classic fit t-shirt, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:297",
+      "split": "test",
+      "goal_index": 297,
+      "category": "beauty",
+      "instruction": "i am looking for ca perfume club fragrance in the 0.17 fl oz travel size, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:303",
+      "split": "test",
+      "goal_index": 303,
+      "category": "electronics",
+      "instruction": "i want to find a usb headset that's certifiably refurbished and has a plug to play, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:304",
+      "split": "test",
+      "goal_index": 304,
+      "category": "fashion",
+      "instruction": "i am looking for a men's long sleeve button down light blue shirt, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:315",
+      "split": "test",
+      "goal_index": 315,
+      "category": "garden",
+      "instruction": "i need a tempered glass window film two pack in the color 91768059675860000 and 23.6 in by 23.6 in, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "test:320",
+      "split": "test",
+      "goal_index": 320,
+      "category": "beauty",
+      "instruction": "i need a conditioner for damaged hair, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:326",
+      "split": "test",
+      "goal_index": 326,
+      "category": "garden",
+      "instruction": "i am looking for eco friendly candle wax. please choose vanilla lavender, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:333",
+      "split": "test",
+      "goal_index": 333,
+      "category": "grocery",
+      "instruction": "i want low carb chipmonk keto lemon poppyseed cookies, and price lower than 90.00 dollars"
+    },
+    {
+      "task_id": "test:334",
+      "split": "test",
+      "goal_index": 334,
+      "category": "grocery",
+      "instruction": "i would like a 15 ounce package of blue stork it's a boy gift chocolate covered cookies, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:340",
+      "split": "test",
+      "goal_index": 340,
+      "category": "electronics",
+      "instruction": "i would like a 20 foot long 4 pack of gold plated hdmi male to male cables, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:345",
+      "split": "test",
+      "goal_index": 345,
+      "category": "electronics",
+      "instruction": "i am looking for a high performance 18 volt charger adapter for beats by dr dre, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:358",
+      "split": "test",
+      "goal_index": 358,
+      "category": "fashion",
+      "instruction": "i want tangerine colored crocs made with vinyl acetate for kids, and price lower than 120.00 dollars"
+    },
+    {
+      "task_id": "test:368",
+      "split": "test",
+      "goal_index": 368,
+      "category": "electronics",
+      "instruction": "i'm looking for a 150 foot plug play hdmi cable, and price lower than 90.00 dollars"
+    },
+    {
+      "task_id": "test:369",
+      "split": "test",
+      "goal_index": 369,
+      "category": "beauty",
+      "instruction": "i am looking for a high quality hair removal wax bottle, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:370",
+      "split": "test",
+      "goal_index": 370,
+      "category": "beauty",
+      "instruction": "i am looking for 5.9 fl oz eau de parfum - fragrance mist for women, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:374",
+      "split": "test",
+      "goal_index": 374,
+      "category": "garden",
+      "instruction": "i need a solid wood platform bed with wooden frame. pick something that is natural in color, and price lower than 180.00 dollars"
+    },
+    {
+      "task_id": "test:383",
+      "split": "test",
+      "goal_index": 383,
+      "category": "beauty",
+      "instruction": "i'm looking for bathing free accessories for fragrance free, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:389",
+      "split": "test",
+      "goal_index": 389,
+      "category": "fashion",
+      "instruction": "i am looking for large size soft material women's cardigans with pockets, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:394",
+      "split": "test",
+      "goal_index": 394,
+      "category": "grocery",
+      "instruction": "i am looking for a cat with ears cupcake toppers for a baby shower, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:396",
+      "split": "test",
+      "goal_index": 396,
+      "category": "beauty",
+      "instruction": "buy a one pack of permanent hair dye in espresso, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:397",
+      "split": "test",
+      "goal_index": 397,
+      "category": "grocery",
+      "instruction": "i want a bagel made from high quality ingredients, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "test:403",
+      "split": "test",
+      "goal_index": 403,
+      "category": "electronics",
+      "instruction": "i'm looking for a black phone case that is apple compatible with a black screen, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "test:407",
+      "split": "test",
+      "goal_index": 407,
+      "category": "grocery",
+      "instruction": "i'm looking for certified  organic for tea bags for peppermint leaf, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:408",
+      "split": "test",
+      "goal_index": 408,
+      "category": "beauty",
+      "instruction": "i'm looking for a hair roller for hair styling, it should be easy to use. also, choose 2.8 *2 inch pink colored one, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "test:415",
+      "split": "test",
+      "goal_index": 415,
+      "category": "grocery",
+      "instruction": "i would like to get two assorted non-gmo powdered cheeses, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "test:419",
+      "split": "test",
+      "goal_index": 419,
+      "category": "beauty",
+      "instruction": "i need a jet black hair piece for hair loss, and price lower than 90.00 dollars"
+    },
+    {
+      "task_id": "test:425",
+      "split": "test",
+      "goal_index": 425,
+      "category": "electronics",
+      "instruction": "i would like a high speed streaming media player that is easy to use, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "test:426",
+      "split": "test",
+      "goal_index": 426,
+      "category": "grocery",
+      "instruction": "i would like a 14 ounce bag of roasted almonds and other nuts that are gluten free, and price lower than 100.00 dollars"
+    },
+    {
+      "task_id": "test:434",
+      "split": "test",
+      "goal_index": 434,
+      "category": "garden",
+      "instruction": "i'm looking for some mid-century style grey chairs, and price lower than 150.00 dollars"
+    },
+    {
+      "task_id": "test:439",
+      "split": "test",
+      "goal_index": 439,
+      "category": "garden",
+      "instruction": "i am looking for an easy to install computer table for my living room, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "test:442",
+      "split": "test",
+      "goal_index": 442,
+      "category": "fashion",
+      "instruction": "i need low rise jeans that are a 54w by 34l, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:443",
+      "split": "test",
+      "goal_index": 443,
+      "category": "grocery",
+      "instruction": "i'm looking for a high protein meat jerky which should be free from gluten, soy and dairy products, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "test:453",
+      "split": "test",
+      "goal_index": 453,
+      "category": "beauty",
+      "instruction": "i am looking for a mouth guard that is pink and non toxic, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "test:462",
+      "split": "test",
+      "goal_index": 462,
+      "category": "electronics",
+      "instruction": "i am looking for a mini mak spotting scope smart phone adapter that is easy to use and comes with a carrying case, and price lower than 230.00 dollars"
+    },
+    {
+      "task_id": "test:468",
+      "split": "test",
+      "goal_index": 468,
+      "category": "garden",
+      "instruction": "i would like a standing shelf unit for my living room, and price lower than 230.00 dollars"
+    },
+    {
+      "task_id": "test:479",
+      "split": "test",
+      "goal_index": 479,
+      "category": "fashion",
+      "instruction": "i need women's denim shorts in cotton spandex material with color jayne and size 9, and price lower than 60.00 dollars"
+    }
+  ]
+}

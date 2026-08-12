@@ -33,6 +33,13 @@ WS_B="${MEMSYS_WS_B:-http://localhost:7001}"
 EVOLVE_MANIFEST="$REPO/manifests/webshop_evolve_train_50_seed42.json"
 EVAL_MANIFEST="$REPO/manifests/webshop_eval_test_100_seed42.json"
 
+# `minimal100` / `full100` continue an existing 50-episode run rather than
+# repeating it: each arm resumes its own store.jsonl and evolves the *next* 50
+# tasks of the same seeded permutation. That is what makes the "evolve on 50 vs
+# 100" column a comparison of amount of experience -- the alternative, running
+# 100 from scratch, would repeat 50 episodes of compute per arm and would also
+# not reuse the memory those episodes produced.
+RESUME_ROOT=""; EVOLVE_OFFSET=0
 case "$MODE" in
   smoke)
     POLICIES=(full); EVOLVE_LIMIT=2; EVAL_LIMIT=4; WORKERS=2
@@ -40,7 +47,12 @@ case "$MODE" in
   minimal|full)
     POLICIES=("$MODE"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-8}"
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="$MODE" ;;
-  *) echo "usage: $0 {smoke|minimal|full}" >&2; exit 2 ;;
+  minimal100|full100)
+    POLICIES=("${MODE%100}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-8}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%100}_e100"
+    EVOLVE_MANIFEST="$REPO/manifests/webshop_evolve_train_50to100_seed42.json"
+    RESUME_ROOT="$OUT_ROOT/${MODE%100}"; EVOLVE_OFFSET=50 ;;
+  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100}" >&2; exit 2 ;;
 esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})
@@ -78,6 +90,13 @@ run_arm() {  # $1=arm $2=policy $3=vllm_url
     out="$shared"; log="$shared.log"
   fi
   local evolve_args=(--evolve-manifest "$EVOLVE_MANIFEST" --evolve-limit "$EVOLVE_LIMIT")
+  if [[ -n "$RESUME_ROOT" ]]; then
+    local prior="$RESUME_ROOT/${arm}_${policy}/store.jsonl"
+    [[ -f "$prior" ]] || { echo "[sweep] FAILED: no store to resume at $prior"; return 1; }
+    evolve_args+=(--resume-store "$prior" --evolve-step-offset "$EVOLVE_OFFSET")
+  fi
+  # `none` has no memory, so its evaluation is identical at 50 and 100 evolving
+  # episodes; it is reused, never re-run.
   [[ "$arm" == "none" ]] && evolve_args=()
   echo "[sweep] START $arm/$policy -> $url  (log: $log)"
   "$PY" "$REPO/scripts/run_webshop.py" \

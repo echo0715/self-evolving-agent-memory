@@ -30,6 +30,11 @@ URL_B="${MEMSYS_URL_B:-http://localhost:8001/v1}"
 EVOLVE_MANIFEST="$REPO/manifests/evolve_train_50_seed42.json"
 EVAL_MANIFEST="$REPO/manifests/eval_valid_unseen_100_seed42.json"
 
+# `minimal100` / `full100` continue an existing 50-episode run: each arm resumes
+# its own store.jsonl and evolves the *next* 50 tasks of the same seeded
+# permutation, making the "evolve on 50 vs 100" column a comparison of amount of
+# experience rather than two independent runs.
+RESUME_ROOT=""; EVOLVE_OFFSET=0
 case "$MODE" in
   smoke)
     POLICIES=(full); EVOLVE_LIMIT=2; EVAL_LIMIT=2; WORKERS=2
@@ -37,7 +42,12 @@ case "$MODE" in
   minimal|full)
     POLICIES=("$MODE"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="$MODE" ;;
-  *) echo "usage: $0 {smoke|minimal|full}" >&2; exit 2 ;;
+  minimal100|full100)
+    POLICIES=("${MODE%100}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%100}_e100"
+    EVOLVE_MANIFEST="$REPO/manifests/evolve_train_50to100_seed42.json"
+    RESUME_ROOT="$OUT_ROOT/${MODE%100}"; EVOLVE_OFFSET=50 ;;
+  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100}" >&2; exit 2 ;;
 esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})
@@ -68,6 +78,13 @@ run_arm() {  # $1=arm $2=policy $3=base_url
   # The "none" arm has nothing to evolve; passing a manifest would be a no-op
   # but the flag is omitted so the intent is visible in config.json.
   local evolve_args=(--evolve-manifest "$EVOLVE_MANIFEST" --evolve-limit "$EVOLVE_LIMIT")
+  if [[ -n "$RESUME_ROOT" ]]; then
+    local prior="$RESUME_ROOT/${arm}_${policy}/store.jsonl"
+    [[ -f "$prior" ]] || { echo "[sweep] FAILED: no store to resume at $prior"; return 1; }
+    evolve_args+=(--resume-store "$prior" --evolve-step-offset "$EVOLVE_OFFSET")
+  fi
+  # `none` has no memory: its evaluation is identical at 50 and 100 evolving
+  # episodes, so it is reused rather than re-run.
   [[ "$arm" == "none" ]] && evolve_args=()
   echo "[sweep] START $arm/$policy -> $url  (log: $log)"
   "$PY" "$REPO/scripts/run_alfworld.py" \

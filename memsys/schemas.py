@@ -18,7 +18,29 @@ from typing import Any
 from .tokens import count_tokens
 
 OUTCOME_TAGS = ("from_success", "from_failure", "from_contrast")
+
+#: Cap on the `evidence` field, which is the grounding anchor rather than
+#: injected context (`MemoryConfig.render_evidence` is False, so raising this
+#: gives no arm more context at inference -- it only changes how much the writer
+#: may quote to prove an entry came from a real trajectory).
+#:
+#: 80 is calibrated for ALFWorld's and WebShop's evidence, which is a sentence of
+#: observation text. AppWorld's is *Python code and API documentation*, where a
+#: single faithful quote runs past 80 tokens routinely, and the cap then rejects
+#: most of what the writer produces -- unevenly across content types, because a
+#: type that writes rarely (skill, which only writes from successful episodes)
+#: can be rejected down to an empty store while a chatty one still accumulates.
+#: That is a benchmark-calibration artifact masquerading as a content-type
+#: result, so it is settable per run and recorded in config.json.
 MAX_EVIDENCE_TOKENS = 80
+
+
+def set_max_evidence_tokens(n: int) -> None:
+    """Set the evidence cap for this process. Apply it to every arm in a run."""
+    global MAX_EVIDENCE_TOKENS
+    if n <= 0:
+        raise ValueError("max evidence tokens must be positive")
+    MAX_EVIDENCE_TOKENS = int(n)
 
 
 def _s(v: Any) -> str:

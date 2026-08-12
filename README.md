@@ -5,7 +5,8 @@ Implementation of the three memory systems in `memory_strategy_design.md` —
 and the `"all"` composite.
 
 The core is benchmark-agnostic: the systems consume `Episode` objects from
-anywhere. Adapters for ALFWorld and WebShop live in `memsys/adapters/`.
+anywhere. Adapters for ALFWorld, WebShop, AppWorld and SpreadsheetBench live in
+`memsys/adapters/`.
 
 ```
 pip install -e .        # optional; the core has zero dependencies
@@ -138,7 +139,7 @@ thresholds and tests but should not be used for the reported experiments.
 
 An adapter runs a ReAct agent against a benchmark with a memory block injected
 and returns `Episode` objects, so everything above stays benchmark-agnostic.
-Two exist.
+Four exist.
 
 **ALFWorld** (`memsys/adapters/alfworld.py`) drives an exact compiled gamefile
 in-process.
@@ -163,23 +164,67 @@ python scripts/build_webshop_manifests.py --server http://localhost:7000
 bash scripts/run_webshop_sweep.sh full
 ```
 
-Runbooks: [RUN_ALFWORLD.md](RUN_ALFWORLD.md) and [RUN_WEBSHOP.md](RUN_WEBSHOP.md),
-each with the traps that cost real time (scaffold fidelity and PDDL thread-safety
-for ALFWorld; goal non-determinism and corpus/index pairing for WebShop).
-Results: [RESULTS_ALFWORLD.md](RESULTS_ALFWORLD.md),
-[RESULTS_WEBSHOP.md](RESULTS_WEBSHOP.md).
+**AppWorld** (`memsys/adapters/appworld.py`) is a client for upstream's own
+`appworld serve environment`. The agent writes Python that runs in a stateful
+REPL against nine apps' REST APIs, and the scaffold is ACE's published ReAct
+prompt, whose `{{ playbook }}` slot is where the memory block goes.
 
-Two differences in how WebShop results must be read. Its reward is **graded**, so
-`summarize.py` reports score alongside the strict success rate — an arm that buys
-plausible-but-wrong items faster raises one and lowers the other. And its
-scaffold has **no external reference point**: the ALFWorld prompt is
-byte-identical to SAGE's, pinning that baseline to an independently measured
-58–60%, while the WebShop prompt was written here. The `none` arm is the only
-reference that means anything.
+```bash
+bash scripts/serve_appworld.sh 16                  # one server per concurrent episode
+python scripts/build_appworld_manifests.py --root "$APPWORLD_ROOT"
+MEMSYS_ARM_CONCURRENCY=5 MEMSYS_SERVERS_PER_ARM=3 \
+  bash scripts/run_appworld_sweep.sh full
+```
+
+**SpreadsheetBench** (`memsys/adapters/spreadsheetbench.py`) is the only one with
+nothing to serve: an episode is a temp directory holding a copy of one `.xlsx`,
+and the agent edits it by writing `solution.py` and running shell commands.
+Upstream's cell evaluator is ported into the adapter. Task selection reuses
+SkillOpt's published 400-task id split; the files come from the 912 release,
+because only that one ships the three test cases per task that make hardcoding
+worthless.
+
+```bash
+bash scripts/setup_spreadsheetbench.sh             # data + openpyxl/pandas, one-time
+python scripts/build_spreadsheetbench_manifests.py
+bash scripts/run_spreadsheetbench_sweep.sh full
+```
+
+Runbooks: [RUN_ALFWORLD.md](RUN_ALFWORLD.md), [RUN_WEBSHOP.md](RUN_WEBSHOP.md),
+[RUN_APPWORLD.md](RUN_APPWORLD.md),
+[RUN_SPREADSHEETBENCH.md](RUN_SPREADSHEETBENCH.md) — each with the traps that
+cost real time (scaffold fidelity and PDDL thread-safety for ALFWorld; goal
+non-determinism and corpus/index pairing for WebShop; unparseable writer JSON and
+a shared experiment namespace for AppWorld; a `python` that is not the memsys
+interpreter, and Excel formulas that score zero with correct arithmetic, for
+SpreadsheetBench). Results:
+[RESULTS_ALFWORLD.md](RESULTS_ALFWORLD.md),
+[RESULTS_WEBSHOP.md](RESULTS_WEBSHOP.md),
+[RESULTS_APPWORLD.md](RESULTS_APPWORLD.md),
+[RESULTS_SPREADSHEETBENCH.md](RESULTS_SPREADSHEETBENCH.md).
+
+**Run the no-memory baseline twice.** AppWorld's two identical baseline runs
+scored 20.0% and 25.0%, disagreeing on 23 of 100 tasks — a ±5 point noise floor
+that erased every arm in that study, including two that looked like +5.0 against
+the first run and were +0.0 against the second. WebShop's and SpreadsheetBench's
+floors have not been measured yet, and SpreadsheetBench's arms are ranked
+differently by the two write policies — a pattern a floor of that size would
+produce on its own. `RESULTS_APPWORLD.md` and `RESULTS_SPREADSHEETBENCH.md` both
+open with this.
+
+Two differences in how WebShop results must be read, and SpreadsheetBench shares
+both. Their reward is **graded**, so `summarize.py` reports score alongside the
+strict success rate — on WebShop an arm that buys plausible-but-wrong items
+faster raises one and lowers the other; on SpreadsheetBench a task scores `1/3`
+when its `solution.py` is right for the test case the agent saw and wrong for the
+two it did not, which is what hardcoding looks like. And their scaffolds have
+**no external reference point**: the ALFWorld prompt is byte-identical to SAGE's
+and the AppWorld one to ACE's, pinning those baselines to independently measured
+numbers, while the WebShop and SpreadsheetBench prompts were written here. For
+both, the `none` arm is the only reference that means anything.
 
 ## Not implemented yet
 
-The AppWorld *adapter* (its environment installs via `scripts/setup_appworld.sh`,
-but nothing yet turns it into `Episode`s), the difficulty-filtering and
-repeat-evolving dataset builders from §6, and failing-step attribution for skills
-(currently read from `episode.meta`, not inferred).
+The difficulty-filtering and repeat-evolving dataset builders from §6, and
+failing-step attribution for skills (currently read from `episode.meta`, not
+inferred).

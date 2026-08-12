@@ -109,6 +109,11 @@ class ScriptedLLM(LLMClient):
         return LLMResponse(text=text)
 
 
+def _is_response_format_error(exc: Exception) -> bool:
+    text = f"{type(exc).__name__}: {exc}".lower()
+    return "response_format" in text or "guided" in text or "json_object" in text
+
+
 class OpenAIChatClient(LLMClient):  # pragma: no cover - needs network
     """Works with the OpenAI API and any OpenAI-compatible server (vLLM/SGLang),
     which is how Qwen3.5-9B / 27B are served locally."""
@@ -122,6 +127,7 @@ class OpenAIChatClient(LLMClient):  # pragma: no cover - needs network
         max_tokens: int = 1024,
         timeout: float = 120.0,
         max_retries: int = 3,
+        json_mode: bool = False,
     ):
         super().__init__()
         from openai import OpenAI
@@ -130,17 +136,35 @@ class OpenAIChatClient(LLMClient):  # pragma: no cover - needs network
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.max_retries = max_retries
+        # Constrained decoding for writer calls. Every writer prompt asks for
+        # JSON, but a mid-size model asked to quote a trajectory *verbatim* into
+        # an `evidence` string routinely emits JSON it cannot escape correctly --
+        # AppWorld trajectories are Python code and API docs full of quotes and
+        # backslashes, and the model drops the escaping partway through a string
+        # (`\"api_name": "show_transactions"`). The result parses to nothing, and
+        # because `parse_ops` returns [] for unparseable text the failure is
+        # silent: the arm records writer calls, zero ops and zero rejections, and
+        # ends with an empty store that makes it indistinguishable from `none`.
+        # No repair pass fixes it -- where the escaping was lost is ambiguous --
+        # so the fix has to be at decode time. Off by default so the benchmarks
+        # whose results predate it stay reproducible from this code.
+        self.json_mode = json_mode
+        self._json_mode_supported = json_mode
         self._client = OpenAI(base_url=base_url, api_key=api_key or "EMPTY", timeout=timeout)
 
     def _complete(self, system: str, user: str, tag: str) -> LLMResponse:
         last = None
         for _ in range(self.max_retries):
             try:
+                kwargs = {}
+                if self._json_mode_supported:
+                    kwargs["response_format"] = {"type": "json_object"}
                 resp = self._client.chat.completions.create(
                     model=self.model,
                     messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
                     temperature=self.temperature,
                     max_tokens=self.max_tokens,
+                    **kwargs,
                 )
                 u = getattr(resp, "usage", None)
                 return LLMResponse(
@@ -150,4 +174,9 @@ class OpenAIChatClient(LLMClient):  # pragma: no cover - needs network
                 )
             except Exception as e:  # noqa: BLE001
                 last = e
+                # A server without guided-decoding support rejects the whole
+                # request. Degrade to unconstrained decoding rather than failing
+                # the run -- the writer merely goes back to its old failure rate.
+                if self._json_mode_supported and _is_response_format_error(e):
+                    self._json_mode_supported = False
         raise RuntimeError(f"LLM call failed after {self.max_retries} retries: {last}")

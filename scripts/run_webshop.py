@@ -216,6 +216,12 @@ def main() -> None:
     ap.add_argument("--evolve-limit", type=int, default=0, help="0 = all tasks in manifest")
     ap.add_argument("--eval-limit", type=int, default=0)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--resume-store", default=None,
+                    help="load this store.jsonl before evolving, to continue a previous "
+                         "run instead of starting from an empty memory")
+    ap.add_argument("--evolve-step-offset", type=int, default=0,
+                    help="step index the evolving loop starts from; set to the number of "
+                         "episodes the resumed store already saw")
     args = ap.parse_args()
 
     servers = args.server or [os.environ.get("WEBSHOP_SERVER_URL", "http://localhost:7000")]
@@ -237,6 +243,20 @@ def main() -> None:
             temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
         )
         system = build_system(args.arm, llm=llm, config=config, store=build_store(args, config))
+        if args.resume_store:
+            # Continue a previous run's memory rather than starting empty. Item
+            # stats (n_retrieved, support/refute, created_at_step) round-trip
+            # through store.jsonl; embeddings are not serialised but `retrieve`
+            # re-encodes lazily, so this is exact as long as the same embedder is
+            # used. Two things do NOT resume: the batch-induction buffer, and the
+            # Evolver's step counter -- hence --evolve-step-offset, without which
+            # `full`'s every-25-episode induction cadence would restart at 0 and
+            # fire at a different point than an uninterrupted 100-episode run.
+            store = getattr(system, "store", None)
+            if store is None:
+                raise SystemExit(f"--resume-store given but arm {args.arm!r} has no store")
+            store.load(args.resume_store)
+            print(f"[resume] loaded {len(store)} live entries from {args.resume_store}", flush=True)
 
     agent = make_agent(args, args.agent_base_url)
     pool = RoundRobin(servers)
@@ -256,6 +276,7 @@ def main() -> None:
             tasks = tasks[: args.evolve_limit]
         logger = RunLogger(str(out / "evolve_log.jsonl"))
         ev = Evolver(system, config=config, logger=logger)
+        ev.step = args.evolve_step_offset
         with (out / "evolve_episodes.jsonl").open("w", encoding="utf-8") as fh:
             for i, task in enumerate(tasks):
                 t0 = time.time()
@@ -267,7 +288,7 @@ def main() -> None:
                               n_rollouts=args.n_rollouts, timeout=args.env_timeout)
                 ev.step_once(ep, ret)
                 row = episode_row(ep, time.time() - t0)
-                row["step"] = i
+                row["step"] = args.evolve_step_offset + i
                 evolve_rows.append(row)
                 fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                 fh.flush()
@@ -340,6 +361,11 @@ def main() -> None:
         ),
         "eval_by_family": _by_family(eval_rows),
         "evolve_n": len(evolve_rows),
+        # Total episodes this memory has seen, including any resumed run. This is
+        # the "evolve on 50 / 100 / 150" axis of the Memory Content table, and it
+        # is NOT len(evolve_rows) when resuming.
+        "evolve_total": args.evolve_step_offset + len(evolve_rows),
+        "resumed_from": args.resume_store,
         "evolve_success_rate": (
             sum(r["success_rate"] for r in evolve_rows) / len(evolve_rows) if evolve_rows else None
         ),

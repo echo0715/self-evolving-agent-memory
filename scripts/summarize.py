@@ -88,11 +88,13 @@ def main() -> None:
     base = next((a for a in arms if a["arm"] == args.baseline), None)
     benchmark = arms[0].get("benchmark", "ALFWorld")
     split = arms[0].get("eval_split") or ("valid_unseen" if benchmark == "ALFWorld" else "test")
-    # WebShop grades partially, so it reports a score alongside the strict
-    # success rate; ALFWorld has no such column and must not grow an empty one.
-    # The two can move in opposite directions -- an agent that buys
-    # plausible-but-wrong items faster raises score and lowers success rate --
-    # which is exactly why the column is added rather than substituted.
+    # WebShop, AppWorld and SpreadsheetBench grade partially, so they report a
+    # score alongside the strict success rate; ALFWorld has no such column and
+    # must not grow an empty one. The two can move in opposite directions -- an
+    # agent that buys plausible-but-wrong items faster raises score and lowers
+    # success rate, and a SpreadsheetBench agent that hardcodes the one test case
+    # it can see scores 1/3 on every task it "solves" -- which is exactly why the
+    # column is added rather than substituted.
     has_score = any(a.get("eval_score") is not None for a in arms)
     score_head = " score |" if has_score else ""
     score_sep = "---|" if has_score else ""
@@ -136,7 +138,10 @@ def main() -> None:
     # ALFWorld task family (the six differ a lot in difficulty). For WebShop the
     # grouping is the product department, which is a weaker cut -- two "beauty"
     # tasks can need entirely different action sequences -- so read it as
-    # exploratory rather than as ALFWorld's procedure families.
+    # exploratory rather than as ALFWorld's procedure families. SpreadsheetBench
+    # is weaker still: it labels only cell-level and sheet-level, so the two
+    # columns are close to a coin flip on procedure. AppWorld reports difficulty
+    # here instead, its ~34 scenarios being far too fine to read.
     families = sorted({f for a in arms for f in (a.get("eval_by_family") or {})})
     if families:
         lines += ["## By task family", "",

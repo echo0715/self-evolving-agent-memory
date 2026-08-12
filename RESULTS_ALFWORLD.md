@@ -7,6 +7,9 @@ Model served locally by vLLM; the same model writes memory and acts.
 Raw outputs: `/gpfs/radev/scratch/cohan/jw3278/memsys_results/{minimal,full}/`.
 Reproduce with [RUN_ALFWORLD.md](RUN_ALFWORLD.md).
 
+§1–§5 report the 50-evolving-task run. **§6 extends every arm to 100 evolving
+tasks and overturns §1**, so read it before quoting the write-policy claim.
+
 ## Scaffold validation
 
 The no-memory baseline scored **58.0%**, matching SAGE's independently measured
@@ -59,6 +62,11 @@ For the write-mechanism ablation this is the headline: on ALFWorld at this
 scale, `WritePolicy.minimal()` dominates `WritePolicy.full()` for every content
 type that uses an LLM writer.
 
+**This does not survive doubling the evolving stream.** At 100 evolving tasks
+full's deficit halves for reflection and skill and reverses sign for rule — see
+[§6](#6-doubling-the-evolving-stream-50--100-evolving-tasks). The scale
+qualifier in the sentence above is doing all the work.
+
 ## 2. Abstraction invents procedures that verbatim replay cannot
 
 `pick_heat_then_place_in_recep`, 21 eval tasks, baseline 9/21 (43%):
@@ -98,6 +106,9 @@ in both directions.** A correct procedure generalises strongly (see §3); a
 wrong one converts a 43% family into 0%. Raw replay is immune because it never
 states a rule — it shows real action sequences, which necessarily contain the
 true one.
+
+Fifty more evolving episodes do not fix it and produce a second one of the same
+shape — see [§6.3](#63-a-wrong-procedure-is-not-corrected-by-more-evidence).
 
 ## 3. Compression works, until the mechanism breaks it
 
@@ -149,6 +160,159 @@ procedures the baseline actually fails on.
 *ceiling*, not the *usage*, so rule may be losing partly on quantity rather than
 kind. `MemoryConfig(equal_item_count=...)` is the lever to separate these.
 
+## 6. Doubling the evolving stream (50 → 100 evolving tasks)
+
+Run 2026-08-11. Each arm resumed its 50-task store (`resumed_from` in every
+`summary.json`) and evolved 50 further `train` tasks from
+`manifests/evolve_train_50to100_seed42.json`, disjoint from the first 50. The
+evaluation set, seed, horizon and scaffold are unchanged, so **every number
+below is paired with every number above.** The `none` baseline has no store and
+no writer, so it is reused verbatim (58.0%).
+
+Raw outputs: `/gpfs/radev/scratch/cohan/jw3278/memsys_results/{minimal,full}_e100/`.
+
+| arm | policy | rate | Δ vs none | b/c | McNemar p | Δ vs 50-task | store | inj. tok | writer calls |
+|---|---|---|---|---|---|---|---|---|---|
+| none | — | 58.0% | — | — | — | — | — | 0 | — |
+| raw | minimal | 75.0% | +17.0 | 9/26 | **0.006** | 0.0 | 75 | 1278 | — |
+| reflection | minimal | 67.0% | +9.0 | 12/21 | 0.163 | +2.0 | 66 | 997 | 81 |
+| rule | minimal | 58.0% | +0.0 | 21/21 | 1.000 | +5.0 | 25 | 260 | 83 |
+| skill | minimal | 70.0% | +12.0 | 7/19 | **0.029** | −9.0 | 6 | 1439 | 33 |
+| raw | full | **81.0%** | **+23.0** | 6/29 | **0.0001** | +1.0 | 61 | 1244 | — |
+| reflection | full | 62.0% | +4.0 | 15/19 | 0.608 | +8.0 | 77 | 961 | 158 |
+| rule | full | 61.0% | +3.0 | 20/23 | 0.761 | **+15.0** | 15 | 241 | 134 |
+| skill | full | 59.0% | +1.0 | 21/22 | 1.000 | −5.0 | 8 | 1325 | 117 |
+
+Store sizes and writer calls are cumulative over all 100 evolving tasks.
+Injected tokens are flat because the 1500-token budget binds, so raw's store
+doubling costs nothing at inference.
+
+### 6.1 Only `raw` is stable; everything else moves
+
+`raw` is the one content type whose eval rate is unchanged by doubling the
+data — 75.0% → 75.0% under minimal (13 tasks flipped each way, pure churn) and
+80.0% → 81.0% under full. It is also the best arm in the whole study:
+**`raw/full` at 81.0%, +23.0, p = 0.0001**, now perfect on
+`pick_cool_then_place_in_recep` (15/15).
+
+The paired 50 → 100 test on each arm's own two runs:
+
+| arm | policy | 50 → 100 | b/c | p |
+|---|---|---|---|---|
+| raw | minimal | 75 → 75 | 13/13 | 1.000 |
+| reflection | minimal | 65 → 67 | 16/18 | 0.864 |
+| rule | minimal | 53 → 58 | 13/18 | 0.473 |
+| skill | minimal | 79 → 70 | 16/7 | 0.093 |
+| raw | full | 80 → 81 | 9/10 | 1.000 |
+| reflection | full | 54 → 62 | 13/21 | 0.229 |
+| rule | full | 46 → 61 | 10/25 | **0.017** |
+| skill | full | 64 → 59 | 14/9 | 0.405 |
+
+Note how large the discordant counts are relative to the deltas: `raw/minimal`
+changes 26 of 100 task outcomes to arrive at exactly the same score. Aggregate
+stability is not per-task stability for any arm here.
+
+### 6.2 The `full` penalty is a small-data artifact
+
+This is the finding that costs us §1. Minimal-minus-full, at both stream
+lengths:
+
+| arm | full − minimal @50 | full − minimal @100 |
+|---|---|---|
+| raw | +5 | +6 |
+| reflection | −11 | −5 |
+| rule | −7 | **+3** |
+| skill | −15 | −11 |
+
+Every LLM-writer arm's full-policy deficit shrinks, and rule's flips to a gain
+of 15 points on the paired test (p = 0.017) — the largest single 50 → 100 move
+in the run. `rule/full` recovers exactly where it was worst at 50 tasks:
+`pick_clean_then_place_in_recep` 5/23 → 13/23, `pick_and_place_simple` 13/18 →
+17/18, `look_at_obj_in_light` 7/13 → 11/13.
+
+The reading that fits: the full-policy mechanisms are data-hungry. Verification,
+refinement and batch induction all consolidate *across* episodes, and with 50
+episodes they consolidate mostly noise — §5 already recorded `rule/full`'s store
+collapsing to a single entry at episode 25. Given 100 episodes the same
+machinery has enough evidence to be net-positive for rule and much less harmful
+for reflection. So §1's claim should be narrowed to: **at 50 evolving episodes**
+`full` is worse for every LLM-written type; the ordering is not stable in the
+stream length, and the write-policy ablation cannot be run at one scale only.
+
+`raw` is the control that makes this legible — it has no LLM writer, its only
+full-policy mechanism is utility deletion, and its full-over-minimal gap is
++5/+6 at both lengths. The mechanism that does bookkeeping is scale-invariant;
+the mechanisms that call the writer are not.
+
+### 6.3 A wrong procedure is not corrected by more evidence
+
+`skill/full`'s microwave procedure from §2 is **still in the store at episode
+100**, now at version 5, still identical in the step that breaks it:
+
+```
+go to the microwave
+open the microwave if it is closed
+move <obj> to the microwave      <- the agent is no longer holding <obj>
+close the microwave
+heat <obj> with the microwave    <- cannot succeed
+```
+
+`pick_heat_then_place_in_recep` goes 0/21 → 1/21. In between, `skill.judge`
+fired 50 more times and `skill.refine` 5 times and the entry was revised to
+version 5 without the false step ever being touched.
+
+Worse, the second 50 episodes manufacture a *new* error of the same shape.
+`examine_obj_with_lamp` under `full` ended at 50 episodes as a four-step
+procedure that takes the object and puts it down next to the lamp, never using
+it. By episode 100 the writer has "fixed" it by appending the missing action:
+
+```
+go to the location containing <obj>
+take <obj> from the location
+go to the location containing <lamp>
+move <obj> to the location containing <lamp>   <- puts the object down
+use <lamp>                                     <- object is not held
+```
+
+`look_at_obj_in_light` falls 8/13 → **3/13**, and it is the only family where
+`skill/full` is now far below baseline (10/13). The repair addressed the
+symptom the writer could see (no `use` action) and preserved the premise that
+caused the failure.
+
+Contrast `skill/minimal`, whose lamp skill kept the object in hand from the
+start — *"use the lamp to examine the held object"* — and scores 11/13. Same
+model, same episodes, same content type; the arm with more repair machinery is
+the one holding the false belief.
+
+The generalisation of §2 is therefore stronger than §2 could state: procedural
+memory errors are not self-correcting under more data. The entry is replayed
+deterministically, so it suppresses the very trajectories that would falsify
+it, and the writer then judges its own output against episodes it caused. Raw
+replay has no such fixed point.
+
+### 6.4 Skill is the only type that gets worse with more data
+
+`skill/minimal` — the best arm at 50 episodes, 79.0% from four skills — drops to
+70.0% (b/c 16/7, p = 0.093; suggestive, not significant). Its store grew 4 → 6
+and its per-family profile flattened: `pick_cool` 12/15 → 8/15, `look` 13/13 →
+11/13, `pick_two_obj` 10/10 → 7/10, against a gain of 7/21 → 10/21 on `heat`.
+It is still the second-best minimal arm and still the cheapest LLM arm (33
+writer calls), but §3's "compression works" now carries a scale caveat of its
+own: the four-skill store was the good one, and adding two more entries cost
+9 points.
+
+Combined with §6.3, skill is the only content type that is worse at 100
+episodes than at 50 under **both** policies (−9 minimal, −5 full).
+
+### 6.5 Evolve-time success does not predict eval
+
+Every arm ran the identical second-50 evolving tasks, so their evolve-time
+success rates are directly comparable — and they invert the eval ordering.
+`raw/minimal` solved 80% of the second-half evolving tasks and evaluates at
+75.0%; `raw/full` solved 52% and evaluates at 81.0%. Evolve-time success is
+measured against a store that is still growing and differs per arm, so it is a
+property of the run, not of the memory. Do not use it as a cheap proxy.
+
 ## Threats to validity
 
 - **n = 100, single seed.** SAGE measured a ±3–6 point noise floor across
@@ -164,3 +328,11 @@ kind. `MemoryConfig(equal_item_count=...)` is the lever to separate these.
   store collapsed to 1 entry at episode 25 before rebuilding to 10). This is the
   writer choosing to delete, *not* appends failing the grounding check —
   rejections were only 5.
+- **§6 is a resumption, not an independent 100-task run.** Each arm continued
+  from its own 50-task store, so its second half is conditioned on whatever that
+  store had become. A stream-length effect and a path-dependence effect are not
+  separable here; only a fresh run over 100 evolving tasks from an empty store
+  would separate them. The two lengths therefore bound the trend, they do not
+  establish a curve — and with two points and a ±3–6 noise floor, the 50 → 100
+  deltas under ~10 points (every arm except `rule/full`) are not resolvable
+  either.

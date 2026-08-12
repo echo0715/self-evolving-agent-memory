@@ -1,0 +1,372 @@
+{
+  "schema_version": 2,
+  "benchmark": "WebShop",
+  "split": "train",
+  "seed": 42,
+  "selection": "positions_[50,100)_of_seeded_permutation",
+  "skip": 50,
+  "available_count": 10587,
+  "selected_count": 50,
+  "task_ids_sha256": "c5e47ec00e78cd56e44567bbbab2b47cde6ec8836377a75887937889aec441ed",
+  "server": {
+    "scale": "full",
+    "corpus": "items_shuffle.json",
+    "index": "indexes_full",
+    "n_products": 1181430,
+    "n_goals": 12087,
+    "human_goals": true,
+    "seed": 42
+  },
+  "tasks": [
+    {
+      "task_id": "train:5035",
+      "split": "train",
+      "goal_index": 5035,
+      "category": "beauty",
+      "instruction": "braided synthetic hair bundle, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:4184",
+      "split": "train",
+      "goal_index": 4184,
+      "category": "garden",
+      "instruction": "i need some drapes for the living room that are 40\" by 63\" by 2, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "train:3089",
+      "split": "train",
+      "goal_index": 3089,
+      "category": "electronics",
+      "instruction": "i'm looking for fast charging, waterproof earbuds, and price lower than 100.00 dollars"
+    },
+    {
+      "task_id": "train:10320",
+      "split": "train",
+      "goal_index": 10320,
+      "category": "grocery",
+      "instruction": "parmcrisps - all parm crisps cheese, made simply with 100% real cheese | healthy keto snacks, low carb, high protein, gluten free, oven baked, keto-friendly  find for me, parm crisps brand, as it is oven baked, gluten free, low carb. excellent product that helps me maintain my low carb diet. my favorite flavor is italian herb. find this flavor, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "train:4281",
+      "split": "train",
+      "goal_index": 4281,
+      "category": "grocery",
+      "instruction": "i am looking for a non gmo mojito cocktail mixer, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "train:7234",
+      "split": "train",
+      "goal_index": 7234,
+      "category": "garden",
+      "instruction": "i'm looking for a three light vanity style light fixture that can hang on the wall and has chrome finish, and price lower than 210.00 dollars"
+    },
+    {
+      "task_id": "train:6949",
+      "split": "train",
+      "goal_index": 6949,
+      "category": "grocery",
+      "instruction": "i want pure  certified organic bpa free coconut oil for baking  and cooking purpose  size :128 fl oz, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "train:3221",
+      "split": "train",
+      "goal_index": 3221,
+      "category": "grocery",
+      "instruction": "i need grass fed protein bars that are banana flavored, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "train:2414",
+      "split": "train",
+      "goal_index": 2414,
+      "category": "garden",
+      "instruction": "buy a steel framed end table for the living room, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "train:3913",
+      "split": "train",
+      "goal_index": 3913,
+      "category": "fashion",
+      "instruction": "looking for a short shleev shirt sunsit colour button closure also size 2x, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "train:2091",
+      "split": "train",
+      "goal_index": 2091,
+      "category": "garden",
+      "instruction": "i would like a 12\" x 16\" in three pieces blackleaf poster that's ready to hang in my living room, and price lower than 90.00 dollars"
+    },
+    {
+      "task_id": "train:10237",
+      "split": "train",
+      "goal_index": 10237,
+      "category": "garden",
+      "instruction": "i am looking for a framed hand painted abstract oil painting to hang in my living room, and price lower than 110.00 dollars"
+    },
+    {
+      "task_id": "train:9495",
+      "split": "train",
+      "goal_index": 9495,
+      "category": "fashion",
+      "instruction": "i need a quick drying clog shoes that is light weight and pink in color, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:4227",
+      "split": "train",
+      "goal_index": 4227,
+      "category": "beauty",
+      "instruction": "i would like a single perfect beige foundation that is oil free, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:5911",
+      "split": "train",
+      "goal_index": 5911,
+      "category": "grocery",
+      "instruction": "i would like a five pound bag of non gmo seeds, and price lower than 120.00 dollars"
+    },
+    {
+      "task_id": "train:6407",
+      "split": "train",
+      "goal_index": 6407,
+      "category": "grocery",
+      "instruction": "i am looking for a  hot buttered rum cocktail, 12.7 fl oz (pack of 1) to present as perfect gift, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:8714",
+      "split": "train",
+      "goal_index": 8714,
+      "category": "fashion",
+      "instruction": "i want some relaxed jeans that are a comfortable fit in a size 46w by 34l and are in the color victoria, and price lower than 90.00 dollars"
+    },
+    {
+      "task_id": "train:7069",
+      "split": "train",
+      "goal_index": 7069,
+      "category": "grocery",
+      "instruction": "i want 24 bags of non gmo bare baked crunchy apple fruit snacks, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:1969",
+      "split": "train",
+      "goal_index": 1969,
+      "category": "electronics",
+      "instruction": "i need two one hundred foot male to male hdmi cables. they should be high speed and gold plated, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:2422",
+      "split": "train",
+      "goal_index": 2422,
+      "category": "grocery",
+      "instruction": "i would like a 12 ounce slim cans of zero sugar ginger ale, and price lower than 100.00 dollars"
+    },
+    {
+      "task_id": "train:2546",
+      "split": "train",
+      "goal_index": 2546,
+      "category": "beauty",
+      "instruction": "i am looking for a light blue, pink, yellow or light green tooth cleaning tool that is easy to carry, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:6782",
+      "split": "train",
+      "goal_index": 6782,
+      "category": "garden",
+      "instruction": "i need to buy a silver eight light chandelier for my living room. i want one that's easy to install, and price lower than 150.00 dollars"
+    },
+    {
+      "task_id": "train:6246",
+      "split": "train",
+      "goal_index": 6246,
+      "category": "fashion",
+      "instruction": "i need some active shorts that are in the color of equator and are a medium, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "train:7666",
+      "split": "train",
+      "goal_index": 7666,
+      "category": "beauty",
+      "instruction": "i am looking for a conditioner color shower cream that is sulphate free, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:7536",
+      "split": "train",
+      "goal_index": 7536,
+      "category": "grocery",
+      "instruction": "i see the 15 ounce size of chocolate cover, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:6664",
+      "split": "train",
+      "goal_index": 6664,
+      "category": "garden",
+      "instruction": "i need a gingko light and 20\"x20\" pillow cover that is hand painted, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:8075",
+      "split": "train",
+      "goal_index": 8075,
+      "category": "grocery",
+      "instruction": "i am looking for endurance crunch granola that comes in a pack of six and is non gmo, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:9414",
+      "split": "train",
+      "goal_index": 9414,
+      "category": "grocery",
+      "instruction": "looking for organic paleo food seasoning which is gluten free of 1 pound pack, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:11667",
+      "split": "train",
+      "goal_index": 11667,
+      "category": "electronics",
+      "instruction": "i need a theater sized pull-down projector screen, and price lower than 330.00 dollars"
+    },
+    {
+      "task_id": "train:11107",
+      "split": "train",
+      "goal_index": 11107,
+      "category": "grocery",
+      "instruction": "i am interested in cake topper party supplies, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "train:10978",
+      "split": "train",
+      "goal_index": 10978,
+      "category": "electronics",
+      "instruction": "i am looking for a 55 inch high definition ultra thin tv"
+    },
+    {
+      "task_id": "train:7111",
+      "split": "train",
+      "goal_index": 7111,
+      "category": "beauty",
+      "instruction": "i need a bpa free jar that is black, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:2362",
+      "split": "train",
+      "goal_index": 2362,
+      "category": "fashion",
+      "instruction": "i am looking for a long sleeve mens hoodie pullover size x-large, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:1581",
+      "split": "train",
+      "goal_index": 1581,
+      "category": "beauty",
+      "instruction": "i will surely succeed with your help. check my order natural deodorant for women | fresh rain + coconut oil - safe for sensitive skin |fresh rain, white floral (2 packages), and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "train:7012",
+      "split": "train",
+      "goal_index": 7012,
+      "category": "garden",
+      "instruction": "i want black qinxiao simple computer desk with metal legs, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "train:7874",
+      "split": "train",
+      "goal_index": 7874,
+      "category": "garden",
+      "instruction": "i need an orange leather ottoman for my living room that is 46 cm, and price lower than 280.00 dollars"
+    },
+    {
+      "task_id": "train:3298",
+      "split": "train",
+      "goal_index": 3298,
+      "category": "electronics",
+      "instruction": "i'm looking for a 135 inch light weight projection screen, and price lower than 640.00 dollars"
+    },
+    {
+      "task_id": "train:10508",
+      "split": "train",
+      "goal_index": 10508,
+      "category": "beauty",
+      "instruction": "i would like a 2.25 bottle of men's single shower fresh alcohol free antiperspirant, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "train:3315",
+      "split": "train",
+      "goal_index": 3315,
+      "category": "garden",
+      "instruction": "i am looking for a grey bunk bed with slats made of solid wood, and price lower than 370.00 dollars"
+    },
+    {
+      "task_id": "train:7097",
+      "split": "train",
+      "goal_index": 7097,
+      "category": "beauty",
+      "instruction": "i would like a 13.5 fluid ounce bottle of vanilla body wash that is paraben free, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "train:11379",
+      "split": "train",
+      "goal_index": 11379,
+      "category": "garden",
+      "instruction": "i am looking for shell mosaic color pendant light chandeliers, and price lower than 200.00 dollars"
+    },
+    {
+      "task_id": "train:7321",
+      "split": "train",
+      "goal_index": 7321,
+      "category": "electronics",
+      "instruction": "i am looking for a desktop pc that is a core i5 and has 8gb of ram with a 512gb ssd"
+    },
+    {
+      "task_id": "train:3066",
+      "split": "train",
+      "goal_index": 3066,
+      "category": "beauty",
+      "instruction": "i am looking for natural magnesium gel deodorant for  muscles aches and pains, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:9013",
+      "split": "train",
+      "goal_index": 9013,
+      "category": "grocery",
+      "instruction": "i am looking for hand crafted snack gifts, and price lower than 160.00 dollars"
+    },
+    {
+      "task_id": "train:11221",
+      "split": "train",
+      "goal_index": 11221,
+      "category": "fashion",
+      "instruction": "i would like a 2xl women's navy tank top with a officially licensed star wars logo, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "train:11648",
+      "split": "train",
+      "goal_index": 11648,
+      "category": "electronics",
+      "instruction": "i'd like to buy a cellphone case for my iphone. i want a black one made out of carbon fiber, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:7393",
+      "split": "train",
+      "goal_index": 7393,
+      "category": "beauty",
+      "instruction": "i want an apple punch highly pigmented lip tint, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:10782",
+      "split": "train",
+      "goal_index": 10782,
+      "category": "garden",
+      "instruction": "i'm looking for a nightstand with tempered glass for living room, size 19.7x11.8x23\" in retro brown color, and price lower than 160.00 dollars"
+    },
+    {
+      "task_id": "train:7484",
+      "split": "train",
+      "goal_index": 7484,
+      "category": "fashion",
+      "instruction": "i want to find a pair of non-slip women's running shoes in a size 8. they need to have rubber soles and i want them in black and red, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "train:9684",
+      "split": "train",
+      "goal_index": 9684,
+      "category": "grocery",
+      "instruction": "i would like a 1.25 ounce container of probiotics from natural ingredients. i would like 24 of them, and price lower than 70.00 dollars"
+    }
+  ]
+}

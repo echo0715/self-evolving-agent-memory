@@ -77,7 +77,8 @@ def resolve_instructions(data_root: Path, tasks: list[TaskSpec]) -> list[TaskSpe
     return out
 
 
-def write_manifest(path: Path, split: str, seed: int, available: int, tasks: list[TaskSpec]) -> None:
+def write_manifest(path: Path, split: str, seed: int, available: int, tasks: list[TaskSpec],
+                   skip: int = 0) -> None:
     ids = [t.task_id for t in tasks]
     payload = {
         "schema_version": 2,
@@ -85,7 +86,9 @@ def write_manifest(path: Path, split: str, seed: int, available: int, tasks: lis
         "data_version": "json_2.1.1",
         "split": SPLIT_DIRS[split],
         "seed": seed,
-        "selection": "prefix_of_seeded_permutation_of_lexicographically_sorted_paths",
+        "selection": ("prefix_of_seeded_permutation_of_lexicographically_sorted_paths" if not skip
+                      else f"positions_[{skip},{skip + len(tasks)})_of_seeded_permutation"),
+        "skip": skip,
         "available_count": available,
         "selected_count": len(tasks),
         "task_ids_sha256": hashlib.sha256("\n".join(ids).encode()).hexdigest(),
@@ -100,16 +103,26 @@ def write_manifest(path: Path, split: str, seed: int, available: int, tasks: lis
     print(f"  sha256={payload['task_ids_sha256'][:16]}  families={families}")
 
 
-def build(data_root: Path, split: str, count: int, seed: int, out: Path) -> None:
+def build(data_root: Path, split: str, count: int, seed: int, out: Path, skip: int = 0) -> None:
+    """`skip` takes positions [skip, count) of the permutation instead of [0, count).
+
+    This is what makes "evolve on 100" a *continuation* of an existing 50-task
+    run rather than a re-run: the same seed gives the same permutation, so
+    `--evolve-count 100 --evolve-skip 50` is exactly the 50 tasks the first run
+    did not see, in the order it would have seen them. The evolving loop is
+    order-dependent (memory written after episode i is retrieved by i+1), so the
+    slice must preserve permutation order.
+    """
     all_tasks = discover(data_root, split)
     if count > len(all_tasks):
         raise ValueError(f"{split} has only {len(all_tasks)} tasks, asked for {count}")
     order = list(all_tasks)
     random.Random(seed).shuffle(order)  # one permutation; every count is a prefix
-    selected = order[:count]
-    print(f"[{split}] resolving goal text for {count} of {len(all_tasks)} tasks...")
+    selected = order[skip:count]
+    print(f"[{split}] resolving goal text for {len(selected)} of {len(all_tasks)} tasks"
+          f"{f' (positions {skip}..{count})' if skip else ''}...")
     selected = resolve_instructions(data_root, selected)
-    write_manifest(out, split, seed, len(all_tasks), selected)
+    write_manifest(out, split, seed, len(all_tasks), selected, skip=skip)
 
 
 def main() -> None:
@@ -121,14 +134,20 @@ def main() -> None:
     ap.add_argument("--eval-split", default="valid_unseen")
     ap.add_argument("--eval-count", type=int, default=100)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--evolve-skip", type=int, default=0,
+                    help="emit evolve positions [skip, count) -- continues an existing run")
+    ap.add_argument("--eval-only", action="store_true")
     args = ap.parse_args()
 
     data_root = Path(args.data_root).expanduser().resolve()
     out = Path(args.out)
+    suffix = (f"_{args.evolve_count}" if not args.evolve_skip
+              else f"_{args.evolve_skip}to{args.evolve_count}")
     build(data_root, args.evolve_split, args.evolve_count, args.seed,
-          out / f"evolve_{args.evolve_split}_{args.evolve_count}_seed{args.seed}.json")
-    build(data_root, args.eval_split, args.eval_count, args.seed,
-          out / f"eval_{args.eval_split}_{args.eval_count}_seed{args.seed}.json")
+          out / f"evolve_{args.evolve_split}{suffix}_seed{args.seed}.json", skip=args.evolve_skip)
+    if not args.eval_only:
+        build(data_root, args.eval_split, args.eval_count, args.seed,
+              out / f"eval_{args.eval_split}_{args.eval_count}_seed{args.seed}.json")
 
 
 if __name__ == "__main__":

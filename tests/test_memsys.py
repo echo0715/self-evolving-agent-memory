@@ -733,3 +733,86 @@ class BudgetFairnessTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class JsonModeTest(unittest.TestCase):
+    """Writer output must survive evidence that quotes code.
+
+    Regression for a silent failure found on AppWorld: the writer is asked to
+    quote the trajectory verbatim into `evidence`, and when that trajectory is
+    Python code the model emits JSON it cannot escape correctly. `parse_ops`
+    returns [] for unparseable text, so the arm records writer calls, zero ops
+    and zero rejections, and ends with an empty store -- indistinguishable from
+    the no-memory arm while still reporting a success rate.
+    """
+
+    def test_unescaped_quotes_in_evidence_parse_to_nothing(self):
+        from memsys.writers import parse_ops
+
+        broken = ('{"ops": [{"op": "APPEND", "content": {"name": "x", "trigger": "t", '
+                  '"evidence": "print(show_api_doc(app_name=\'venmo\'))\\n {\\"api_name": '
+                  '"show_transactions"}"}}]}')
+        self.assertEqual(parse_ops(broken), [], "malformed JSON should yield no ops")
+
+    def test_json_mode_is_off_unless_asked(self):
+        # The benchmarks whose results predate guided decoding must stay
+        # reproducible from this code, so the flag cannot default on.
+        import inspect
+
+        from memsys.llm import OpenAIChatClient
+
+        sig = inspect.signature(OpenAIChatClient.__init__)
+        self.assertIs(sig.parameters["json_mode"].default, False)
+
+    def test_response_format_error_disables_json_mode_instead_of_failing(self):
+        from memsys.llm import _is_response_format_error
+
+        self.assertTrue(_is_response_format_error(ValueError("response_format is not supported")))
+        self.assertTrue(_is_response_format_error(ValueError("guided decoding backend missing")))
+        self.assertFalse(_is_response_format_error(ValueError("connection reset by peer")))
+
+
+class EvidenceCapTest(unittest.TestCase):
+    """The evidence cap is benchmark calibration, not an arm-level knob.
+
+    At 80 tokens -- right for ALFWorld/WebShop observation text -- AppWorld's
+    code evidence is rejected wholesale, and unevenly: a type that writes rarely
+    (skill only writes from successful episodes) can be rejected down to an empty
+    store while a chatty one still accumulates. That reads as a content-type
+    result and is not one.
+    """
+
+    def setUp(self):
+        from memsys import schemas
+
+        self._original = schemas.MAX_EVIDENCE_TOKENS
+        self.addCleanup(lambda: schemas.set_max_evidence_tokens(self._original))
+
+    def _errors(self, n_tokens):
+        from memsys.schemas import RuleContent
+
+        content = RuleContent.normalize({
+            "trigger": "t", "directive": "d", "polarity": "do",
+            "evidence": " ".join(["token"] * n_tokens),
+        })
+        return [e for e in RuleContent.validate(content) if "evidence" in e]
+
+    def test_default_cap_rejects_code_length_evidence(self):
+        self.assertTrue(self._errors(150))
+
+    def test_raised_cap_accepts_it(self):
+        from memsys.schemas import set_max_evidence_tokens
+
+        set_max_evidence_tokens(300)
+        self.assertEqual(self._errors(150), [])
+
+    def test_default_is_unchanged_for_the_other_benchmarks(self):
+        from memsys import schemas
+
+        self.assertEqual(self._original, 80)
+
+    def test_cap_must_be_positive(self):
+        from memsys.schemas import set_max_evidence_tokens
+
+        with self.assertRaises(ValueError):
+            set_max_evidence_tokens(0)

@@ -80,14 +80,27 @@ def split_range(split: str, n_goals: int) -> tuple[int, int]:
     return lo, hi
 
 
-def build(server: str, split: str, count: int, seed: int, out: Path, health: dict) -> list[TaskSpec]:
+def build(server: str, split: str, count: int, seed: int, out: Path, health: dict,
+          skip: int = 0) -> list[TaskSpec]:
+    """`skip` takes positions [skip, count) of the permutation instead of [0, count).
+
+    This is what makes "evolve on 100" runnable as a *continuation* of an
+    existing 50-task run rather than a re-run: the same seed produces the same
+    permutation, so `--evolve-count 100 --skip 50` is exactly the 50 tasks the
+    first run did not see, in the order it would have seen them. Re-running from
+    scratch would work too but would repeat 50 episodes of compute per arm, and
+    the resumed store already encodes them.
+    """
     n_goals = int(health["n_goals"])
     lo, hi = split_range(split, n_goals)
     indices = list(range(lo, hi))
     if count > len(indices):
         raise ValueError(f"{split} has only {len(indices)} goals, asked for {count}")
     random.Random(seed).shuffle(indices)  # one permutation; every count is a prefix
-    selected = sorted(indices[:count])
+    # NOT sorted when skipping: the evolving loop is order-dependent (memory
+    # written after episode i is retrieved by episode i+1), so a continuation has
+    # to preserve the permutation's order, and sorting would silently reorder it.
+    selected = indices[skip:count] if skip else sorted(indices[:count])
 
     print(f"[{split}] resolving {count} of {len(indices)} goals in [{lo}, {hi})...", flush=True)
     goals = {g["index"]: g for g in fetch_goals(server, lo, hi)}
@@ -108,12 +121,13 @@ def build(server: str, split: str, count: int, seed: int, out: Path, health: dic
                 instruction=instruction,
             )
         )
-    write_manifest(out, split, seed, len(indices), tasks, health)
+    write_manifest(out, split, seed, len(indices), tasks, health, skip=skip)
     return tasks
 
 
 def write_manifest(
-    path: Path, split: str, seed: int, available: int, tasks: list[TaskSpec], health: dict
+    path: Path, split: str, seed: int, available: int, tasks: list[TaskSpec], health: dict,
+    skip: int = 0
 ) -> None:
     ids = [t.task_id for t in tasks]
     payload = {
@@ -121,7 +135,9 @@ def write_manifest(
         "benchmark": "WebShop",
         "split": split,
         "seed": seed,
-        "selection": "prefix_of_seeded_permutation_of_the_split_index_range",
+        "selection": ("prefix_of_seeded_permutation_of_the_split_index_range" if not skip
+                      else f"positions_[{skip},{skip + len(tasks)})_of_seeded_permutation"),
+        "skip": skip,
         "available_count": available,
         "selected_count": len(tasks),
         "task_ids_sha256": hashlib.sha256("\n".join(ids).encode()).hexdigest(),
@@ -149,6 +165,11 @@ def main() -> None:
     ap.add_argument("--eval-split", default="test")
     ap.add_argument("--eval-count", type=int, default=100)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--evolve-skip", type=int, default=0,
+                    help="emit evolve positions [skip, count) -- use to continue an "
+                         "existing run instead of repeating its episodes")
+    ap.add_argument("--eval-only", action="store_true",
+                    help="skip building the evolve manifest")
     args = ap.parse_args()
 
     health = get(args.server, "/health")
@@ -158,9 +179,11 @@ def main() -> None:
               file=sys.stderr)
 
     out = Path(args.out)
+    suffix = (f"_{args.evolve_count}" if not args.evolve_skip
+              else f"_{args.evolve_skip}to{args.evolve_count}")
     evolve = build(args.server, args.evolve_split, args.evolve_count, args.seed,
-                   out / f"webshop_evolve_{args.evolve_split}_{args.evolve_count}_seed{args.seed}.json",
-                   health)
+                   out / f"webshop_evolve_{args.evolve_split}{suffix}_seed{args.seed}.json",
+                   health, skip=args.evolve_skip)
     ev = build(args.server, args.eval_split, args.eval_count, args.seed,
                out / f"webshop_eval_{args.eval_split}_{args.eval_count}_seed{args.seed}.json",
                health)

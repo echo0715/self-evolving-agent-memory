@@ -1,0 +1,614 @@
+{
+  "schema_version": 2,
+  "benchmark": "AppWorld",
+  "split": "test_normal",
+  "seed": 42,
+  "selection": "prefix_of_seeded_permutation_of_scenarios",
+  "available_count": 168,
+  "available_scenarios": 56,
+  "selected_count": 100,
+  "selected_scenarios": 34,
+  "task_ids_sha256": "25158ac95c358e1f94e1c0790f4edcd0aafb2fa343e34137b0d70ea4d254324a",
+  "tasks": [
+    {
+      "task_id": "83a7951_1",
+      "split": "test_normal",
+      "instruction": "I owed people some money. They put the associated expenses on Splitwise yesterday. I paid some of them up on Venmo today. Please record payments on Splitwise for each in their respective groups. Each payment should have a note, \"Sent on Venmo, see receipt.\", and an attached Venmo receipt of it as a proof.",
+      "scenario": "83a7951"
+    },
+    {
+      "task_id": "83a7951_2",
+      "split": "test_normal",
+      "instruction": "I owed people some money. They put the associated expenses on Splitwise yesterday. I paid some of them up on Venmo today. Please record payments on Splitwise for each in their respective groups. Each payment should have a note, \"Paid via Venmo, see attached receipt.\", and an attached Venmo receipt of it as a proof.",
+      "scenario": "83a7951"
+    },
+    {
+      "task_id": "83a7951_3",
+      "split": "test_normal",
+      "instruction": "I owed people some money. They put the associated expenses on Splitwise yesterday. I paid some of them up on Venmo today. Please record payments on Splitwise for each in their respective groups. Each payment should have a note, \"Payment made on Venmo, receipt attached.\", and an attached Venmo receipt of it as a proof.",
+      "scenario": "83a7951"
+    },
+    {
+      "task_id": "59fae45_1",
+      "split": "test_normal",
+      "instruction": "Update all my Spotify playlist titles with the most common song genre in that playlist in this format: \"<original_title> | <most_common_genre>\". Replace <original_title> and <most_common_genre> with the actual values.",
+      "scenario": "59fae45"
+    },
+    {
+      "task_id": "59fae45_2",
+      "split": "test_normal",
+      "instruction": "Update all my Spotify playlist titles with the most common song genre in that playlist in this format: \"<original_title> | <most_common_genre>\". Replace <original_title> and <most_common_genre> with the actual values.",
+      "scenario": "59fae45"
+    },
+    {
+      "task_id": "59fae45_3",
+      "split": "test_normal",
+      "instruction": "Update all my Spotify playlist titles with the most common song genre in that playlist in this format: \"<original_title> | <most_common_genre>\". Replace <original_title> and <most_common_genre> with the actual values.",
+      "scenario": "59fae45"
+    },
+    {
+      "task_id": "f323bae_1",
+      "split": "test_normal",
+      "instruction": "I maintain my habit tracking logs in Simple Note. Export it in \"~/downloads/habit_tracker.csv\" in my file system. Its first header column should be \"date\" and the rest should be correspond to the habits I track as per my logs. The rows for date column should be in yyyy-mm-dd format and the rest should be yes or no as per my logs. The rows should be sorted in ascending order of the date from top to bottom, and habit columns as per their order in logs.",
+      "scenario": "f323bae"
+    },
+    {
+      "task_id": "f323bae_2",
+      "split": "test_normal",
+      "instruction": "I maintain my habit tracking logs in Simple Note. Export it in \"~/backups/habit_log.csv\" in my file system. Its first header column should be \"date\" and the rest should be correspond to the habits I track as per my logs. The rows for date column should be in yyyy-mm-dd format and the rest should be yes or no as per my logs. The rows should be sorted in descending order of the date from top to bottom, and habit columns as per their order in logs.",
+      "scenario": "f323bae"
+    },
+    {
+      "task_id": "f323bae_3",
+      "split": "test_normal",
+      "instruction": "I maintain my habit tracking logs in Simple Note. Export it in \"~/backups/simple_note/habits.csv\" in my file system. Its first header column should be \"date\" and the rest should be correspond to the habits I track as per my logs. The rows for date column should be in yyyy-mm-dd format and the rest should be yes or no as per my logs. The rows should be sorted in ascending order of the date from top to bottom, and habit columns as per their order in logs.",
+      "scenario": "f323bae"
+    },
+    {
+      "task_id": "29a7b7e_1",
+      "split": "test_normal",
+      "instruction": "My work meeting files are available in the \"~/documents/work/meetings/\" directory in my file system. Currently, they are organized as \"<date>__<file_name>.<extension>\". Reorganize them in this format, \"<file_name>/<date>.<extension>\".",
+      "scenario": "29a7b7e"
+    },
+    {
+      "task_id": "29a7b7e_2",
+      "split": "test_normal",
+      "instruction": "My work meeting files are available in the \"~/documents/work/meetings_files/\" directory in my file system. Currently, they are organized as \"<date>__<file_name>.<extension>\". Reorganize them in this format, \"<file_name>/<date>.<extension>\".",
+      "scenario": "29a7b7e"
+    },
+    {
+      "task_id": "29a7b7e_3",
+      "split": "test_normal",
+      "instruction": "My work meeting files are available in the \"~/documents/work/meetings_data/\" directory in my file system. Currently, they are organized as \"<date>__<file_name>.<extension>\". Reorganize them in this format, \"<file_name>/<date>.<extension>\".",
+      "scenario": "29a7b7e"
+    },
+    {
+      "task_id": "32616b5_1",
+      "split": "test_normal",
+      "instruction": "I went on a few trips each with some of my friends. My Simple Note has information on who owes whom what from each trip. I have already created Splitwise groups for the trips. Record the expenses accordingly in the respective groups.",
+      "scenario": "32616b5"
+    },
+    {
+      "task_id": "32616b5_2",
+      "split": "test_normal",
+      "instruction": "I went on a few trips each with some of my coworkers. My Simple Note has information on who owes whom what from each trip. I have already created Splitwise groups for the trips. Record the expenses accordingly in the respective groups.",
+      "scenario": "32616b5"
+    },
+    {
+      "task_id": "32616b5_3",
+      "split": "test_normal",
+      "instruction": "I went on a few trips each with some of my friends. My Simple Note has information on who owes whom what from each trip. I have already created Splitwise groups for the trips. Record the expenses accordingly in the respective groups.",
+      "scenario": "32616b5"
+    },
+    {
+      "task_id": "425a494_1",
+      "split": "test_normal",
+      "instruction": "Songs of which genre have I liked the most in my Spotify song library?",
+      "scenario": "425a494"
+    },
+    {
+      "task_id": "425a494_2",
+      "split": "test_normal",
+      "instruction": "Songs of which genre have I liked the least in my Spotify album library?",
+      "scenario": "425a494"
+    },
+    {
+      "task_id": "425a494_3",
+      "split": "test_normal",
+      "instruction": "Songs of which genre have I liked the most in my Spotify playlists?",
+      "scenario": "425a494"
+    },
+    {
+      "task_id": "f3f60f0_1",
+      "split": "test_normal",
+      "instruction": "Like all the songs and albums in my Spotify song and album library, respectively, that I have not liked yet.",
+      "scenario": "f3f60f0"
+    },
+    {
+      "task_id": "f3f60f0_2",
+      "split": "test_normal",
+      "instruction": "Like all the songs and albums in my Spotify song and album library, respectively, that I have not liked yet.",
+      "scenario": "f3f60f0"
+    },
+    {
+      "task_id": "f3f60f0_3",
+      "split": "test_normal",
+      "instruction": "Like all the songs and albums in my Spotify song and album library, respectively, that I have not liked yet.",
+      "scenario": "f3f60f0"
+    },
+    {
+      "task_id": "ff58e36_1",
+      "split": "test_normal",
+      "instruction": "Add all my friends and roommates as friends on venmo, if they are not already.",
+      "scenario": "ff58e36"
+    },
+    {
+      "task_id": "ff58e36_2",
+      "split": "test_normal",
+      "instruction": "Add all my coworkers and friends as friends on venmo, if they are not already.",
+      "scenario": "ff58e36"
+    },
+    {
+      "task_id": "ff58e36_3",
+      "split": "test_normal",
+      "instruction": "Add all my coworkers and roommates as friends on venmo, if they are not already.",
+      "scenario": "ff58e36"
+    },
+    {
+      "task_id": "986aa4e_1",
+      "split": "test_normal",
+      "instruction": "I am going on a trip to Beijing with some of my roommates. We are managing its planning on a Todoist project for it. One of the tasks in it is about preparing a Spotify playlist. I have made the playlist and shared it with others on the project. But they have made some suggestions in comments. Please incorporate them, leave a final comment, \"Incorporated changes.\", and mark it complete.",
+      "scenario": "986aa4e"
+    },
+    {
+      "task_id": "986aa4e_2",
+      "split": "test_normal",
+      "instruction": "I am going on a trip to Edinburgh with some of my siblings. We are managing its planning on a Todoist project for it. One of the tasks in it is about preparing a Spotify playlist. I have made the playlist and shared it with others on the project. But they have made some suggestions in comments. Please incorporate them, leave a final comment, \"Done!\", and mark it complete.",
+      "scenario": "986aa4e"
+    },
+    {
+      "task_id": "986aa4e_3",
+      "split": "test_normal",
+      "instruction": "I am going on a trip to Bangkok with some of my friends. We are managing its planning on a Todoist project for it. One of the tasks in it is about preparing a Spotify playlist. I have made the playlist and shared it with others on the project. But they have made some suggestions in comments. Please incorporate them, leave a final comment, \"Thanks! Updated.\", and mark it complete.",
+      "scenario": "986aa4e"
+    },
+    {
+      "task_id": "3d9a636_1",
+      "split": "test_normal",
+      "instruction": "Reset friends on venmo to be the same as my friends in my phone. Befriend and unfriend as needed.",
+      "scenario": "3d9a636"
+    },
+    {
+      "task_id": "3d9a636_2",
+      "split": "test_normal",
+      "instruction": "Reset friends on venmo to be the same as my friends in my phone. Befriend and unfriend as needed.",
+      "scenario": "3d9a636"
+    },
+    {
+      "task_id": "3d9a636_3",
+      "split": "test_normal",
+      "instruction": "Reset friends on venmo to be the same as my friends in my phone. Befriend and unfriend as needed.",
+      "scenario": "3d9a636"
+    },
+    {
+      "task_id": "21abae1_1",
+      "split": "test_normal",
+      "instruction": "How much money have I sent to others on venmo this month so far?",
+      "scenario": "21abae1"
+    },
+    {
+      "task_id": "21abae1_2",
+      "split": "test_normal",
+      "instruction": "How much money have I received from others on venmo this month so far?",
+      "scenario": "21abae1"
+    },
+    {
+      "task_id": "21abae1_3",
+      "split": "test_normal",
+      "instruction": "How much money have I sent to or received from others on venmo this month so far?",
+      "scenario": "21abae1"
+    },
+    {
+      "task_id": "9016950_1",
+      "split": "test_normal",
+      "instruction": "I need my parents to have a venmo account. Last time I checked none had one. Make an account for whoever that does not have it yet, using their email address and A}2Gm4r as password. Then send them a phone text message, \"I have created a venmo account for you. Please activate it, you should have received an email for it. I've set your password to be A}2Gm4r. Change it soon too.\".",
+      "scenario": "9016950"
+    },
+    {
+      "task_id": "9016950_2",
+      "split": "test_normal",
+      "instruction": "I need my roommates to have a venmo account. Last time I checked none had one. Make an account for whoever that does not have it yet, using their email address and -kO6&A as password. Then send them a phone text message, \"I made an account on venmo for you. You should have received an email for activation. Please do it soon. The temporary password is -kO6&A. Change it too.\".",
+      "scenario": "9016950"
+    },
+    {
+      "task_id": "9016950_3",
+      "split": "test_normal",
+      "instruction": "I need my parents to have a venmo account. Last time I checked none had one. Make an account for whoever that does not have it yet, using their email address and jy**-a3U as password. Then send them a phone text message, \"You have a venmo account now. Please activate it with the code you received in your email. Your password is jy**-a3U. Change it as well.\".",
+      "scenario": "9016950"
+    },
+    {
+      "task_id": "b9c5c9a_1",
+      "split": "test_normal",
+      "instruction": "I have invited some of my friends to a reunion party via phone messages. I have made a CSV to track who is coming or not in \"~/documents/personal/\" in my file system. Please update RSVPs in it as per their latest replies.",
+      "scenario": "b9c5c9a"
+    },
+    {
+      "task_id": "b9c5c9a_2",
+      "split": "test_normal",
+      "instruction": "I have invited some of my friends to a reunion party via phone messages. I have made a CSV to track who is coming or not in \"~/documents/personal_stuff/\" in my file system. Please update RSVPs in it as per their latest replies.",
+      "scenario": "b9c5c9a"
+    },
+    {
+      "task_id": "b9c5c9a_3",
+      "split": "test_normal",
+      "instruction": "I have invited some of my friends to a reunion party via phone messages. I have made a CSV to track who is coming or not in \"~/documents/personal_files/\" in my file system. Please update RSVPs in it as per their latest replies.",
+      "scenario": "b9c5c9a"
+    },
+    {
+      "task_id": "ccf4b82_1",
+      "split": "test_normal",
+      "instruction": "Approve all pending venmo payment requests I have received in this month, and withdraw the remaining venmo balance, if any, to my card ending in 8907.",
+      "scenario": "ccf4b82"
+    },
+    {
+      "task_id": "ccf4b82_2",
+      "split": "test_normal",
+      "instruction": "Approve all pending venmo payment requests I have received in this or the last month, and withdraw the remaining venmo balance, if any, to my card ending in 1102.",
+      "scenario": "ccf4b82"
+    },
+    {
+      "task_id": "ccf4b82_3",
+      "split": "test_normal",
+      "instruction": "Approve all pending venmo payment requests I have received in this month, and withdraw the remaining venmo balance, if any, to my card ending in 4184.",
+      "scenario": "ccf4b82"
+    },
+    {
+      "task_id": "7847649_1",
+      "split": "test_normal",
+      "instruction": "How many activities are completed in my bucket list as per my SimpleNote note?",
+      "scenario": "7847649"
+    },
+    {
+      "task_id": "7847649_2",
+      "split": "test_normal",
+      "instruction": "How many activities are left to do in my bucket list as per my SimpleNote note?",
+      "scenario": "7847649"
+    },
+    {
+      "task_id": "7847649_3",
+      "split": "test_normal",
+      "instruction": "How many activities are done in my bucket list as per my SimpleNote note?",
+      "scenario": "7847649"
+    },
+    {
+      "task_id": "ffe6d5e_1",
+      "split": "test_normal",
+      "instruction": "My wife has asked me what I'd like for dinner on phone. Reply her with any one of my favorite recipes' name from my Simple Note account. Just the name, nothing else.",
+      "scenario": "ffe6d5e"
+    },
+    {
+      "task_id": "ffe6d5e_2",
+      "split": "test_normal",
+      "instruction": "My husband has asked me what I'd like for dinner on phone. Reply him with any one of my favorite recipes' name from my Simple Note account. Just the name, nothing else.",
+      "scenario": "ffe6d5e"
+    },
+    {
+      "task_id": "ffe6d5e_3",
+      "split": "test_normal",
+      "instruction": "My mother has asked me what I'd like for dinner on phone. Reply her with any one of my favorite recipes' name from my Simple Note account. Just the name, nothing else.",
+      "scenario": "ffe6d5e"
+    },
+    {
+      "task_id": "0a9d82a_1",
+      "split": "test_normal",
+      "instruction": "What is my longest practiced-good-posture habit streak, in number of days, as per my Simple Note habit tracking logs?",
+      "scenario": "0a9d82a"
+    },
+    {
+      "task_id": "0a9d82a_2",
+      "split": "test_normal",
+      "instruction": "What is my longest limited-screen-time-to-1-hr habit streak, in number of days, as per my Simple Note habit tracking logs?",
+      "scenario": "0a9d82a"
+    },
+    {
+      "task_id": "0a9d82a_3",
+      "split": "test_normal",
+      "instruction": "What is my longest ate-homemade-meals habit streak, in number of days, as per my Simple Note habit tracking logs?",
+      "scenario": "0a9d82a"
+    },
+    {
+      "task_id": "522e5e5_1",
+      "split": "test_normal",
+      "instruction": "Befriend on Venmo anyone I have sent or received money from this month.",
+      "scenario": "522e5e5"
+    },
+    {
+      "task_id": "522e5e5_2",
+      "split": "test_normal",
+      "instruction": "Befriend on Venmo anyone I have sent money to this month.",
+      "scenario": "522e5e5"
+    },
+    {
+      "task_id": "522e5e5_3",
+      "split": "test_normal",
+      "instruction": "Befriend on Venmo anyone I have received money from this month.",
+      "scenario": "522e5e5"
+    },
+    {
+      "task_id": "d18139b_1",
+      "split": "test_normal",
+      "instruction": "Approve all venmo payment requests from my roommates from this calendar month.",
+      "scenario": "d18139b"
+    },
+    {
+      "task_id": "d18139b_2",
+      "split": "test_normal",
+      "instruction": "Approve all venmo payment requests from my roommates from this calendar month.",
+      "scenario": "d18139b"
+    },
+    {
+      "task_id": "d18139b_3",
+      "split": "test_normal",
+      "instruction": "Approve all venmo payment requests from my roommates from this calendar month.",
+      "scenario": "d18139b"
+    },
+    {
+      "task_id": "0d01c76_1",
+      "split": "test_normal",
+      "instruction": "Import markdown notes in the \"~/documents/personal/notes/\" directory of my file system to my Simple Note account. Each markdown file should become a separate note in the Simple Note account. The title of each note should be taken from the name of the source file (excluding the directory path and file extension), replacing underscores in it with blank spaces.",
+      "scenario": "0d01c76"
+    },
+    {
+      "task_id": "0d01c76_2",
+      "split": "test_normal",
+      "instruction": "Import markdown notes in the \"~/documents/personal/simple_note/\" directory of my file system to my Simple Note account. Each markdown file should become a separate note in the Simple Note account. The title of each note should be taken from the name of the source file (excluding the directory path and file extension), replacing underscores in it with blank spaces.",
+      "scenario": "0d01c76"
+    },
+    {
+      "task_id": "0d01c76_3",
+      "split": "test_normal",
+      "instruction": "Import markdown notes in the \"~/documents/personal/personal_notes/\" directory of my file system to my Simple Note account. Each markdown file should become a separate note in the Simple Note account. The title of each note should be taken from the name of the source file (excluding the directory path and file extension), replacing underscores in it with blank spaces.",
+      "scenario": "0d01c76"
+    },
+    {
+      "task_id": "6f4b9a5_1",
+      "split": "test_normal",
+      "instruction": "I keep a log of all my liked songs and respective artists in a note in simple_note. I want to add release month information for them as well. I have added it for the first few songs. Add it for the rest.",
+      "scenario": "6f4b9a5"
+    },
+    {
+      "task_id": "6f4b9a5_2",
+      "split": "test_normal",
+      "instruction": "I keep a log of all my liked songs and respective artists in a note in simple_note. I want to add release month information for them as well. I have added it for the first few songs. Add it for the rest.",
+      "scenario": "6f4b9a5"
+    },
+    {
+      "task_id": "6f4b9a5_3",
+      "split": "test_normal",
+      "instruction": "I keep a log of all my liked songs and respective artists in a note in simple_note. I want to add release month information for them as well. I have added it for the first few songs. Add it for the rest.",
+      "scenario": "6f4b9a5"
+    },
+    {
+      "task_id": "270f1ff_1",
+      "split": "test_normal",
+      "instruction": "Today is my son's birthday. Venmo him twice the money I sent him on his last birthday, privately, with a description note, \"Happy Birthday\". Then leave him a phone text message, \"Happy Birthday son! Give a call when you are free.\".",
+      "scenario": "270f1ff"
+    },
+    {
+      "task_id": "270f1ff_2",
+      "split": "test_normal",
+      "instruction": "Today is my daughter's birthday. Venmo her thrice the money I sent her on her last birthday, privately, with a description note, \"Many happy returns of the day!\". Then leave her a phone text message, \"Happy Birthday daughter! Looking forward to meet you soon!\".",
+      "scenario": "270f1ff"
+    },
+    {
+      "task_id": "270f1ff_3",
+      "split": "test_normal",
+      "instruction": "Today is my son's birthday. Venmo him four times the money I sent him on his last birthday, privately, with a description note, \"Have a great day!\". Then leave him a phone text message, \"Happy Birthday son! Hope you have a great day!\".",
+      "scenario": "270f1ff"
+    },
+    {
+      "task_id": "bde252e_1",
+      "split": "test_normal",
+      "instruction": "I maintain my work schedule in SimpleNote and track my tasks in Todoist. Every night, I delete the completed tasks from my \"Today's Goal\" project. Then, I move the maximum number of incomplete tasks from my Inbox to the \"Today's Goal\" project. The maximum here is assuming I work back-to-back as per my schedule and I find time for the left overs from the current day first. I am busy tonight, please do it for me. Note that the moved tasks must be identical to the original ones.",
+      "scenario": "bde252e"
+    },
+    {
+      "task_id": "bde252e_2",
+      "split": "test_normal",
+      "instruction": "I maintain my work schedule in SimpleNote and track my tasks in Todoist. Every night, I delete the completed tasks from my \"Today's Target\" project. Then, I move the maximum number of incomplete tasks from my Inbox to the \"Today's Target\" project. The maximum here is assuming I work back-to-back as per my schedule and I find time for the left overs from the current day first. I am busy tonight, please do it for me. Note that the moved tasks must be identical to the original ones.",
+      "scenario": "bde252e"
+    },
+    {
+      "task_id": "bde252e_3",
+      "split": "test_normal",
+      "instruction": "I maintain my work schedule in SimpleNote and track my tasks in Todoist. Every night, I delete the completed tasks from my \"Today\" project. Then, I move the maximum number of incomplete tasks from my Inbox to the \"Today\" project. The maximum here is assuming I work back-to-back as per my schedule and I find time for the left overs from the current day first. I am busy tonight, please do it for me. Note that the moved tasks must be identical to the original ones.",
+      "scenario": "bde252e"
+    },
+    {
+      "task_id": "552869a_1",
+      "split": "test_normal",
+      "instruction": "How much have I paid in phone bill on venmo this year so far?",
+      "scenario": "552869a"
+    },
+    {
+      "task_id": "552869a_2",
+      "split": "test_normal",
+      "instruction": "How much have I paid in electricity bill on venmo this year so far?",
+      "scenario": "552869a"
+    },
+    {
+      "task_id": "552869a_3",
+      "split": "test_normal",
+      "instruction": "How much have I paid in internet bill on venmo this year so far?",
+      "scenario": "552869a"
+    },
+    {
+      "task_id": "a30375d_1",
+      "split": "test_normal",
+      "instruction": "Give me a random funny quote from my SimpleNote note about it. Just the quote, nothing else.",
+      "scenario": "a30375d"
+    },
+    {
+      "task_id": "a30375d_2",
+      "split": "test_normal",
+      "instruction": "Give me a random inspirational quote from my SimpleNote note about it. Just the quote, nothing else.",
+      "scenario": "a30375d"
+    },
+    {
+      "task_id": "a30375d_3",
+      "split": "test_normal",
+      "instruction": "Give me a random movie quote from my SimpleNote note about it. Just the quote, nothing else.",
+      "scenario": "a30375d"
+    },
+    {
+      "task_id": "5a83b05_1",
+      "split": "test_normal",
+      "instruction": "Delete all .pdf files from my file system ~/downloads folder.",
+      "scenario": "5a83b05"
+    },
+    {
+      "task_id": "5a83b05_2",
+      "split": "test_normal",
+      "instruction": "Delete all .jpg files from my file system ~/downloads folder.",
+      "scenario": "5a83b05"
+    },
+    {
+      "task_id": "5a83b05_3",
+      "split": "test_normal",
+      "instruction": "Delete all .pdf files from my file system ~/downloads folder.",
+      "scenario": "5a83b05"
+    },
+    {
+      "task_id": "024c982_1",
+      "split": "test_normal",
+      "instruction": "Request $13 publicly on Venmo from my friend, Stacy, with a note, \"For yesterday's meal\".",
+      "scenario": "024c982"
+    },
+    {
+      "task_id": "024c982_2",
+      "split": "test_normal",
+      "instruction": "Request $28 privately on Venmo from my roommate, Melissa, with a note, \"For the movie tickets\".",
+      "scenario": "024c982"
+    },
+    {
+      "task_id": "024c982_3",
+      "split": "test_normal",
+      "instruction": "Request $29 publicly on Venmo from my friend, Ronald, with a note, \"For the road trip\".",
+      "scenario": "024c982"
+    },
+    {
+      "task_id": "634f342_1",
+      "split": "test_normal",
+      "instruction": "Go through all my Spotify playlists and remove all the songs from them that are in \"~/documents/personal/old_songs.txt\" from my file system and put them in a new playlist named \"Archived Songs\".",
+      "scenario": "634f342"
+    },
+    {
+      "task_id": "634f342_2",
+      "split": "test_normal",
+      "instruction": "Go through all my Spotify playlists and remove all the songs from them that are in \"~/documents/personal/songs_to_archive.txt\" from my file system and put them in a new playlist named \"Old Songs\".",
+      "scenario": "634f342"
+    },
+    {
+      "task_id": "634f342_3",
+      "split": "test_normal",
+      "instruction": "Go through all my Spotify playlists and remove all the songs from them that are in \"~/documents/personal/list_of_old_songs.txt\" from my file system and put them in a new playlist named \"Archived Playlist Songs\".",
+      "scenario": "634f342"
+    },
+    {
+      "task_id": "d6ac34d_1",
+      "split": "test_normal",
+      "instruction": "Add a new habit tracking log note for today in my Simple Note account. It should be the same as yesterday, except I had a good posture today.",
+      "scenario": "d6ac34d"
+    },
+    {
+      "task_id": "d6ac34d_2",
+      "split": "test_normal",
+      "instruction": "Add a new habit tracking log note for today in my Simple Note account. It should be the same as yesterday, except I did not meditate today.",
+      "scenario": "d6ac34d"
+    },
+    {
+      "task_id": "d6ac34d_3",
+      "split": "test_normal",
+      "instruction": "Add a new habit tracking log note for today in my Simple Note account. It should be the same as yesterday, except I ate home-prepared meals today.",
+      "scenario": "d6ac34d"
+    },
+    {
+      "task_id": "3b8fb7a_1",
+      "split": "test_normal",
+      "instruction": "I went on a trip with friends to Maui recently. I have maintained a note of money I owe to others and others owe me from the trip in simple note. Make private venmo payments or requests accordingly. In the payments/requests, add a note, \"For Maui trip\".",
+      "scenario": "3b8fb7a"
+    },
+    {
+      "task_id": "3b8fb7a_2",
+      "split": "test_normal",
+      "instruction": "I went on a trip with friends to Athens recently. I have maintained a note of money I owe to others and others owe me from the trip in simple note. Make private venmo payments or requests accordingly. In the payments/requests, add a note, \"For Athens trip\".",
+      "scenario": "3b8fb7a"
+    },
+    {
+      "task_id": "3b8fb7a_3",
+      "split": "test_normal",
+      "instruction": "I went on a trip with friends to Miami recently. I have maintained a note of money I owe to others and others owe me from the trip in simple note. Make private venmo payments or requests accordingly. In the payments/requests, add a note, \"For Miami trip\".",
+      "scenario": "3b8fb7a"
+    },
+    {
+      "task_id": "8749218_1",
+      "split": "test_normal",
+      "instruction": "Reset my Spotify queue with all of its recommended songs, shuffle it, and play it.",
+      "scenario": "8749218"
+    },
+    {
+      "task_id": "8749218_2",
+      "split": "test_normal",
+      "instruction": "Reset my Spotify queue with all of its recommended songs, shuffle it, and play it.",
+      "scenario": "8749218"
+    },
+    {
+      "task_id": "8749218_3",
+      "split": "test_normal",
+      "instruction": "Reset my Spotify queue with all of its recommended songs, shuffle it, and play it.",
+      "scenario": "8749218"
+    },
+    {
+      "task_id": "9dabbc9_1",
+      "split": "test_normal",
+      "instruction": "My roommate requested me to pay for my share of the housing bill this month on venmo today. But they forgot about the 5% rent increase starting this month. So reject that payment request and send them the corrected amount of money with a note, \"You forgot about the 5% increase!\".",
+      "scenario": "9dabbc9"
+    },
+    {
+      "task_id": "9dabbc9_2",
+      "split": "test_normal",
+      "instruction": "My roommate requested me to pay for my share of the housing bill this month on venmo today. But they forgot about the 10% rent decrease starting this month. So reject that payment request and send them the corrected amount of money with a note, \"The rent decreased by 10% this month.\".",
+      "scenario": "9dabbc9"
+    },
+    {
+      "task_id": "9dabbc9_3",
+      "split": "test_normal",
+      "instruction": "My roommate requested me to pay for my share of the housing bill this month on venmo today. But they forgot about the 15% rent increase starting this month. So reject that payment request and send them the corrected amount of money with a note, \"Correcting for 15% rent increase.\".",
+      "scenario": "9dabbc9"
+    },
+    {
+      "task_id": "652485c_1",
+      "split": "test_normal",
+      "instruction": "Make a new public playlist from all my liked songs from my Spotify song, album and playlist libraries, and share its URL with my husband via phone text message.",
+      "scenario": "652485c"
+    },
+    {
+      "task_id": "652485c_2",
+      "split": "test_normal",
+      "instruction": "Make a new public playlist from all my liked songs from my Spotify song, album and playlist libraries, and share its URL with my wife via phone text message.",
+      "scenario": "652485c"
+    },
+    {
+      "task_id": "652485c_3",
+      "split": "test_normal",
+      "instruction": "Make a new public playlist from all my liked songs from my Spotify song, album and playlist libraries, and share its URL with my husband via phone text message.",
+      "scenario": "652485c"
+    },
+    {
+      "task_id": "2c544f9_1",
+      "split": "test_normal",
+      "instruction": "Send $250 on venmo to Catherine.",
+      "scenario": "2c544f9"
+    }
+  ]
+}

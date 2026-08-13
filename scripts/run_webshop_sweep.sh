@@ -4,6 +4,10 @@
 #   bash scripts/run_webshop_sweep.sh smoke     # 2 evolve / 4 eval, all arms -- validates plumbing
 #   bash scripts/run_webshop_sweep.sh minimal   # 50 evolve / 100 eval, WritePolicy.minimal()
 #   bash scripts/run_webshop_sweep.sh full      # 50 evolve / 100 eval, WritePolicy.full()
+#   bash scripts/run_webshop_sweep.sh minimal100 # continue each store to 100 evolve episodes
+#   bash scripts/run_webshop_sweep.sh full100
+#   bash scripts/run_webshop_sweep.sh minimal150 # ... and on to 150
+#   bash scripts/run_webshop_sweep.sh full150
 #
 # Prerequisites, both of which this script checks rather than assumes:
 #   bash scripts/serve_qwen.sh 0 8000 --background   # vLLM, GPU 0
@@ -52,7 +56,17 @@ case "$MODE" in
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%100}_e100"
     EVOLVE_MANIFEST="$REPO/manifests/webshop_evolve_train_50to100_seed42.json"
     RESUME_ROOT="$OUT_ROOT/${MODE%100}"; EVOLVE_OFFSET=50 ;;
-  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100}" >&2; exit 2 ;;
+  # The third leg, [100, 150). Unlike SpreadsheetBench's, this one needs no
+  # overflow split and no group filter: `train` holds 10,587 selectable goals
+  # against the 150 spent here, and the evaluation set is drawn from `test`, so
+  # the two are disjoint by split rather than by construction. The builder still
+  # verifies it -- it exits non-zero if any goal index appears in both.
+  minimal150|full150)
+    POLICIES=("${MODE%150}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-8}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%150}_e150"
+    EVOLVE_MANIFEST="$REPO/manifests/webshop_evolve_train_100to150_seed42.json"
+    RESUME_ROOT="$OUT_ROOT/${MODE%150}_e100"; EVOLVE_OFFSET=100 ;;
+  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100|minimal150|full150}" >&2; exit 2 ;;
 esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})

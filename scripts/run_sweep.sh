@@ -4,6 +4,12 @@
 #   bash scripts/run_sweep.sh smoke     # 2 evolve / 2 eval, all arms, validates plumbing
 #   bash scripts/run_sweep.sh minimal   # 50 evolve / 100 eval, WritePolicy.minimal()
 #   bash scripts/run_sweep.sh full      # 50 evolve / 100 eval, WritePolicy.full()
+#   bash scripts/run_sweep.sh full100   # the *next* 50 tasks, resuming each store
+#   bash scripts/run_sweep.sh full150   # ... and the 50 after that (-> 150 total)
+#   bash scripts/run_sweep.sh full_x2   # the *same* 50 tasks a second time
+#   bash scripts/run_sweep.sh full_x3   # ... and a third
+#   bash scripts/run_sweep.sh full75    # 75 evolve / 100 eval, fresh store
+#   bash scripts/run_sweep.sh full75_x2 # the *same* 75 again (-> 150 episodes)
 #
 # Arms are dispatched two at a time, one per vLLM server (GPU 0 -> :8000,
 # GPU 1 -> :8001). Within an arm the evolving phase is sequential by
@@ -47,7 +53,48 @@ case "$MODE" in
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%100}_e100"
     EVOLVE_MANIFEST="$REPO/manifests/evolve_train_50to100_seed42.json"
     RESUME_ROOT="$OUT_ROOT/${MODE%100}"; EVOLVE_OFFSET=50 ;;
-  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100}" >&2; exit 2 ;;
+  # The third leg of the same chain: positions [100,150) of the one seeded
+  # permutation, resuming the `*_e100` stores. Same axis as `*100` (amount of
+  # experience), so 50 / 100 / 150 are three points on one curve -- and, like
+  # `*100`, a resumption rather than an independent 150-task run.
+  minimal150|full150)
+    POLICIES=("${MODE%150}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%150}_e150"
+    EVOLVE_MANIFEST="$REPO/manifests/evolve_train_100to150_seed42.json"
+    RESUME_ROOT="$OUT_ROOT/${MODE%150}_e100"; EVOLVE_OFFSET=100 ;;
+  # `_x2` / `_x3` are the *repetition* axis, not the amount-of-experience one:
+  # the SAME 50 tasks in the SAME frozen order, run again over the store the
+  # previous pass left behind. Everything that differs between epoch k and k+1
+  # is memory state. Note what that implies for retrieval -- on epoch 2 the
+  # nearest neighbour of a task is usually the agent's own epoch-1 memory of
+  # *that same task*, which for `raw` is a near-verbatim replay of its own
+  # trajectory. That is the phenomenon under test, and it is why these runs are
+  # not comparable to `*100`, where the second 50 tasks are new. Evaluation is
+  # unchanged (held-out `valid_unseen`), so nothing leaks into the test set.
+  minimal_x2|full_x2)
+    POLICIES=("${MODE%_x2}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="$MODE"
+    RESUME_ROOT="$OUT_ROOT/${MODE%_x2}"; EVOLVE_OFFSET=50 ;;
+  minimal_x3|full_x3)
+    POLICIES=("${MODE%_x3}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="$MODE"
+    RESUME_ROOT="$OUT_ROOT/${MODE%_x3}_x2"; EVOLVE_OFFSET=100 ;;
+  # 75 x 2 epochs = 150 evolving episodes, the same budget as the `*150` chain
+  # (150 distinct tasks) and as `_x3` (50 tasks x 3). Holding episodes fixed and
+  # varying only how many *distinct* tasks they cover is what makes diversity vs
+  # repetition separable; the three points are only comparable because all three
+  # evaluate the same frozen `valid_unseen` 100. Epoch 1 starts from an empty
+  # store -- it is a new chain, not a continuation of the 50-task one.
+  minimal75|full75)
+    POLICIES=("${MODE%75}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%75}_e75"
+    EVOLVE_MANIFEST="$REPO/manifests/evolve_train_75_seed42.json" ;;
+  minimal75_x2|full75_x2)
+    POLICIES=("${MODE%75_x2}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0; WORKERS="${MEMSYS_WORKERS:-4}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%75_x2}_e75_x2"
+    EVOLVE_MANIFEST="$REPO/manifests/evolve_train_75_seed42.json"
+    RESUME_ROOT="$OUT_ROOT/${MODE%75_x2}_e75"; EVOLVE_OFFSET=75 ;;
+  *) echo "usage: $0 {smoke|minimal|full|{minimal,full}{100,150}|{minimal,full}_x{2,3}|{minimal,full}75[_x2]}" >&2; exit 2 ;;
 esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})
@@ -78,7 +125,7 @@ run_arm() {  # $1=arm $2=policy $3=base_url
   # The "none" arm has nothing to evolve; passing a manifest would be a no-op
   # but the flag is omitted so the intent is visible in config.json.
   local evolve_args=(--evolve-manifest "$EVOLVE_MANIFEST" --evolve-limit "$EVOLVE_LIMIT")
-  if [[ -n "$RESUME_ROOT" ]]; then
+  if [[ -n "$RESUME_ROOT" && "$arm" != "none" ]]; then
     local prior="$RESUME_ROOT/${arm}_${policy}/store.jsonl"
     [[ -f "$prior" ]] || { echo "[sweep] FAILED: no store to resume at $prior"; return 1; }
     evolve_args+=(--resume-store "$prior" --evolve-step-offset "$EVOLVE_OFFSET")

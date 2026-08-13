@@ -1,0 +1,372 @@
+{
+  "schema_version": 2,
+  "benchmark": "WebShop",
+  "split": "train",
+  "seed": 42,
+  "selection": "positions_[100,150)_of_seeded_permutation",
+  "skip": 100,
+  "available_count": 10587,
+  "selected_count": 50,
+  "task_ids_sha256": "7967823d297376b7bdb141f0452bd011c808c282148fc47a59691d997faf6b94",
+  "server": {
+    "scale": "full",
+    "corpus": "items_shuffle.json",
+    "index": "indexes_full",
+    "n_products": 1181430,
+    "n_goals": 12087,
+    "human_goals": true,
+    "seed": 42
+  },
+  "tasks": [
+    {
+      "task_id": "train:5759",
+      "split": "train",
+      "goal_index": 5759,
+      "category": "fashion",
+      "instruction": "i need sun canvas women's slip on sneakers in size 12 with arch support, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "train:9899",
+      "split": "train",
+      "goal_index": 9899,
+      "category": "grocery",
+      "instruction": "i need a gold colored birthday cake ornament, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:4591",
+      "split": "train",
+      "goal_index": 4591,
+      "category": "grocery",
+      "instruction": "i'm looking for a 1.2 ounce bag of freeze-dried strawberries and bananas; they must suit my low-calorie, fat-free diet, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "train:10071",
+      "split": "train",
+      "goal_index": 10071,
+      "category": "electronics",
+      "instruction": "i am looking for a 200 ft size high-speed coaxial cable and the cable material is aluminum alloy, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:3020",
+      "split": "train",
+      "goal_index": 3020,
+      "category": "grocery",
+      "instruction": "i need some non-gmo chocolate pretzels, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "train:10866",
+      "split": "train",
+      "goal_index": 10866,
+      "category": "electronics",
+      "instruction": "i want a 10 foot gold plated jolgoo 1/4\" trs to dual rca insert cable, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:2845",
+      "split": "train",
+      "goal_index": 2845,
+      "category": "fashion",
+      "instruction": "i would like a gray 2xl philadelphia eagles fleece lined jacket, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "train:7945",
+      "split": "train",
+      "goal_index": 7945,
+      "category": "beauty",
+      "instruction": "i want a marble white and high quality travel makeup bag, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:11111",
+      "split": "train",
+      "goal_index": 11111,
+      "category": "grocery",
+      "instruction": "i am interested in hand crafted hors d'oeuvres, and price lower than 450.00 dollars"
+    },
+    {
+      "task_id": "train:9925",
+      "split": "train",
+      "goal_index": 9925,
+      "category": "beauty",
+      "instruction": "i need a high quality pink toiletry bag, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:11162",
+      "split": "train",
+      "goal_index": 11162,
+      "category": "fashion",
+      "instruction": "i need a fashionable zdfer polo with a slim fit in the green color, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:3241",
+      "split": "train",
+      "goal_index": 3241,
+      "category": "grocery",
+      "instruction": "i'm looking for some cupcake picks that are suitable for a baby shower, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:8921",
+      "split": "train",
+      "goal_index": 8921,
+      "category": "electronics",
+      "instruction": "i am looking for a gray bags, cases & sleeves › sleeves for carrying case, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:2026",
+      "split": "train",
+      "goal_index": 2026,
+      "category": "garden",
+      "instruction": "i need to buy a heavy duty daycare sleeping cot. find one in red without sheets, and price lower than 160.00 dollars"
+    },
+    {
+      "task_id": "train:11659",
+      "split": "train",
+      "goal_index": 11659,
+      "category": "grocery",
+      "instruction": "i would like to buy some unsweetened hazelnut dairy and gluten free milk, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:4723",
+      "split": "train",
+      "goal_index": 4723,
+      "category": "beauty",
+      "instruction": "i need some high quality covers for a massage bed in my beauty salon; it's 71 x 24 inches and i'd prefer the \"c\" colour, and price lower than 180.00 dollars"
+    },
+    {
+      "task_id": "train:11537",
+      "split": "train",
+      "goal_index": 11537,
+      "category": "fashion",
+      "instruction": "i would like a pair of gold 30w x 34l pants that i can machine wash, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:3935",
+      "split": "train",
+      "goal_index": 3935,
+      "category": "electronics",
+      "instruction": "i am looking for a desktop computer with intel core i7-10510u cpu, 240g ssd storage and 16g of ram, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "train:9172",
+      "split": "train",
+      "goal_index": 9172,
+      "category": "grocery",
+      "instruction": "i am looking for an electrolyte drink that is low carb and in the berry flavor, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:6211",
+      "split": "train",
+      "goal_index": 6211,
+      "category": "garden",
+      "instruction": "i am ordering best dad ever coach fleece throw with super soft features, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:8925",
+      "split": "train",
+      "goal_index": 8925,
+      "category": "garden",
+      "instruction": "i am looking for canalis 3 mini pendant lighting led hanging light fixture, and price lower than 130.00 dollars"
+    },
+    {
+      "task_id": "train:11328",
+      "split": "train",
+      "goal_index": 11328,
+      "category": "beauty",
+      "instruction": "looking for because it is you perfurme long lasting effect, and price lower than 150.00 dollars"
+    },
+    {
+      "task_id": "train:5172",
+      "split": "train",
+      "goal_index": 5172,
+      "category": "fashion",
+      "instruction": "i am looking for poly-cotton in digital blue, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:7346",
+      "split": "train",
+      "goal_index": 7346,
+      "category": "garden",
+      "instruction": "i am looking for soft fuzzy blanket super soft in multi 49, and price lower than 80.00 dollars"
+    },
+    {
+      "task_id": "train:10700",
+      "split": "train",
+      "goal_index": 10700,
+      "category": "grocery",
+      "instruction": "i need a fully cooked two whole slabs with dry rubbed (seasoned) baby backs, and price lower than 150.00 dollars"
+    },
+    {
+      "task_id": "train:2588",
+      "split": "train",
+      "goal_index": 2588,
+      "category": "beauty",
+      "instruction": "i am looking for a 1 fl oz oil free super-blendable liquid foundation, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "train:8584",
+      "split": "train",
+      "goal_index": 8584,
+      "category": "beauty",
+      "instruction": "i want a white and long lasting bellesky eyeshadow primer set, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:8549",
+      "split": "train",
+      "goal_index": 8549,
+      "category": "electronics",
+      "instruction": "i would like to buy soundbars which can be operated hands free and are 2.1 soundbar, and price lower than 630.00 dollars"
+    },
+    {
+      "task_id": "train:5712",
+      "split": "train",
+      "goal_index": 5712,
+      "category": "garden",
+      "instruction": "i am looking for a table and chair set that is white and easy to assemble, and price lower than 260.00 dollars"
+    },
+    {
+      "task_id": "train:6811",
+      "split": "train",
+      "goal_index": 6811,
+      "category": "beauty",
+      "instruction": "i am looking for high quality dark red synthetic hair extensions, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:2001",
+      "split": "train",
+      "goal_index": 2001,
+      "category": "fashion",
+      "instruction": "i'd like to buy some open toed, high heeled sandals with an ankle strap. look for 6 wides in khaki, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "train:8919",
+      "split": "train",
+      "goal_index": 8919,
+      "category": "garden",
+      "instruction": "i want to get a black twin size bed frame, and price lower than 380.00 dollars"
+    },
+    {
+      "task_id": "train:8729",
+      "split": "train",
+      "goal_index": 8729,
+      "category": "electronics",
+      "instruction": "i am loooking for mini business desktop having wireless bluetooth"
+    },
+    {
+      "task_id": "train:9323",
+      "split": "train",
+      "goal_index": 9323,
+      "category": "beauty",
+      "instruction": "i need a cruelty free skin care set, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "train:4596",
+      "split": "train",
+      "goal_index": 4596,
+      "category": "fashion",
+      "instruction": "i'm looking for a machine washable men's shorts made of nylon spandex stretchable fabric with imported zipper. also choose 32 sized dark ash colored one, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:5286",
+      "split": "train",
+      "goal_index": 5286,
+      "category": "garden",
+      "instruction": "i am looking for standing baker's racks kitchen shelf which is superior strength and durability,with universal wheelswhich is easy to move it allow for easy positioning in the kitchen, multipurpose shelves rack in gold color preferable, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "train:5889",
+      "split": "train",
+      "goal_index": 5889,
+      "category": "garden",
+      "instruction": "i am looking for 96\"w x 72\"h roller shades of gray color and it is east to install, and price lower than 300.00 dollars"
+    },
+    {
+      "task_id": "train:1588",
+      "split": "train",
+      "goal_index": 1588,
+      "category": "grocery",
+      "instruction": "looking for cookie favor gifts with natural ingredients choose size 4 bars, and price lower than 60.00 dollars"
+    },
+    {
+      "task_id": "train:4483",
+      "split": "train",
+      "goal_index": 4483,
+      "category": "garden",
+      "instruction": "i would like to buy a heather slate pebble weave loveseat with a solid wood frame"
+    },
+    {
+      "task_id": "train:5578",
+      "split": "train",
+      "goal_index": 5578,
+      "category": "garden",
+      "instruction": "i want a living room traditional vintage shabby chic standing floor lamp with a linen shade, and price lower than 240.00 dollars"
+    },
+    {
+      "task_id": "train:7284",
+      "split": "train",
+      "goal_index": 7284,
+      "category": "fashion",
+      "instruction": "i am looking for men's size 13 work shoes with arch support and rubber soles, and price lower than 120.00 dollars"
+    },
+    {
+      "task_id": "train:10362",
+      "split": "train",
+      "goal_index": 10362,
+      "category": "electronics",
+      "instruction": "i am looking for gold noise cancelling headphones, and price lower than 40.00 dollars"
+    },
+    {
+      "task_id": "train:7041",
+      "split": "train",
+      "goal_index": 7041,
+      "category": "fashion",
+      "instruction": "my order is : a pair of twisted x men's chukka riding mocs - handmade riding mocs in full grain leather with special size 14-d. let me know if you can find it in bombe/neon orange. i'm also looking for a rubber sole, and price lower than 140.00 dollars"
+    },
+    {
+      "task_id": "train:8969",
+      "split": "train",
+      "goal_index": 8969,
+      "category": "fashion",
+      "instruction": "i would like a 2xl multicolor vest that can be machine washed, and price lower than 70.00 dollars"
+    },
+    {
+      "task_id": "train:8736",
+      "split": "train",
+      "goal_index": 8736,
+      "category": "garden",
+      "instruction": "i am looking for a  7 ft 0 x 7 ft 0 spot clean area rugs, and price lower than 270.00 dollars"
+    },
+    {
+      "task_id": "train:1712",
+      "split": "train",
+      "goal_index": 1712,
+      "category": "electronics",
+      "instruction": "i wan a high speed micro usb cable, and price lower than 20.00 dollars"
+    },
+    {
+      "task_id": "train:4274",
+      "split": "train",
+      "goal_index": 4274,
+      "category": "beauty",
+      "instruction": "order me four bundles of high quality curly hair extensions, and price lower than 120.00 dollars"
+    },
+    {
+      "task_id": "train:7093",
+      "split": "train",
+      "goal_index": 7093,
+      "category": "beauty",
+      "instruction": "i need a 0.5 ml serum for my dry skin, and price lower than 30.00 dollars"
+    },
+    {
+      "task_id": "train:6968",
+      "split": "train",
+      "goal_index": 6968,
+      "category": "garden",
+      "instruction": "what scented candles that are lead free are available in wild lavender scent?, and price lower than 50.00 dollars"
+    },
+    {
+      "task_id": "train:6372",
+      "split": "train",
+      "goal_index": 6372,
+      "category": "electronics",
+      "instruction": "i need a new quad core 4gb 32gb support usb port  1080p hd android tv box, and price lower than 100.00 dollars"
+    }
+  ]
+}

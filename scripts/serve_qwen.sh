@@ -36,8 +36,16 @@ LOG="${MEMSYS_SERVE_LOG:-$SCRATCH/memsys_qwen9b_gpu${GPU}_${PORT}.log}"
 export HF_HOME="${HF_HOME:-$SCRATCH/hf_cache}"
 export HF_HUB_DISABLE_XET=1
 export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
-# Per-port cache roots: two servers compiling into one dir race each other.
-export VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-$SCRATCH/env-caches/memsys-vllm-$PORT}"
+# Per-host *and* per-port cache roots: two servers compiling into one dir race
+# each other. Per-port alone is not enough -- $SCRATCH is shared across nodes,
+# so two allocations each starting their own port-8000 server land in the same
+# inductor cache and race across the filesystem. That failure is silent and
+# misleading: the model loads, torch.compile logs a normal "Using cache
+# directory", and then the engine core dies with nothing but
+# "Engine core initialization failed ... Failed core proc(s): {}". It stayed
+# hidden for as long as multi-node runs happened to find one node's servers
+# already healthy, so only one node ever compiled.
+export VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-$SCRATCH/env-caches/memsys-vllm-$(hostname -s)-$PORT}"
 export OUTLINES_CACHE_DIR="$VLLM_CACHE_ROOT/outlines"
 export TRITON_CACHE_DIR="$VLLM_CACHE_ROOT/triton"
 export TMPDIR="${TMPDIR:-$SCRATCH/tmp}"

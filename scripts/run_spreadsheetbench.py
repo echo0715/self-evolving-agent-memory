@@ -272,6 +272,14 @@ def main() -> None:
                 fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                 fh.flush()
                 store = getattr(system, "store", None)
+                # Checkpoint the store every episode. Without this a crash --
+                # a dead vLLM, a reclaimed allocation -- loses every episode of
+                # the leg, because the only save used to be after the loop. The
+                # write is a few hundred KB against a step that costs tens of
+                # seconds, and the post-loop save below still has the last word,
+                # so this only ever adds a recoverable artefact.
+                if store is not None:
+                    store.save(str(out / "store.jsonl"))
                 print(f"[evolve {i+1}/{len(tasks)}] {row['outcome']:<12} "
                       f"score={row['score']:.2f} "
                       f"store={len(store) if store is not None else '-'} "

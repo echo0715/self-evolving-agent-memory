@@ -8,7 +8,10 @@ Raw outputs: `/gpfs/radev/scratch/cohan/jw3278/memsys_results/{minimal,full}/`.
 Reproduce with [RUN_ALFWORLD.md](RUN_ALFWORLD.md).
 
 §1–§5 report the 50-evolving-task run. **§6 extends every arm to 100 evolving
-tasks and overturns §1**, so read it before quoting the write-policy claim.
+tasks and overturns §1**, so read it before quoting the write-policy claim. §7
+adds the orthogonal axis — the *same* 50 tasks three times over — where nothing
+reaches significance but `raw`'s store is shown to close under repetition while
+the writer arms' stores grow without bound.
 
 ## Scaffold validation
 
@@ -313,8 +316,98 @@ success rates are directly comparable — and they invert the eval ordering.
 measured against a store that is still growing and differs per arm, so it is a
 property of the run, not of the memory. Do not use it as a cheap proxy.
 
+## 7. Three passes over the *same* 50 tasks
+
+Run 2026-08-12. Each arm re-ran the identical frozen evolving manifest
+(`manifests/evolve_train_50_seed42.json`, same order) twice more, each pass
+resuming the previous pass's store with `--evolve-step-offset` 50 then 100.
+Epoch 1 is the §1–§5 run. Evaluation, seed, horizon and scaffold are unchanged,
+so every number below is paired with every number above.
+
+This is a **repetition** axis, not §6's amount-of-experience axis, and the two
+must not be read together. From epoch 2 on, the nearest neighbour of an evolving
+task is usually the agent's own epoch-1 memory of *that same task* — for `raw`, a
+near-verbatim replay of its own trajectory. Nothing leaks into the test set:
+`valid_unseen` is held out and untouched.
+
+Raw outputs: `memsys_results/{minimal,full}_x{2,3}/`. The two policies ran
+concurrently on separate nodes (~10.3 h each).
+
+| arm | policy | ep1 | ep2 | ep3 | ep3 vs none | p | ep1 → ep3 | p | store 1→2→3 |
+|---|---|---|---|---|---|---|---|---|---|
+| raw | minimal | 75.0 | 74.0 | 77.0 | +19.0 | **0.003** | +2.0 | 0.832 | 38 → 44 → 44 |
+| reflection | minimal | 65.0 | 68.0 | 56.0 | −2.0 | 0.885 | −9.0 | 0.211 | 39 → 63 → 93 |
+| rule | minimal | 53.0 | 54.0 | 56.0 | −2.0 | 0.875 | +3.0 | 0.711 | 16 → 22 → 37 |
+| skill | minimal | 79.0 | 81.0 | 73.0 | +15.0 | **0.024** | −6.0 | 0.307 | 4 → 10 → 10 |
+| raw | full | 80.0 | 75.0 | 79.0 | +21.0 | **0.001** | −1.0 | 1.000 | 36 → 45 → 45 |
+| reflection | full | 54.0 | 64.0 | 59.0 | +1.0 | 1.000 | +5.0 | 0.424 | 43 → 71 → 112 |
+| rule | full | 46.0 | 50.0 | 58.0 | +0.0 | 1.000 | +12.0 | 0.096 | 10 → 11 → 23 |
+| skill | full | 64.0 | 75.0 | 75.0 | +17.0 | **0.006** | +11.0 | 0.061 | 10 → 16 → 24 |
+
+**No arm's epoch 1 → 3 change is significant**, and no arm improves
+monotonically. Against the ±3–6 noise floor, six of the eight move by less than
+the floor or non-monotonically. Repeating the same 50 tasks is not a way to buy
+accuracy.
+
+### 7.1 The arms that recover are exactly the ones `full` broke
+
+The two largest 1 → 3 moves are `rule/full` (+12.0, p = 0.096) and `skill/full`
+(+11.0, p = 0.061) — the two arms §1 identified as `full`'s worst casualties.
+`rule/full` was the study's only case of **significant harm** (−12.0, p = 0.043);
+after two more passes it sits exactly at baseline. `skill/full` goes from +6.0
+(ns) to +17.0 (p = 0.006).
+
+Neither is significant on its own, but the pattern is the same one §6 found by
+adding new tasks: `full`'s deficit is a small-store artefact that more episodes
+partly repair, and it repairs about as well from **re-processing old experience**
+as from new experience. The arms that were already working (`raw` both policies,
+`skill/minimal`) gain nothing — they are saturated at epoch 1.
+
+### 7.2 Dedup closes `raw`'s store; the writer arms have no such stop
+
+The mechanism behind the store column, from the evolve logs
+(duplicate-rejections / total rejections, per epoch):
+
+| arm | policy | ep1 | ep2 | ep3 |
+|---|---|---|---|---|
+| raw | minimal | 3/3 | 37/37 | **40/40** |
+| raw | full | 2/2 | 32/32 | **36/36** |
+| reflection | minimal | 0/17 | 0/25 | 0/10 |
+| rule | full | 0/5 | 0/5 | 0/10 |
+| skill | full | 0/7 | 0/10 | 0/11 |
+
+By epoch 3 **every single one of `raw`'s write attempts is rejected as an exact
+duplicate** — 40/40 and 36/36 — and its store stops growing outright (44 → 44,
+45 → 45; `created_at_step` confirms 0 and 1 new entries respectively). Verbatim
+storage is closed under repetition: once a task's successful trajectory is in the
+store, re-solving it adds nothing.
+
+**The LLM-writer arms register zero duplicate rejections in any epoch.** Dedup is
+a content-hash check, and a writer's paraphrase of the same experience is never
+byte-identical to its last paraphrase, so nothing stops it. Their stores grow
+linearly over 50 unchanging tasks: `reflection/full` 43 → 71 → 112,
+`reflection/minimal` 39 → 63 → 93. Reflection ends with 93–112 entries derived
+from 50 experiences, and it is the worst-performing pair of runs in the epoch
+sweep (−9.0 and +5.0, both ns). This is §1's "damage is to entry quality, not
+quantity" with a mechanism attached: the writer cannot tell it has already
+written this down.
+
+That is the one clearly actionable finding here. Semantic dedup — or any
+same-source check at write time — would cost the writer arms nothing and is the
+obvious next change to the write path.
+
+### 7.3 Injected tokens stay flat, so none of this is a context effect
+
+Injected memory tokens move by <5% across all three epochs for every arm
+(`reflection/full` 942 → 927 → 903, `rule/full` 226 → 241 → 251), because the
+1500-token injection budget binds well before the store size does. A store that
+triples costs nothing at inference and buys nothing at inference.
+
 ## Threats to validity
 
+- **§7's three epochs are one seed and one order.** The manifest order is
+  identical in all three passes, so an epoch effect and an order effect are not
+  separable. Nothing in §7 reaches significance anyway.
 - **n = 100, single seed.** SAGE measured a ±3–6 point noise floor across
   identical ALFWorld runs, so read the paired tests, not the deltas. Effects
   under ~10 points are not resolvable here; ≥3 seeds are needed.

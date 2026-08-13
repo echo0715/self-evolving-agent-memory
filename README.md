@@ -207,10 +207,11 @@ SpreadsheetBench). Results:
 scored 20.0% and 25.0%, disagreeing on 23 of 100 tasks — a ±5 point noise floor
 that erased every arm in that study, including two that looked like +5.0 against
 the first run and were +0.0 against the second. WebShop's and SpreadsheetBench's
-floors have not been measured yet, and SpreadsheetBench's arms are ranked
-differently by the two write policies — a pattern a floor of that size would
-produce on its own. `RESULTS_APPWORLD.md` and `RESULTS_SPREADSHEETBENCH.md` both
-open with this.
+floor has not been measured yet. SpreadsheetBench's has: two runs of an arm
+whose store was byte-identical between them scored 27/100 twice while flipping
+22 of 100 individual tasks, putting σ at 4.7 points — so only 4 of its 16
+configurations clear 2σ. `RESULTS_APPWORLD.md` and `RESULTS_SPREADSHEETBENCH.md`
+both open with this.
 
 Two differences in how WebShop results must be read, and SpreadsheetBench shares
 both. Their reward is **graded**, so `summarize.py` reports score alongside the

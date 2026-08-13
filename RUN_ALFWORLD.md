@@ -93,6 +93,30 @@ bash scripts/run_sweep.sh minimal    # 50/100, WritePolicy.minimal()
 bash scripts/run_sweep.sh full       # 50/100, WritePolicy.full()
 ```
 
+Two continuation families, both resuming each arm's own `store.jsonl` and both
+passing `--evolve-step-offset` so the Evolver's step counter (and with it
+`full`'s every-25-episode batch induction) lines up with an uninterrupted run:
+
+```bash
+bash scripts/run_sweep.sh full100    # the NEXT 50 train tasks   -> full_e100/
+bash scripts/run_sweep.sh full_x2    # the SAME 50 again         -> full_x2/
+bash scripts/run_sweep.sh full_x3    # ... and a third time      -> full_x3/
+```
+
+They measure different things and their numbers are not interchangeable —
+`*100` varies amount of experience, `_x2`/`_x3` vary repetition over fixed
+experience (RESULTS_ALFWORLD.md §6 vs §7). `_x3` requires `_x2` to exist.
+
+The two policies are independent chains, so on two allocations they run in
+parallel — one policy per node, ~10 h each for both extra epochs:
+
+```bash
+srun --jobid=<other-job> --overlap -N1 -n1 bash /path/to/driver.sh &
+```
+
+The per-node driver must start its own vLLM pair; arm concurrency stays at 2
+(see below).
+
 Arms: `none`, `raw`, `reflection`, `rule`, `skill`. `none` is the no-memory
 reference — without it no delta is interpretable, because ALFWorld's run-to-run
 noise floor is several points (SAGE measured 54 / 58 / 60% across three

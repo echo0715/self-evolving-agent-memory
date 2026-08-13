@@ -6,6 +6,8 @@
 #   bash scripts/run_spreadsheetbench_sweep.sh full       # 50 evolve / 100 eval, WritePolicy.full()
 #   bash scripts/run_spreadsheetbench_sweep.sh minimal100 # continue each store to 100 evolve episodes
 #   bash scripts/run_spreadsheetbench_sweep.sh full100
+#   bash scripts/run_spreadsheetbench_sweep.sh minimal150 # ... and on to 150
+#   bash scripts/run_spreadsheetbench_sweep.sh full150
 #
 # Prerequisites:
 #   bash scripts/setup_spreadsheetbench.sh
@@ -73,7 +75,21 @@ case "$MODE" in
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%100}_e100"
     EVOLVE_MANIFEST="$REPO/manifests/spreadsheetbench_evolve_train+val_50to100_seed42.json"
     RESUME_ROOT="$OUT_ROOT/${MODE%100}"; EVOLVE_OFFSET=50 ;;
-  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100}" >&2; exit 2 ;;
+  # The third leg, [100, 150). train+val is spent -- it holds 117 selectable
+  # tasks once the eval set's source workbooks are excluded -- so this leg
+  # overflows into `test` as well. That is safe but worth stating plainly: the
+  # extra 33 tasks come from the same split the evaluation set is drawn from,
+  # and they are disjoint from it only because the group filter makes them so.
+  # The builder enforces both halves of that (no shared task id, no shared
+  # source workbook) and refuses to write the manifest otherwise. Positions
+  # [0, 100) are bit-identical to the two manifests above, so the three legs
+  # remain one nested sequence.
+  minimal150|full150)
+    POLICIES=("${MODE%150}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%150}_e150"
+    EVOLVE_MANIFEST="$REPO/manifests/spreadsheetbench_evolve_train+val+test_100to150_seed42.json"
+    RESUME_ROOT="$OUT_ROOT/${MODE%150}_e100"; EVOLVE_OFFSET=100 ;;
+  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100|minimal150|full150}" >&2; exit 2 ;;
 esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})

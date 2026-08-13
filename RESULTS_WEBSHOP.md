@@ -41,17 +41,19 @@ is policy-independent and appears once.
 WebShop grades partially: **score** is the mean graded reward ×100, **rate** is
 the fraction scoring exactly 1.0. Both are reported because they move apart.
 
-| arm | policy | rate | Δ | score | Δ | b/c | McNemar p | store | inj. tok | writer calls |
-|---|---|---|---|---|---|---|---|---|---|---|
-| none | — | 29.0% | — | 59.8 | — | — | — | — | 0 | — |
-| raw | minimal | 30.0% | +1.0 | 58.1 | −1.7 | 8/9 | 1.000 | 16 | 1177 | — |
-| reflection | minimal | 28.0% | −1.0 | 51.2 | −8.6 | 10/9 | 1.000 | 18 | 1117 | 58 |
-| rule | minimal | 31.0% | +2.0 | 57.0 | −2.8 | 6/8 | 0.791 | 31 | 468 | 58 |
-| skill | minimal | 32.0% | +3.0 | 55.9 | −3.9 | 6/9 | 0.607 | 4 | 969 | 20 |
-| raw | full | **37.0%** | **+8.0** | **62.0** | +2.2 | 5/13 | 0.096 | 17 | 1261 | — |
-| reflection | full | 25.0% | −4.0 | 52.8 | −7.0 | 10/6 | 0.454 | 13 | 1004 | 126 |
-| rule | full | 35.0% | +6.0 | 58.8 | −1.0 | 6/12 | 0.238 | 7 | 294 | 111 |
-| skill | full | 28.0% | −1.0 | 61.6 | +1.8 | 7/6 | 1.000 | 1 | 249 | 51 |
+
+| arm        | policy  | rate      | Δ        | score    | Δ    | b/c  | McNemar p | store | inj. tok | writer calls |     |
+| ---------- | ------- | --------- | -------- | -------- | ---- | ---- | --------- | ----- | -------- | ------------ | --- |
+| none       | —       | 29.0%     | —        | 59.8     | —    | —    | —         | —     | 0        | —            |     |
+| raw        | minimal | 30.0%     | +1.0     | 58.1     | −1.7 | 8/9  | 1.000     | 16    | 1177     | —            |     |
+| reflection | minimal | 28.0%     | −1.0     | 51.2     | −8.6 | 10/9 | 1.000     | 18    | 1117     | 58           |     |
+| rule       | minimal | 31.0%     | +2.0     | 57.0     | −2.8 | 6/8  | 0.791     | 31    | 468      | 58           |     |
+| skill      | minimal | 32.0%     | +3.0     | 55.9     | −3.9 | 6/9  | 0.607     | 4     | 969      | 20           |     |
+| raw        | full    | **37.0%** | **+8.0** | **62.0** | +2.2 | 5/13 | 0.096     | 17    | 1261     |              | —   |
+| reflection | full    | 25.0%     | −4.0     | 52.8     | −7.0 | 10/6 | 0.454     | 13    | 1004     | 126          |     |
+| rule       | full    | 35.0%     | +6.0     | 58.8     | −1.0 | 6/12 | 0.238     | 7     | 294      | 111          |     |
+| skill      | full    | 28.0%     | −1.0     | 61.6     | +1.8 | 7/6  | 1.000     | 1     | 249      | 51           |     |
+
 
 **No arm reaches p < 0.05.** `raw/full` is the strongest at +8.0 points and
 p = 0.096, and it is the only arm whose discordant counts are lopsided enough to
@@ -66,13 +68,15 @@ effect is half that size and does not clear significance at n = 100.
 The aggregate hides the mechanism completely. Decomposing every episode into
 *did the agent buy anything* and *how good was what it bought*:
 
-| arm | policy | purchase rate | rate given purchase | reward given purchase | mean steps |
-|---|---|---|---|---|---|
-| none | — | 86% | 33.7% | 69.6 | 6.94 |
-| raw | minimal | 82% | 36.6% | 70.9 | 6.55 |
-| reflection | minimal | 77% | 36.4% | 66.5 | 7.82 |
-| rule | minimal | 83% | 37.3% | 68.7 | 6.98 |
-| skill | minimal | 76% | **42.1%** | **73.5** | 8.28 |
+
+| arm        | policy  | purchase rate | rate given purchase | reward given purchase | mean steps |
+| ---------- | ------- | ------------- | ------------------- | --------------------- | ---------- |
+| none       | —       | 86%           | 33.7%               | 69.6                  | 6.94       |
+| raw        | minimal | 82%           | 36.6%               | 70.9                  | 6.55       |
+| reflection | minimal | 77%           | 36.4%               | 66.5                  | 7.82       |
+| rule       | minimal | 83%           | 37.3%               | 68.7                  | 6.98       |
+| skill      | minimal | 76%           | **42.1%**           | **73.5**              | 8.28       |
+
 
 Under `minimal`, **every arm is a better shopper than the baseline and every arm
 finishes fewer episodes.** Success-given-purchase rises by 2.7 to 8.4 points
@@ -101,12 +105,14 @@ ALFWorld's headline was that `WritePolicy.minimal()` dominated `full()` for ever
 content type that uses an LLM writer, losing 7 to 15 points each. On WebShop the
 sign flips:
 
-| arm | rate minimal → full | score minimal → full | purchase rate | mean steps | writer calls |
-|---|---|---|---|---|---|
-| raw | 30.0% → **37.0%** (+7) | 58.1 → 62.0 (**+3.9**) | 82% → 86% | 6.55 → 6.04 | none → none |
-| reflection | 28.0% → 25.0% (−3) | 51.2 → 52.8 (**+1.6**) | 77% → 82% | 7.82 → 7.26 | 58 → 126 |
-| rule | 31.0% → **35.0%** (+4) | 57.0 → 58.8 (**+1.8**) | 83% → 84% | 6.98 → 6.70 | 58 → 111 |
-| skill | 32.0% → 28.0% (−4) | 55.9 → 61.6 (**+5.7**) | 76% → 86% | 8.28 → 6.62 | 20 → 51 |
+
+| arm        | rate minimal → full    | score minimal → full   | purchase rate | mean steps  | writer calls |
+| ---------- | ---------------------- | ---------------------- | ------------- | ----------- | ------------ |
+| raw        | 30.0% → **37.0%** (+7) | 58.1 → 62.0 (**+3.9**) | 82% → 86%     | 6.55 → 6.04 | none → none  |
+| reflection | 28.0% → 25.0% (−3)     | 51.2 → 52.8 (**+1.6**) | 77% → 82%     | 7.82 → 7.26 | 58 → 126     |
+| rule       | 31.0% → **35.0%** (+4) | 57.0 → 58.8 (**+1.8**) | 83% → 84%     | 6.98 → 6.70 | 58 → 111     |
+| skill      | 32.0% → 28.0% (−4)     | 55.9 → 61.6 (**+5.7**) | 76% → 86%     | 8.28 → 6.62 | 20 → 51      |
+
 
 `full` raises the score for **all four** arms, raises the purchase rate for
 **all four**, and lowers mean steps for **all four**. That is exactly the tax
@@ -207,17 +213,19 @@ ALFWorld's six task families — two "beauty" tasks can need entirely different
 action sequences, where "pick_heat_then_place" names a procedure. Read this as
 exploratory.
 
-| arm | policy | beauty (21) | electronics (20) | fashion (19) | garden (23) | grocery (17) |
-|---|---|---|---|---|---|---|
-| none | — | 7 | 4 | 8 | 4 | 6 |
-| raw | minimal | 5 | 5 | 9 | 5 | 6 |
-| reflection | minimal | 8 | 5 | 7 | 4 | 4 |
-| rule | minimal | 6 | 6 | 8 | 3 | 8 |
-| skill | minimal | 9 | 6 | 7 | 5 | 5 |
-| raw | full | **10** | 3 | 9 | **7** | 8 |
-| reflection | full | 5 | 4 | 7 | 4 | 5 |
-| rule | full | **10** | 6 | 6 | 5 | 8 |
-| skill | full | 8 | 5 | 5 | 3 | 7 |
+
+| arm        | policy  | beauty (21) | electronics (20) | fashion (19) | garden (23) | grocery (17) |
+| ---------- | ------- | ----------- | ---------------- | ------------ | ----------- | ------------ |
+| none       | —       | 7           | 4                | 8            | 4           | 6            |
+| raw        | minimal | 5           | 5                | 9            | 5           | 6            |
+| reflection | minimal | 8           | 5                | 7            | 4           | 4            |
+| rule       | minimal | 6           | 6                | 8            | 3           | 8            |
+| skill      | minimal | 9           | 6                | 7            | 5           | 5            |
+| raw        | full    | **10**      | 3                | 9            | **7**       | 8            |
+| reflection | full    | 5           | 4                | 7            | 4           | 5            |
+| rule       | full    | **10**      | 6                | 6            | 5           | 8            |
+| skill      | full    | 8           | 5                | 5            | 3           | 7            |
+
 
 `raw/full`'s +8 comes from `beauty` (+3) and `garden` (+3) while it *loses* a
 point on `electronics`. No arm improves `electronics`, the hardest department for
@@ -234,16 +242,18 @@ the memory the first 50 produced is what the second 50 build on.
 `p` is the paired test of each arm against **its own 50-episode self**, which is
 the comparison that isolates the added experience.
 
-| arm | policy | e50 | e100 | Δ | p | score 50→100 | store | survived/deleted/new |
-|---|---|---|---|---|---|---|---|---|
-| raw | minimal | 30.0% | 31.0% | +1.0 | 1.000 | 58.1 → 57.6 | 16 → 28 | 16/0/12 |
-| reflection | minimal | 28.0% | 25.0% | −3.0 | 0.664 | 51.2 → 53.6 | 18 → 38 | 14/4/24 |
-| rule | minimal | 31.0% | 25.0% | −6.0 | 0.210 | 57.0 → 56.2 | 31 → 52 | 25/6/27 |
-| skill | minimal | 32.0% | 29.0% | −3.0 | 0.607 | 55.9 → 54.9 | 4 → 5 | 3/1/2 |
-| **raw** | **full** | **37.0%** | **21.0%** | **−16.0** | **0.002** | 62.0 → 52.0 | 17 → 18 | 13/4/5 |
-| reflection | full | 25.0% | 28.0% | +3.0 | 0.581 | 52.8 → 57.9 | 13 → 24 | 6/7/18 |
-| rule | full | 35.0% | 31.0% | −4.0 | 0.424 | 58.8 → 56.4 | 7 → 3 | 0/7/3 |
-| skill | full | 28.0% | 30.0% | +2.0 | 0.727 | 61.6 → 59.0 | 1 → 1 | 0/1/1 |
+
+| arm        | policy   | e50       | e100      | Δ         | p         | score 50→100 | store   | survived/deleted/new |
+| ---------- | -------- | --------- | --------- | --------- | --------- | ------------ | ------- | -------------------- |
+| raw        | minimal  | 30.0%     | 31.0%     | +1.0      | 1.000     | 58.1 → 57.6  | 16 → 28 | 16/0/12              |
+| reflection | minimal  | 28.0%     | 25.0%     | −3.0      | 0.664     | 51.2 → 53.6  | 18 → 38 | 14/4/24              |
+| rule       | minimal  | 31.0%     | 25.0%     | −6.0      | 0.210     | 57.0 → 56.2  | 31 → 52 | 25/6/27              |
+| skill      | minimal  | 32.0%     | 29.0%     | −3.0      | 0.607     | 55.9 → 54.9  | 4 → 5   | 3/1/2                |
+| **raw**    | **full** | **37.0%** | **21.0%** | **−16.0** | **0.002** | 62.0 → 52.0  | 17 → 18 | 13/4/5               |
+| reflection | full     | 25.0%     | 28.0%     | +3.0      | 0.581     | 52.8 → 57.9  | 13 → 24 | 6/7/18               |
+| rule       | full     | 35.0%     | 31.0%     | −4.0      | 0.424     | 58.8 → 56.4  | 7 → 3   | 0/7/3                |
+| skill      | full     | 28.0%     | 30.0%     | +2.0      | 0.727     | 61.6 → 59.0  | 1 → 1   | 0/1/1                |
+
 
 **Five of eight arms declined, and the only significant result in the entire
 WebShop study is a 16-point collapse.** At evolve-50 every `minimal` arm sat at
@@ -271,16 +281,18 @@ here except `raw/full`, whose 16 points are too large for it.
 
 ### The axis is confounded: phase 2 was a worse 50 tasks
 
-| arm | policy | phase-1 successes | phase-2 successes |
-|---|---|---|---|
-| raw | minimal | 16/50 | 12/50 |
-| reflection | minimal | 15/50 | 10/50 |
-| rule | minimal | 21/50 | 9/50 |
-| skill | minimal | 18/50 | 12/50 |
-| raw | full | 19/50 | **8/50** |
-| reflection | full | 19/50 | 12/50 |
-| rule | full | 15/50 | 10/50 |
-| skill | full | 14/50 | 11/50 |
+
+| arm        | policy  | phase-1 successes | phase-2 successes |
+| ---------- | ------- | ----------------- | ----------------- |
+| raw        | minimal | 16/50             | 12/50             |
+| reflection | minimal | 15/50             | 10/50             |
+| rule       | minimal | 21/50             | 9/50              |
+| skill      | minimal | 18/50             | 12/50             |
+| raw        | full    | 19/50             | **8/50**          |
+| reflection | full    | 19/50             | 12/50             |
+| rule       | full    | 15/50             | 10/50             |
+| skill      | full    | 14/50             | 11/50             |
+
 
 Every arm succeeded less often in phase 2 — 8 of 8, by ~35% on average. So this
 column is not "more experience", it is "more experience, less of it successful",
@@ -297,46 +309,49 @@ phase.
 ## Threats to validity
 
 - **n = 100, single seed, and the effects are small.** Nothing here is
-  significant at 0.05. The strongest result (`raw/full`, +8.0) is p = 0.096 and
-  would need roughly 300 tasks to resolve at this effect size. Read the paired
-  tests, not the deltas.
+significant at 0.05. The strongest result (`raw/full`, +8.0) is p = 0.096 and
+would need roughly 300 tasks to resolve at this effect size. Read the paired
+tests, not the deltas.
 - **The noise floor was never measured on this benchmark.** Everything above is
-  computed against a *single* no-memory run. The AppWorld study
-  ([RESULTS_APPWORLD.md](RESULTS_APPWORLD.md)) later ran its baseline twice under
-  identical conditions and got 20.0% and 25.0% — a ±5 point spread that
-  disagreed on 23 of 100 tasks, and that erased every arm in that table,
-  including two that looked like +5.0 against the first run and were +0.0 against
-  the second. No claim here should be trusted above ~5 points until the same
-  replicate is run for WebShop. It costs one baseline run.
+computed against a *single* no-memory run. The AppWorld study
+([RESULTS_APPWORLD.md](RESULTS_APPWORLD.md)) later ran its baseline twice under
+identical conditions and got 20.0% and 25.0% — a ±5 point spread that
+disagreed on 23 of 100 tasks, and that erased every arm in that table,
+including two that looked like +5.0 against the first run and were +0.0 against
+the second. No claim here should be trusted above ~5 points until the same
+replicate is run for WebShop. It costs one baseline run.
 - **The 15-step horizon confounds the content comparison** (§1). Every arm's
-  benefit is partly eaten by timeouts, and the arms are affected unequally —
-  `skill/minimal` loses 10 points of purchase rate, `rule/minimal` 3. Until the
-  longer-horizon control is run, "content type X is better" cannot be separated
-  from "content type X is cheaper to read".
+benefit is partly eaten by timeouts, and the arms are affected unequally —
+`skill/minimal` loses 10 points of purchase rate, `rule/minimal` 3. Until the
+longer-horizon control is run, "content type X is better" cannot be separated
+from "content type X is cheaper to read".
 - **The scaffold has no external reference.** Unlike ALFWorld, the baseline
-  cannot be checked against an independently measured number, only against a
-  published range. If the scaffold is systematically weak or strong, every arm
-  moves with it.
+cannot be checked against an independently measured number, only against a
+published range. If the scaffold is systematically weak or strong, every arm
+moves with it.
 - **One rollout per evolving task**, so `Episode.outcome()` is only ever
-  `all_success` or `all_failure`; Reflection's `from_contrast` mode never fired
-  and skill could not write from mixed outcomes.
+`all_success` or `all_failure`; Reflection's `from_contrast` mode never fired
+and skill could not write from mixed outcomes.
 - **Writer model = actor model.** Qwen3.5-9B writes the memory it later consumes,
-  so content quality and consumption ability are confounded.
+so content quality and consumption ability are confounded.
 - **Product departments are a weak cluster key.** `MemoryConfig.cluster_key` is
-  `task_type`, which here is the department. Batch induction therefore clusters
-  over a grouping with little procedural coherence, which may be part of why
-  consolidation produced a generic skill (§3).
+`task_type`, which here is the department. Batch induction therefore clusters
+over a grouping with little procedural coherence, which may be part of why
+consolidation produced a generic skill (§3).
+
+
 
 ## What to run next
 
 1. **A second no-memory baseline run.** Now the highest-value measurement, and
-   the cheapest: one run, ~25 minutes. On AppWorld the equivalent replicate moved
+  the cheapest: one run, ~25 minutes. On AppWorld the equivalent replicate moved
    the reference by 5 points and nullified the entire table. Until it exists,
    every delta above is uncalibrated.
 2. **The 25-step horizon control.** The one confound that touches every number
-   above. If the arms separate, §1's mechanism is confirmed and the content
+  above. If the arms separate, §1's mechanism is confirmed and the content
    comparison becomes interpretable.
-3. **≥ 3 seeds on `raw/full` and `rule/full`.** The two arms with lopsided
-   discordant counts are the only candidates for a real effect.
-4. **`equal_item_count`** to separate rule's small injected block (294 tokens)
-   from its content, the same control ALFWorld's §5 called for.
+3. **≥ 3 seeds on** `raw/full` **and** `rule/full`**.** The two arms with lopsided
+  discordant counts are the only candidates for a real effect.
+4. `equal_item_count` to separate rule's small injected block (294 tokens)
+  from its content, the same control ALFWorld's §5 called for.
+

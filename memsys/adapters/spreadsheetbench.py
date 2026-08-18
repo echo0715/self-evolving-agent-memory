@@ -228,6 +228,18 @@ def run_generated_code(code: str, input_path: str, output_path: str,
     The agent's own assignments are stripped rather than trusted: on case 2 they
     still point at case 1's files, and a solution that ignored the override would
     re-score case 1 three times and look like it generalised.
+
+    **`-P` is load-bearing, not hygiene.** Without it Python puts the runner
+    script's own directory -- the system temp dir -- first on `sys.path`, and the
+    agent writes files there all episode long with names of its own choosing.
+    One episode that saves a helper called `inspect.py` (or `types.py`, `csv.py`,
+    ...) then shadows that stdlib module for *every* scoring subprocess on the
+    node, in every concurrently running arm, until the file is removed. Observed:
+    an `/tmp/inspect.py` cost 42 episodes across three arms of one leg, each
+    surfacing as `exec-error: partially initialized module 'openpyxl'` -- numpy
+    imports `inspect` on the way into openpyxl, got the agent's file, and that
+    file called `openpyxl.load_workbook` mid-import. It reads exactly like a
+    model that writes code which does not generalise to cases 2 and 3.
     """
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     cleaned = _PATH_ASSIGN_RE.sub("", code)
@@ -240,7 +252,12 @@ def run_generated_code(code: str, input_path: str, output_path: str,
         fh.write(script)
         tmp = fh.name
     try:
-        proc = subprocess.run([sys.executable, tmp], capture_output=True, text=True,
+        # PYTHONSAFEPATH as well as -P: the flag covers this interpreter, the
+        # variable covers anything the solution itself spawns.
+        env = os.environ.copy()
+        env["PYTHONSAFEPATH"] = "1"
+        proc = subprocess.run([sys.executable, "-P", tmp], capture_output=True, text=True,
+                              env=env,
                               timeout=timeout if timeout and timeout > 0 else None)
         if proc.returncode != 0:
             return False, (proc.stdout + "\n" + proc.stderr).strip()

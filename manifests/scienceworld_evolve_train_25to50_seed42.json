@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "benchmark": "ScienceWorld",
+  "split": "train",
+  "seed": 42,
+  "selection": "positions_[25,50)_of_seeded_round_robin",
+  "skip": 25,
+  "available_count": 3592,
+  "selected_count": 25,
+  "selected_by_task": {
+    "change-the-state-of-matter-of": 1,
+    "measure-melting-point-known-substance": 1,
+    "freeze": 1,
+    "identify-life-stages-1": 1,
+    "mendelian-genetics-known-plant": 1,
+    "power-component": 1,
+    "find-plant": 1,
+    "power-component-renewable-vs-nonrenewable-energy": 1,
+    "chemistry-mix-paint-tertiary-color": 1,
+    "lifespan-longest-lived": 1,
+    "measure-melting-point-unknown-substance": 1,
+    "grow-fruit": 1,
+    "melt": 1,
+    "identify-life-stages-2": 1,
+    "lifespan-shortest-lived": 1,
+    "test-conductivity": 1,
+    "find-living-thing": 1,
+    "lifespan-longest-lived-then-shortest-lived": 1,
+    "find-animal": 1,
+    "inclined-plane-determine-angle": 1,
+    "grow-plant": 1,
+    "boil": 1,
+    "inclined-plane-friction-unnamed-surfaces": 1,
+    "chemistry-mix": 1,
+    "use-thermometer": 1
+  },
+  "task_ids_sha256": "e78f3a693e70109eb065684a4d522c37f79d779ed20c6042bd43659435323402",
+  "tasks": [
+    {
+      "task_id": "change-the-state-of-matter-of/2",
+      "split": "train",
+      "task_name": "change-the-state-of-matter-of",
+      "variation": 2,
+      "task_family": "change-the-state-of-matter-of",
+      "instruction": "Your task is to change the state of matter of water. First, focus on the substance. Then, take actions that will cause it to change its state of matter."
+    },
+    {
+      "task_id": "measure-melting-point-known-substance/200",
+      "split": "train",
+      "task_name": "measure-melting-point-known-substance",
+      "variation": 200,
+      "task_family": "measure-melting-point-known-substance",
+      "instruction": "Your task is to measure the melting point of gallium, which is located around the kitchen. First, focus on the thermometer. Next, focus on the gallium. If the melting point of gallium is above 150.0 degrees celsius, focus on the yellow box. If the melting point of gallium is below 150.0 degrees celsius, focus on the purple box. The boxes are located around the kitchen."
+    },
+    {
+      "task_id": "freeze/9",
+      "split": "train",
+      "task_name": "freeze",
+      "variation": 9,
+      "task_family": "freeze",
+      "instruction": "Your task is to freeze apple juice. First, focus on the substance. Then, take actions that will cause it to change its state of matter."
+    },
+    {
+      "task_id": "identify-life-stages-1/0",
+      "split": "train",
+      "task_name": "identify-life-stages-1",
+      "variation": 0,
+      "task_family": "identify-life-stages-1",
+      "instruction": "Your task is to focus on the 4 life stages of the turtle, starting from earliest to latest."
+    },
+    {
+      "task_id": "mendelian-genetics-known-plant/8",
+      "split": "train",
+      "task_name": "mendelian-genetics-known-plant",
+      "variation": 8,
+      "task_family": "mendelian-genetics-known-plant",
+      "instruction": "Your task is to determine whether tall plant height is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box."
+    },
+    {
+      "task_id": "power-component/7",
+      "split": "train",
+      "task_name": "power-component",
+      "variation": 7,
+      "task_family": "power-component",
+      "instruction": "Your task is to turn on the green light bulb. First, focus on the green light bulb. Then, create an electrical circuit that powers it on."
+    },
+    {
+      "task_id": "find-plant/74",
+      "split": "train",
+      "task_name": "find-plant",
+      "variation": 74,
+      "task_family": "find-plant",
+      "instruction": "Your task is to find a(n) plant. First, focus on the thing. Then, move it to the blue box in the living room."
+    },
+    {
+      "task_id": "power-component-renewable-vs-nonrenewable-energy/4",
+      "split": "train",
+      "task_name": "power-component-renewable-vs-nonrenewable-energy",
+      "variation": 4,
+      "task_family": "power-component-renewable-vs-nonrenewable-energy",
+      "instruction": "Your task is to turn on the green light bulb by powering it using a renewable power source. First, focus on the green light bulb. Then, create an electrical circuit that powers it on."
+    },
+    {
+      "task_id": "chemistry-mix-paint-tertiary-color/0",
+      "split": "train",
+      "task_name": "chemistry-mix-paint-tertiary-color",
+      "variation": 0,
+      "task_family": "chemistry-mix-paint-tertiary-color",
+      "instruction": "Your task is to use chemistry to create green-blue paint. When you are part-way done, focus on the intermediate (secondary color) paint you created.  When you are completely done, focus on the green paint."
+    },
+    {
+      "task_id": "lifespan-longest-lived/48",
+      "split": "train",
+      "task_name": "lifespan-longest-lived",
+      "variation": 48,
+      "task_family": "lifespan-longest-lived",
+      "instruction": "Your task is to find the animal with the longest life span.  The animals are in the 'outside' location.  Focus on the animal with the longest life span."
+    },
+    {
+      "task_id": "measure-melting-point-unknown-substance/136",
+      "split": "train",
+      "task_name": "measure-melting-point-unknown-substance",
+      "variation": 136,
+      "task_family": "measure-melting-point-unknown-substance",
+      "instruction": "Your task is to measure the melting point of solid unknown substance H, which is located around the kitchen. First, focus on the thermometer. Next, focus on the solid unknown substance H. If the melting point of solid unknown substance H is above 10.0 degrees celsius, focus on the red box. If the melting point of solid unknown substance H is below 10.0 degrees celsius, focus on the green box. The boxes are located around the kitchen."
+    },
+    {
+      "task_id": "grow-fruit/10",
+      "split": "train",
+      "task_name": "grow-fruit",
+      "variation": 10,
+      "task_family": "grow-fruit",
+      "instruction": "Your task is to grow a apple. This will require growing several plants, and them being crosspollinated to produce fruit.  Seeds can be found in the bedroom. To complete the task, focus on the grown apple."
+    },
+    {
+      "task_id": "melt/0",
+      "split": "train",
+      "task_name": "melt",
+      "variation": 0,
+      "task_family": "melt",
+      "instruction": "Your task is to melt water. First, focus on the substance. Then, take actions that will cause it to change its state of matter."
+    },
+    {
+      "task_id": "identify-life-stages-2/0",
+      "split": "train",
+      "task_name": "identify-life-stages-2",
+      "variation": 0,
+      "task_family": "identify-life-stages-2",
+      "instruction": "Your task is to focus on the life stages of the apple plant, starting from earliest to latest. The plants are located outside."
+    },
+    {
+      "task_id": "lifespan-shortest-lived/37",
+      "split": "train",
+      "task_name": "lifespan-shortest-lived",
+      "variation": 37,
+      "task_family": "lifespan-shortest-lived",
+      "instruction": "Your task is to find the animal with the shortest life span.  The animals are in the 'outside' location.  Focus on the animal with the shortest life span."
+    },
+    {
+      "task_id": "test-conductivity/183",
+      "split": "train",
+      "task_name": "test-conductivity",
+      "variation": 183,
+      "task_family": "test-conductivity",
+      "instruction": "Your task is to determine if book (The Foundations of the Origin of Species) is electrically conductive. The book (The Foundations of the Origin of Species) is located around the kitchen. First, focus on the book (The Foundations of the Origin of Species). If it is electrically conductive, place it in the orange box. If it is electrically nonconductive, place it in the yellow box."
+    },
+    {
+      "task_id": "find-living-thing/28",
+      "split": "train",
+      "task_name": "find-living-thing",
+      "variation": 28,
+      "task_family": "find-living-thing",
+      "instruction": "Your task is to find a(n) living thing. First, focus on the thing. Then, move it to the yellow box in the workshop."
+    },
+    {
+      "task_id": "lifespan-longest-lived-then-shortest-lived/27",
+      "split": "train",
+      "task_name": "lifespan-longest-lived-then-shortest-lived",
+      "variation": 27,
+      "task_family": "lifespan-longest-lived-then-shortest-lived",
+      "instruction": "Your task is to find the animal with the longest life span, then the shortest life span. First, focus on the animal with the longest life span.  Then, focus on the animal with the shortest life span. The animals are in the 'outside' location."
+    },
+    {
+      "task_id": "find-animal/106",
+      "split": "train",
+      "task_name": "find-animal",
+      "variation": 106,
+      "task_family": "find-animal",
+      "instruction": "Your task is to find a(n) animal. First, focus on the thing. Then, move it to the yellow box in the living room."
+    },
+    {
+      "task_id": "inclined-plane-determine-angle/27",
+      "split": "train",
+      "task_name": "inclined-plane-determine-angle",
+      "variation": 27,
+      "task_family": "inclined-plane-determine-angle",
+      "instruction": "Your task is to determine which of the two inclined planes (C, E) has the steepest angle. After completing your experiment, focus on the inclined plane with the steepest angle."
+    },
+    {
+      "task_id": "grow-plant/25",
+      "split": "train",
+      "task_name": "grow-plant",
+      "variation": 25,
+      "task_family": "grow-plant",
+      "instruction": "Your task is to grow a avocado plant from seed. Seeds can be found in the living room. First, focus on a seed. Then, make changes to the environment that grow the plant until it reaches the reproduction life stage."
+    },
+    {
+      "task_id": "boil/12",
+      "split": "train",
+      "task_name": "boil",
+      "variation": 12,
+      "task_family": "boil",
+      "instruction": "Your task is to boil marshmallow. For compounds without a boiling point, combusting the substance is also acceptable. First, focus on the substance. Then, take actions that will cause it to change its state of matter."
+    },
+    {
+      "task_id": "inclined-plane-friction-unnamed-surfaces/8",
+      "split": "train",
+      "task_name": "inclined-plane-friction-unnamed-surfaces",
+      "variation": 8,
+      "task_family": "inclined-plane-friction-unnamed-surfaces",
+      "instruction": "Your task is to determine which of the two inclined planes (unknown material F, unknown material H) has the most friction. After completing your experiment, focus on the inclined plane with the most friction."
+    },
+    {
+      "task_id": "chemistry-mix/3",
+      "split": "train",
+      "task_name": "chemistry-mix",
+      "variation": 3,
+      "task_family": "chemistry-mix",
+      "instruction": "Your task is to use chemistry to create the substance 'sodium acetate'. A recipe and some of the ingredients might be found near the kitchen. When you are done, focus on the sodium acetate."
+    },
+    {
+      "task_id": "use-thermometer/40",
+      "split": "train",
+      "task_name": "use-thermometer",
+      "variation": 40,
+      "task_family": "use-thermometer",
+      "instruction": "Your task is to measure the temperature of unknown substance B, which is located around the bedroom. First, focus on the thermometer. Next, focus on the unknown substance B. If the unknown substance B temperature is above 100.0 degrees celsius, place it in the red box. If the unknown substance B temperature is below 100.0 degrees celsius, place it in the green box. The boxes are located around the bathroom."
+    }
+  ]
+}

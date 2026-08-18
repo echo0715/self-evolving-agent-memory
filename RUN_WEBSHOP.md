@@ -72,11 +72,25 @@ Then, against a running server:
 ```bash
 python scripts/build_webshop_manifests.py --server http://localhost:7000 \
   --out manifests --evolve-count 50 --eval-count 100 --seed 42
+
+# Continuation legs. `--evolve-skip N --evolve-count M` emits positions [N, M)
+# of the same seeded permutation, so the legs nest instead of overlapping.
+python scripts/build_webshop_manifests.py --server http://localhost:7000 \
+  --evolve-skip 50 --evolve-count 100 --eval-count 100 --seed 42
+python scripts/build_webshop_manifests.py --server http://localhost:7000 \
+  --evolve-skip 100 --evolve-count 150 --eval-count 100 --seed 42
 ```
 
-Committed as `manifests/webshop_evolve_train_50_seed42.json` and
+Committed as `manifests/webshop_evolve_train_50_seed42.json`,
+`..._50to100_seed42.json`, `..._100to150_seed42.json` and
 `manifests/webshop_eval_test_100_seed42.json`. Once a run starts, never
 regenerate under the same filename.
+
+The builder rewrites the eval manifest on every invocation. That is safe — it is
+a pure function of split, count and seed, so the continuation calls above
+reproduce it byte for byte (fingerprint `17bee695c04b1ca2`) — but check `git
+status` afterwards rather than trusting it. `--eval-only` is accepted and then
+never read; it does not skip the evolve build.
 
 Three properties are deliberate:
 
@@ -123,9 +137,18 @@ memory block differs.
 
 ```bash
 bash scripts/run_webshop_sweep.sh smoke      # 2 evolve / 4 eval, all arms
-bash scripts/run_webshop_sweep.sh minimal    # 50/100, WritePolicy.minimal()
-bash scripts/run_webshop_sweep.sh full       # 50/100, WritePolicy.full()
+bash scripts/run_webshop_sweep.sh minimal    # 50 evolve / 100 eval, WritePolicy.minimal()
+bash scripts/run_webshop_sweep.sh full       # 50 evolve / 100 eval, WritePolicy.full()
+bash scripts/run_webshop_sweep.sh minimal100 # continue each store to 100 evolve episodes
+bash scripts/run_webshop_sweep.sh full100
+bash scripts/run_webshop_sweep.sh minimal150 # ... and on to 150
+bash scripts/run_webshop_sweep.sh full150
 ```
+
+The `100` and `150` modes *resume* each arm's own `store.jsonl` and carry the
+Evolver's step counter, so they extend the previous leg rather than repeating
+it. Running 150 from scratch would instead redo 100 episodes of compute and
+discard the memory they produced.
 
 Arms: `none`, `raw`, `reflection`, `rule`, `skill`. `none` is the no-memory
 reference — without it no delta is interpretable.

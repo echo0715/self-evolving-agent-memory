@@ -30,7 +30,11 @@ MODEL="${MEMSYS_MODEL:-Qwen/Qwen3.5-9B}"
 # 32768 is ample here and leaves more KV cache for concurrent requests.
 MAX_LEN="${MEMSYS_MAX_MODEL_LEN:-32768}"
 GPU_UTIL="${MEMSYS_GPU_UTIL:-0.90}"
-LOG="${MEMSYS_SERVE_LOG:-$SCRATCH/memsys_qwen9b_gpu${GPU}_${PORT}.log}"
+# Per-host, for the same reason VLLM_CACHE_ROOT below is: $SCRATCH is shared
+# across nodes, so two allocations each serving gpu0/8000 wrote to one file --
+# and `> "$LOG"` truncates it, so the second one silently destroys the first
+# run's log while both keep appending at their own offsets.
+LOG="${MEMSYS_SERVE_LOG:-$SCRATCH/memsys_qwen9b_$(hostname -s)_gpu${GPU}_${PORT}.log}"
 
 # Keep HF + compile caches off HOME (home is at its inode quota).
 export HF_HOME="${HF_HOME:-$SCRATCH/hf_cache}"

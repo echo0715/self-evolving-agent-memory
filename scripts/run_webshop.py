@@ -41,12 +41,14 @@ from urllib.request import urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from memsys.episode import ALL_SUCCESS  # noqa: E402
 from memsys import (  # noqa: E402
     Episode,
     Evolver,
     MemoryConfig,
     MemoryStore,
     OpenAIChatClient,
+    OpenAIResponsesClient,
     RunLogger,
     WritePolicy,
     build_system,
@@ -152,6 +154,53 @@ def make_agent(args, base_url: str) -> WebShopAgent:
     )
 
 
+def _dotenv(name: str) -> str | None:
+    """Read one key from the repo's .env, which is gitignored and holds the
+    gateway credential. Real environment variables win over the file."""
+    if os.environ.get(name):
+        return os.environ[name]
+    path = Path(__file__).resolve().parent.parent / ".env"
+    if not path.exists():
+        return None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line.startswith("#") or "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        if k.strip() == name:
+            return v.strip().strip("'\"")
+    return None
+
+
+def build_writer_llm(args, writer_url: str):
+    """The memory writer's client, deliberately independent of the agent's:
+    `--writer-model` is the independent variable of the Memory Writing Model
+    study, while the actor stays on `--model` (the local Qwen) so any delta is
+    attributable to what was written rather than to who acted. Same contract as
+    `run_alfworld.py:build_writer_llm`."""
+    model = args.writer_model or args.model
+    key = "EMPTY"
+    if args.writer_api_key_env:
+        key = _dotenv(args.writer_api_key_env)
+        if not key:
+            # Failing here is the point: an unauthenticated writer 401s on every
+            # call, and `parse_ops` turns that into an empty store rather than an
+            # error, so the arm would finish and report a plausible number.
+            raise SystemExit(
+                f"--writer-api-key-env {args.writer_api_key_env!r} is set but no such key "
+                f"is in the environment or .env")
+    if args.writer_api == "responses":
+        return OpenAIResponsesClient(
+            model, base_url=writer_url, api_key=key,
+            temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
+            reasoning_effort=args.writer_reasoning_effort,
+        )
+    return OpenAIChatClient(
+        model, base_url=writer_url, api_key=key,
+        temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
+    )
+
+
 def episode_row(ep: Episode, seconds: float) -> dict:
     return {
         "task_id": ep.task_id,
@@ -195,6 +244,18 @@ def main() -> None:
     ap.add_argument("--agent-base-url", default="http://localhost:8000/v1")
     ap.add_argument("--writer-base-url", default=None,
                     help="defaults to --agent-base-url; point elsewhere to split GPUs")
+    ap.add_argument("--writer-model", default=None,
+                    help="memory-writing model; defaults to --model (the agent's). Set this "
+                         "to vary the writer independently of the actor, which is the point "
+                         "of the Memory Writing Model study")
+    ap.add_argument("--writer-api", choices=("chat", "responses"), default="chat",
+                    help="wire protocol for the writer endpoint. vLLM speaks 'chat'; the "
+                         "Perplexity gateway serving openai/gpt-5.6-* speaks only 'responses'")
+    ap.add_argument("--writer-api-key-env", default=None,
+                    help="environment variable holding the writer API key (also read from "
+                         "the repo .env). Local vLLM needs none")
+    ap.add_argument("--writer-reasoning-effort", default=None,
+                    help="reasoning effort for a 'responses' writer, e.g. low/medium/high")
     ap.add_argument("--timeout", type=float, default=180.0)
     ap.add_argument("--env-timeout", type=float, default=180.0)
 
@@ -222,6 +283,19 @@ def main() -> None:
     ap.add_argument("--evolve-step-offset", type=int, default=0,
                     help="step index the evolving loop starts from; set to the number of "
                          "episodes the resumed store already saw")
+    # The success-budget axis. Instead of "evolve on N tasks whatever happens",
+    # these two hold the amount of *successful* experience fixed and let the
+    # number of tasks consumed float. On WebShop roughly 25-35% of evolving
+    # episodes succeed, so 100 successes costs 300-450 tasks and the count
+    # differs per arm -- which is the point: arms are then equal in what they
+    # learned from, not in what they were shown.
+    ap.add_argument("--evolve-until-successes", type=int, default=0,
+                    help="stop evolving once this many episodes have outcome all_success "
+                         "(0 = run the whole manifest). Warns if the manifest runs out first.")
+    ap.add_argument("--write-only-on-success", action="store_true",
+                    help="discard failed episodes entirely: the memory system never "
+                         "observes them, so they produce no writer call, no utility "
+                         "signal, and do not advance the induction cadence")
     args = ap.parse_args()
 
     servers = args.server or [os.environ.get("WEBSHOP_SERVER_URL", "http://localhost:7000")]
@@ -238,10 +312,7 @@ def main() -> None:
     # the model + scaffold alone. Without it no delta is interpretable.
     system = None
     if args.arm != "none":
-        llm = OpenAIChatClient(
-            args.model, base_url=writer_url, api_key="EMPTY",
-            temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
-        )
+        llm = build_writer_llm(args, writer_url)
         system = build_system(args.arm, llm=llm, config=config, store=build_store(args, config))
         if args.resume_store:
             # Continue a previous run's memory rather than starting empty. Item
@@ -277,6 +348,8 @@ def main() -> None:
         logger = RunLogger(str(out / "evolve_log.jsonl"))
         ev = Evolver(system, config=config, logger=logger)
         ev.step = args.evolve_step_offset
+        n_success = 0
+        n_consumed = 0
         with (out / "evolve_episodes.jsonl").open("w", encoding="utf-8") as fh:
             for i, task in enumerate(tasks):
                 t0 = time.time()
@@ -286,9 +359,26 @@ def main() -> None:
                 ret = ev.retrieve(task.instruction, scope=task.scope())
                 ep = run_task(agent, pool.next(), task, memory_block=ret.block,
                               n_rollouts=args.n_rollouts, timeout=args.env_timeout)
-                ev.step_once(ep, ret)
+                n_consumed = i + 1
+                succeeded = ep.outcome() == ALL_SUCCESS
+                n_success += int(succeeded)
+                # --write-only-on-success discards failed episodes *before* the
+                # memory system ever observes them: no writer call, no utility
+                # bookkeeping, and no increment of the Evolver's step counter.
+                # That last one matters -- under `full` it means batch induction
+                # fires every 25 *successful* episodes rather than every 25
+                # attempts, which is the reading that keeps "the memory is built
+                # from 100 successes" literally true. It also means `full` loses
+                # the negative-utility signal that failures would have supplied
+                # to its deletion machinery: an entry can no longer be demoted
+                # for being retrieved into an episode that then failed.
+                skipped = args.write_only_on_success and not succeeded
+                if not skipped:
+                    ev.step_once(ep, ret)
                 row = episode_row(ep, time.time() - t0)
                 row["step"] = args.evolve_step_offset + i
+                row["observed_by_memory"] = not skipped
+                row["n_success_so_far"] = n_success
                 evolve_rows.append(row)
                 fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                 fh.flush()
@@ -303,8 +393,22 @@ def main() -> None:
                     store.save(str(out / "store.jsonl"))
                 print(f"[evolve {i+1}/{len(tasks)}] {row['outcome']:<12} "
                       f"score={row['score']:.2f} "
+                      f"ok={n_success}{'/' + str(args.evolve_until_successes) if args.evolve_until_successes else ''} "
+                      f"{'SKIP ' if skipped else ''}"
                       f"store={len(store) if store is not None else '-'} "
                       f"{row['seconds']:.0f}s {task.task_id}", flush=True)
+                if args.evolve_until_successes and n_success >= args.evolve_until_successes:
+                    print(f"[evolve] reached {n_success} successful episodes after "
+                          f"{n_consumed} tasks; stopping", flush=True)
+                    break
+            else:
+                if args.evolve_until_successes:
+                    # Exhausting the manifest before the target is a failed run,
+                    # not a shorter one: the arm would be compared against arms
+                    # that did reach it. Say so loudly rather than writing a
+                    # summary that looks complete.
+                    print(f"[evolve] WARNING: manifest exhausted at {n_consumed} tasks with "
+                          f"only {n_success}/{args.evolve_until_successes} successes", flush=True)
         ev.flush()
         if getattr(system, "store", None) is not None:
             system.store.save(str(out / "store.jsonl"))
@@ -358,6 +462,11 @@ def main() -> None:
         "arm": args.arm,
         "policy": args.policy,
         "model": args.model,
+        # The actor and the writer are separate variables; recording only one of
+        # them makes two runs that differ in the writer indistinguishable in the
+        # summary. `none`/`raw` have no writer LLM at all, hence the empty string.
+        "writer_model": getattr(
+            getattr(getattr(system, "writer", None), "llm", None), "model", ""),
         "eval_split": eval_tasks[0].split if eval_tasks else "",
         "eval_n": len(eval_rows),
         "eval_success": n_ok,
@@ -374,6 +483,14 @@ def main() -> None:
         # is NOT len(evolve_rows) when resuming.
         "evolve_total": args.evolve_step_offset + len(evolve_rows),
         "resumed_from": args.resume_store,
+        # Under --evolve-until-successes the interesting denominator is not the
+        # episode count but how many tasks it took to buy that many successes,
+        # and how many the memory system was actually allowed to see.
+        "evolve_successes": sum(1 for r in evolve_rows if r.get("outcome") == ALL_SUCCESS),
+        "evolve_observed_by_memory": sum(1 for r in evolve_rows
+                                         if r.get("observed_by_memory", True)),
+        "evolve_success_target": args.evolve_until_successes or None,
+        "write_only_on_success": args.write_only_on_success,
         "evolve_success_rate": (
             sum(r["success_rate"] for r in evolve_rows) / len(evolve_rows) if evolve_rows else None
         ),

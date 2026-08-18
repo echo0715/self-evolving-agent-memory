@@ -39,6 +39,7 @@ from memsys import (  # noqa: E402
     MemoryConfig,
     MemoryStore,
     OpenAIChatClient,
+    OpenAIResponsesClient,
     RunLogger,
     WritePolicy,
     build_system,
@@ -129,6 +130,52 @@ def make_agent(args, base_url: str) -> AlfworldAgent:
     )
 
 
+def _dotenv(name: str) -> str | None:
+    """Read one key from the repo's .env, which is gitignored and holds the
+    gateway credential. Real environment variables win over the file."""
+    if os.environ.get(name):
+        return os.environ[name]
+    path = Path(__file__).resolve().parent.parent / ".env"
+    if not path.exists():
+        return None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line.startswith("#") or "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        if k.strip() == name:
+            return v.strip().strip("'\"")
+    return None
+
+
+def build_writer_llm(args, writer_url: str):
+    """The memory writer's client, which is deliberately independent of the
+    agent's: `--writer-model` is the independent variable of the Memory Writing
+    Model study, while the actor stays fixed at `--model` so any delta is
+    attributable to what was written and not to who acted."""
+    model = args.writer_model or args.model
+    key = "EMPTY"
+    if args.writer_api_key_env:
+        key = _dotenv(args.writer_api_key_env)
+        if not key:
+            # Failing here is the point: an unauthenticated writer would 401 on
+            # every call, and `parse_ops` turns that into an empty store rather
+            # than an error, so the arm would finish and report a number.
+            raise SystemExit(
+                f"--writer-api-key-env {args.writer_api_key_env!r} is set but no such key "
+                f"is in the environment or .env")
+    if args.writer_api == "responses":
+        return OpenAIResponsesClient(
+            model, base_url=writer_url, api_key=key,
+            temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
+            reasoning_effort=args.writer_reasoning_effort,
+        )
+    return OpenAIChatClient(
+        model, base_url=writer_url, api_key=key,
+        temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
+    )
+
+
 def episode_row(ep: Episode, seconds: float) -> dict:
     return {
         "task_id": ep.task_id,
@@ -168,6 +215,18 @@ def main() -> None:
     ap.add_argument("--agent-base-url", default="http://localhost:8000/v1")
     ap.add_argument("--writer-base-url", default=None,
                     help="defaults to --agent-base-url; point elsewhere to split GPUs")
+    ap.add_argument("--writer-model", default=None,
+                    help="memory-writing model; defaults to --model (the agent's). Set this "
+                         "to vary the writer independently of the actor, which is the point "
+                         "of the Memory Writing Model study")
+    ap.add_argument("--writer-api", choices=("chat", "responses"), default="chat",
+                    help="wire protocol for the writer endpoint. vLLM speaks 'chat'; the "
+                         "Perplexity gateway serving openai/gpt-5.6-* speaks only 'responses'")
+    ap.add_argument("--writer-api-key-env", default=None,
+                    help="environment variable holding the writer API key (also read from "
+                         "the repo .env). Local vLLM needs none")
+    ap.add_argument("--writer-reasoning-effort", default=None,
+                    help="reasoning effort for a 'responses' writer, e.g. low/medium/high")
     ap.add_argument("--timeout", type=float, default=180.0)
 
     ap.add_argument("--n-rollouts", type=int, default=1, help="rollouts per evolving task")
@@ -188,12 +247,41 @@ def main() -> None:
     ap.add_argument("--evolve-limit", type=int, default=0, help="0 = all tasks in manifest")
     ap.add_argument("--eval-limit", type=int, default=0)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--success-only-writes", action="store_true",
+                    help="discard failed episodes entirely: the memory system never "
+                         "observes them, so they drive no extraction, verification, "
+                         "refinement, pruning or batch induction")
+    ap.add_argument("--evolve-until-successes", type=int, default=0,
+                    help="stop evolving once this many episodes have succeeded, "
+                         "instead of after a fixed number of tasks (0 = off)")
+    ap.add_argument("--failure-only-writes", action="store_true",
+                    help="the mirror of --success-only-writes: discard SUCCESSFUL episodes, "
+                         "so the memory is built from nothing but what went wrong. Note that "
+                         "`raw` then writes nothing at all (it keeps best_success()) and ends "
+                         "up identical to the `none` arm")
+    ap.add_argument("--evolve-until-failures", type=int, default=0,
+                    help="stop evolving once this many episodes have FAILED (0 = off)")
     ap.add_argument("--resume-store", default=None,
                     help="load this store.jsonl before evolving, to continue a previous run")
     ap.add_argument("--evolve-step-offset", type=int, default=0,
                     help="step index the evolving loop starts from; set to the number of "
                          "episodes the resumed store already saw")
     args = ap.parse_args()
+
+    # The two filters and the two budgets are mirrors of each other, so asking
+    # for both is always a mistake -- and a silent one: "success only" wins by
+    # ordering in the loop below and the run would look like a success-budget
+    # run under a failure-budget name.
+    if args.success_only_writes and args.failure_only_writes:
+        raise SystemExit("--success-only-writes and --failure-only-writes are mutually exclusive")
+    if args.evolve_until_successes and args.evolve_until_failures:
+        raise SystemExit("--evolve-until-successes and --evolve-until-failures are mutually exclusive")
+    if args.failure_only_writes and args.arm == "raw":
+        # Not fatal: an empty-store `raw` run is a legitimate (if uninformative)
+        # data point, and refusing would hide that the filter is a no-op here.
+        print("[warn] arm=raw with --failure-only-writes: RawTrajectorySystem keeps only "
+              "best_success(), so nothing will ever be written and this run is the `none` "
+              "baseline with extra steps", flush=True)
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -207,10 +295,7 @@ def main() -> None:
     # ALFWorld's run-to-run noise floor at n=100 is several points.
     system = None
     if args.arm != "none":
-        llm = OpenAIChatClient(
-            args.model, base_url=writer_url, api_key="EMPTY",
-            temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
-        )
+        llm = build_writer_llm(args, writer_url)
         system = build_system(args.arm, llm=llm, config=config, store=build_store(args, config))
         if args.resume_store:
             # Continue a previous run's memory rather than starting empty. Item
@@ -242,6 +327,8 @@ def main() -> None:
         logger = RunLogger(str(out / "evolve_log.jsonl"))
         ev = Evolver(system, config=config, logger=logger)
         ev.step = args.evolve_step_offset
+        n_success = 0
+        n_fail = 0
         with (out / "evolve_episodes.jsonl").open("w", encoding="utf-8") as fh:
             for i, task in enumerate(tasks):
                 t0 = time.time()
@@ -253,16 +340,70 @@ def main() -> None:
                 )
                 ep = run_task(agent, args.data_root, task,
                               memory_block=ret.block, n_rollouts=args.n_rollouts)
-                ev.step_once(ep, ret)
+                # --success-only-writes drops the failed episode entirely rather
+                # than letting the writer see it: no extraction, and also no
+                # verify/refine/prune and no batch-induction buffering, all of
+                # which otherwise take a failure as evidence against whatever was
+                # injected. `raw` already writes only on success by construction
+                # (RawTrajectorySystem.observe keeps best_success()), so this flag
+                # changes that arm only via the step counter.
+                # --failure-only-writes is the same filter with the sign flipped:
+                # every successful episode is dropped, so the store is built out
+                # of failure evidence alone and (under `full`) the only utility
+                # signal the deletion machinery ever sees is negative.
+                if args.success_only_writes:
+                    written = bool(ep.any_success)
+                elif args.failure_only_writes:
+                    written = not ep.any_success
+                else:
+                    written = True
+                if written:
+                    # step_once advances ev.step, so with the flag on the step
+                    # counter -- and with it `full`'s every-25-episode batch
+                    # induction cadence -- counts *written* episodes, not tasks
+                    # attempted. That is what makes "100 successes" the unit.
+                    row_step = ev.step
+                    ev.step_once(ep, ret)
+                else:
+                    row_step = None
                 row = episode_row(ep, time.time() - t0)
-                row["step"] = args.evolve_step_offset + i
+                row["step"] = row_step
+                row["written"] = written
+                row["task_index"] = i
                 evolve_rows.append(row)
                 fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                 fh.flush()
+                n_success += int(bool(ep.any_success))
+                n_fail += int(not ep.any_success)
                 store = getattr(system, "store", None)
                 print(f"[evolve {i+1}/{len(tasks)}] {row['outcome']:<12} "
+                      f"{'W' if written else '.'} succ={n_success} fail={n_fail} "
                       f"store={len(store) if store is not None else '-'} "
                       f"{row['seconds']:.0f}s {task.task_id}", flush=True)
+                # Budget the run by successful episodes instead of attempts: arms
+                # differ by 20+ points in evolve-time success rate, so a fixed
+                # task count hands them very different amounts of usable
+                # experience.
+                if args.evolve_until_successes and n_success >= args.evolve_until_successes:
+                    print(f"[evolve] reached {n_success} successes after {i+1} tasks", flush=True)
+                    break
+                # Same budgeting argument in the other direction: arms differ in
+                # how often they fail, so a fixed task count hands them very
+                # different amounts of failure evidence to write from.
+                if args.evolve_until_failures and n_fail >= args.evolve_until_failures:
+                    print(f"[evolve] reached {n_fail} failures after {i+1} tasks", flush=True)
+                    break
+            else:
+                # Running out of manifest short of the target is a failed run,
+                # not a shorter one -- it would be compared against arms that did
+                # reach it -- so say so rather than writing a summary that looks
+                # complete.
+                if args.evolve_until_successes:
+                    print(f"[evolve] WARNING: manifest exhausted at {n_success} successes "
+                          f"(<{args.evolve_until_successes}) after {len(tasks)} tasks", flush=True)
+                if args.evolve_until_failures:
+                    print(f"[evolve] WARNING: manifest exhausted at {n_fail} failures "
+                          f"(<{args.evolve_until_failures}) after {len(tasks)} tasks", flush=True)
         ev.flush()
         if getattr(system, "store", None) is not None:
             system.store.save(str(out / "store.jsonl"))
@@ -327,14 +468,36 @@ def main() -> None:
         "arm": args.arm,
         "policy": args.policy,
         "model": args.model,
+        # The actor and the writer are separate variables; recording only one of
+        # them makes two runs that differ in the writer indistinguishable in the
+        # summary. `none`/`raw` have no writer LLM at all, hence the empty string.
+        "writer_model": getattr(
+            getattr(getattr(system, "writer", None), "llm", None), "model", ""),
         "eval_n": len(eval_rows),
         "eval_success": n_ok,
         "eval_success_rate": n_ok / len(eval_rows) if eval_rows else 0.0,
         "eval_by_family": _by_family(eval_rows),
+        # Tasks attempted. Under --success-only-writes this is larger than the
+        # number the memory actually saw; the two are separated on purpose so a
+        # "100 successes" run cannot be mistaken for a "100 episodes" one.
         "evolve_n": len(evolve_rows),
+        "evolve_written": sum(1 for r in evolve_rows if r.get("written", True)),
+        "evolve_successes": sum(1 for r in evolve_rows if r.get("any_success")),
+        "evolve_failures": sum(1 for r in evolve_rows if not r.get("any_success")),
+        "success_only_writes": args.success_only_writes,
+        "failure_only_writes": args.failure_only_writes,
+        "evolve_budget": (
+            {"kind": "successes", "target": args.evolve_until_successes}
+            if args.evolve_until_successes else
+            {"kind": "failures", "target": args.evolve_until_failures}
+            if args.evolve_until_failures else {"kind": "tasks", "target": len(evolve_rows)}
+        ),
         # Total episodes this memory has seen, including any resumed run -- the
-        # "evolve on 50 / 100 / 150" axis. NOT len(evolve_rows) when resuming.
-        "evolve_total": args.evolve_step_offset + len(evolve_rows),
+        # "evolve on 50 / 100 / 150" axis. Counts *written* episodes, so it stays
+        # the memory's own experience count when failures are dropped.
+        "evolve_total": args.evolve_step_offset + sum(
+            1 for r in evolve_rows if r.get("written", True)
+        ),
         "resumed_from": args.resume_store,
         "evolve_success_rate": (
             sum(r["success_rate"] for r in evolve_rows) / len(evolve_rows) if evolve_rows else None

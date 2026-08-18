@@ -10,3 +10,4 @@ runs/
 # drops ~160 MB of benchmark payload here. Benchmark data belongs on scratch.
 data/
 results/
+.env

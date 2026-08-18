@@ -17,7 +17,15 @@ from .config import NATIVE_POLICIES, MemoryConfig, WritePolicy
 from .embedding import HashingEmbedder, SentenceTransformerEmbedder, cosine, default_embedder
 from .episode import Episode, Rollout, Step, evidence_supported
 from .item import MemoryItem
-from .llm import CallableLLM, LLMClient, LLMResponse, OpenAIChatClient, ScriptedLLM, Usage
+from .llm import (
+    CallableLLM,
+    LLMClient,
+    LLMResponse,
+    OpenAIChatClient,
+    OpenAIResponsesClient,
+    ScriptedLLM,
+    Usage,
+)
 from .runner import Evolver, RunLogger, frozen
 from .schemas import CONTENT_TYPES, ReflectionContent, RuleContent, SkillContent, get_type
 from .store import MemoryStore, Scored, render_block
@@ -75,6 +83,7 @@ __all__ = [
     "ScriptedLLM",
     "CallableLLM",
     "OpenAIChatClient",
+    "OpenAIResponsesClient",
     "Usage",
     "ReflectionSystem",
     "RuleSystem",

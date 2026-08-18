@@ -1,0 +1,2114 @@
+{
+  "schema_version": 2,
+  "benchmark": "ALFWorld",
+  "data_version": "json_2.1.1",
+  "split": "train",
+  "seed": 42,
+  "selection": "prefix_of_seeded_permutation_of_lexicographically_sorted_paths",
+  "skip": 0,
+  "available_count": 3553,
+  "selected_count": 300,
+  "task_ids_sha256": "2f6f7f16709d9ae7cd6d6b439fd158598d4c7bc2c0b10f261c548a5373b66d0c",
+  "tasks": [
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SoapBottle-None-Drawer-423/trial_T20190909_061945_505585/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SoapBottle-None-Drawer-423/trial_T20190909_061945_505585/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two soapbottle and put them in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Book-None-Desk-314/trial_T20190911_015042_291676/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Book-None-Desk-314/trial_T20190911_015042_291676/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some book on desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-Cabinet-18/trial_T20190907_212755_456877/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-Cabinet-18/trial_T20190907_212755_456877/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pan and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Statue-None-SideTable-214/trial_T20190909_065508_033151/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Statue-None-SideTable-214/trial_T20190909_065508_033151/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two statue in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SoapBottle-None-Toilet-412/trial_T20190908_112135_164068/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SoapBottle-None-Toilet-412/trial_T20190908_112135_164068/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a soapbottle in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-CounterTop-22/trial_T20190909_022057_173698/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-CounterTop-22/trial_T20190909_022057_173698/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some cup and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-324/trial_T20190908_155728_431043/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-324/trial_T20190908_155728_431043/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the pillow with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Toilet-419/trial_T20190907_005338_967686/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Toilet-419/trial_T20190907_005338_967686/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some soapbar and put it in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-Fridge-16/trial_T20190907_203354_811721/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-Fridge-16/trial_T20190907_203354_811721/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some apple and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Pen-None-Dresser-229/trial_T20190908_043711_689596/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Pen-None-Dresser-229/trial_T20190908_043711_689596/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two pen and put them in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Pot-None-Shelf-1/trial_T20190908_171357_561933/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Pot-None-Shelf-1/trial_T20190908_171357_561933/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two pot in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CD-None-Drawer-306/trial_T20190907_025443_659956/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CD-None-Drawer-306/trial_T20190907_025443_659956/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two cd and put them in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Lettuce-None-Fridge-15/trial_T20190909_005320_906392/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Lettuce-None-Fridge-15/trial_T20190909_005320_906392/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two lettuce in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Knife-None-SideTable-3/trial_T20190906_214318_430974/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Knife-None-SideTable-3/trial_T20190906_214318_430974/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some knife on sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-DishSponge-None-Drawer-430/trial_T20190908_122130_366898/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-DishSponge-None-Drawer-430/trial_T20190908_122130_366898/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean dishsponge in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-Microwave-23/trial_T20190908_051030_481119/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-Microwave-23/trial_T20190908_051030_481119/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some apple and put it in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Plate-None-Cabinet-13/trial_T20190907_062749_759882/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Plate-None-Cabinet-13/trial_T20190907_062749_759882/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some plate and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-ArmChair-223/trial_T20190909_110354_219840/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-ArmChair-223/trial_T20190909_110354_219840/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two creditcard in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Sofa-218/trial_T20190907_231953_945601/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Sofa-218/trial_T20190907_231953_945601/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two cellphone in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Plate-None-Fridge-19/trial_T20190907_014028_680948/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Plate-None-Fridge-19/trial_T20190907_014028_680948/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some plate and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-HandTowel-None-CounterTop-421/trial_T20190909_145453_953814/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-HandTowel-None-CounterTop-421/trial_T20190909_145453_953814/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a handtowel in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Cabinet-20/trial_T20190907_195135_687248/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Cabinet-20/trial_T20190907_195135_687248/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some ladle and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-Shelf-7/trial_T20190908_135638_621187/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-Shelf-7/trial_T20190908_135638_621187/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool mug in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-StoveBurner-1/trial_T20190907_183647_995754/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-StoveBurner-1/trial_T20190907_183647_995754/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pan and put it in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-StoveBurner-2/trial_T20190908_093815_701270/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-StoveBurner-2/trial_T20190908_093815_701270/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean kettle in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CreditCard-None-DiningTable-329/trial_T20190909_013555_714877/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CreditCard-None-DiningTable-329/trial_T20190909_013555_714877/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a creditcard in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-KeyChain-None-ArmChair-318/trial_T20190909_114706_369286/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-KeyChain-None-ArmChair-318/trial_T20190909_114706_369286/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a keychain in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Mug-None-CoffeeMachine-1/trial_T20190909_134710_542972/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Mug-None-CoffeeMachine-1/trial_T20190909_134710_542972/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-316/trial_T20190908_232409_225369/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-316/trial_T20190908_232409_225369/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the pillow with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-StoveBurner-30/trial_T20190906_200703_494083/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-StoveBurner-30/trial_T20190906_200703_494083/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some kettle and put it in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Newspaper-None-Sofa-218/trial_T20190908_082733_167561/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Newspaper-None-Sofa-218/trial_T20190908_082733_167561/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two newspaper and put them in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-328/trial_T20190908_114608_138013/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-328/trial_T20190908_114608_138013/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the pillow with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Potato-None-Fridge-5/trial_T20190908_140513_739727/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Potato-None-Fridge-5/trial_T20190908_140513_739727/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some potato and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-314/trial_T20190908_042438_590230/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-314/trial_T20190908_042438_590230/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at alarmclock under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-TissueBox-None-SideTable-321/trial_T20190908_030039_682622/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-TissueBox-None-SideTable-321/trial_T20190908_030039_682622/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two tissuebox and put them in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CD-None-Dresser-318/trial_T20190907_190322_270194/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CD-None-Dresser-318/trial_T20190907_190322_270194/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some cd on dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-26/trial_T20190908_063705_795670/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-26/trial_T20190908_063705_795670/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool mug in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Plate-None-Cabinet-13/trial_T20190909_123448_575866/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Plate-None-Cabinet-13/trial_T20190909_123448_575866/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some plate and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Potato-None-Microwave-18/trial_T20190909_152047_812506/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Potato-None-Microwave-18/trial_T20190909_152047_812506/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some potato and put it in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SoapBottle-None-GarbageCan-428/trial_T20190909_105731_241727/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SoapBottle-None-GarbageCan-428/trial_T20190909_105731_241727/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two soapbottle in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Dresser-217/trial_T20190909_053720_916417/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Dresser-217/trial_T20190909_053720_916417/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a remotecontrol in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Sofa-207/trial_T20190909_153746_466577/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Sofa-207/trial_T20190909_153746_466577/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a remotecontrol in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-ArmChair-207/trial_T20190906_201711_370043/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-ArmChair-207/trial_T20190906_201711_370043/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two creditcard and put them in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Bowl-None-Dresser-327/trial_T20190907_235202_045025/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Bowl-None-Dresser-327/trial_T20190907_235202_045025/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two bowl in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Tomato-None-SideTable-21/trial_T20190907_165032_703898/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Tomato-None-SideTable-21/trial_T20190907_165032_703898/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some tomato and put it in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-423/trial_T20190908_022354_663784/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-423/trial_T20190908_022354_663784/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a toiletpaper in toiletpaperhanger."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Pan-None-StoveBurner-13/trial_T20190907_123642_135397/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Pan-None-StoveBurner-13/trial_T20190907_123642_135397/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean pan in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Sofa-216/trial_T20190909_150037_262342/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Sofa-216/trial_T20190909_150037_262342/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a remotecontrol in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Laptop-None-Ottoman-203/trial_T20190907_034427_986385/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Laptop-None-Ottoman-203/trial_T20190907_034427_986385/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two laptop and put them in ottoman."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Spoon-None-Drawer-8/trial_T20190907_151947_378545/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Spoon-None-Drawer-8/trial_T20190907_151947_378545/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some spoon and put it in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-Cabinet-405/trial_T20190907_080943_173175/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-Cabinet-405/trial_T20190907_080943_173175/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some cloth and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Drawer-4/trial_T20190908_180801_677907/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Drawer-4/trial_T20190908_180801_677907/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean ladle in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-21/trial_T20190908_034155_073328/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-21/trial_T20190908_034155_073328/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool mug in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-SideTable-3/trial_T20190907_140859_097831/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-SideTable-3/trial_T20190907_140859_097831/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot tomato in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-DiningTable-11/trial_T20190907_125451_098098/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-DiningTable-11/trial_T20190907_125451_098098/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot egg in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Candle-None-Cart-401/trial_T20190909_081920_801026/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Candle-None-Cart-401/trial_T20190909_081920_801026/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a candle in cart."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-CounterTop-410/trial_T20190907_181451_902505/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-CounterTop-410/trial_T20190907_181451_902505/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some cloth and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Lettuce-None-DiningTable-26/trial_T20190906_200751_569799/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Lettuce-None-DiningTable-26/trial_T20190906_200751_569799/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some lettuce and put it in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-Drawer-410/trial_T20190908_162032_928842/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-Drawer-410/trial_T20190908_162032_928842/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some toiletpaper on drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-KeyChain-None-DeskLamp-309/trial_T20190909_094258_737509/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-KeyChain-None-DeskLamp-309/trial_T20190909_094258_737509/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at keychain under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-314/trial_T20190908_042454_725701/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-314/trial_T20190908_042454_725701/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at alarmclock under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Bowl-None-Shelf-7/trial_T20190908_152810_145685/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Bowl-None-Shelf-7/trial_T20190908_152810_145685/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some bowl and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-SideTable-21/trial_T20190908_041653_706030/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-SideTable-21/trial_T20190908_041653_706030/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some apple and put it in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Statue-None-CoffeeTable-222/trial_T20190907_131249_788749/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Statue-None-CoffeeTable-222/trial_T20190907_131249_788749/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some statue on coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SoapBottle-None-Toilet-413/trial_T20190909_042914_071706/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SoapBottle-None-Toilet-413/trial_T20190909_042914_071706/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some soapbottle on toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-318/trial_T20190906_180832_250182/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-318/trial_T20190906_180832_250182/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the alarmclock with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-CounterTop-24/trial_T20190909_012033_758096/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-CounterTop-24/trial_T20190909_012033_758096/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool pot in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-Drawer-416/trial_T20190908_040658_918781/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-Drawer-416/trial_T20190908_040658_918781/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some cloth and put it in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Shelf-1/trial_T20190907_075404_556171/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Shelf-1/trial_T20190907_075404_556171/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot mug in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-DiningTable-21/trial_T20190907_210609_700272/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-DiningTable-21/trial_T20190907_210609_700272/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean apple in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-CounterTop-2/trial_T20190908_092533_792300/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-CounterTop-2/trial_T20190908_092533_792300/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some egg and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-301/trial_T20190907_174127_043461/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-301/trial_T20190907_174127_043461/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at alarmclock under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Egg-None-Microwave-14/trial_T20190907_232820_943207/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Egg-None-Microwave-14/trial_T20190907_232820_943207/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some egg and put it in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Egg-None-SideTable-21/trial_T20190907_044039_497081/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Egg-None-SideTable-21/trial_T20190907_044039_497081/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool egg in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-GarbageCan-420/trial_T20190909_141746_420846/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-GarbageCan-420/trial_T20190909_141746_420846/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Newspaper-None-Ottoman-203/trial_T20190908_173724_161102/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Newspaper-None-Ottoman-203/trial_T20190908_173724_161102/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some newspaper on ottoman."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Plate-None-Shelf-20/trial_T20190907_034641_037726/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Plate-None-Shelf-20/trial_T20190907_034641_037726/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some plate and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Spoon-None-SideTable-3/trial_T20190908_123320_379413/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Spoon-None-SideTable-3/trial_T20190908_123320_379413/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spoon in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-ToiletPaper-None-Cabinet-412/trial_T20190908_141702_352728/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-ToiletPaper-None-Cabinet-412/trial_T20190908_141702_352728/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two toiletpaper and put them in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Fridge-13/trial_T20190908_070322_791516/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Fridge-13/trial_T20190908_070322_791516/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot cup in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-Fridge-24/trial_T20190907_210711_329362/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-Fridge-24/trial_T20190907_210711_329362/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some apple and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-StoveBurner-16/trial_T20190907_164753_746972/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-StoveBurner-16/trial_T20190907_164753_746972/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pan and put it in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Knife-None-CounterTop-24/trial_T20190907_235023_869746/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Knife-None-CounterTop-24/trial_T20190907_235023_869746/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some knife and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-18/trial_T20190907_142151_953742/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-18/trial_T20190907_142151_953742/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot mug in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Plate-None-DiningTable-17/trial_T20190909_122910_260021/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Plate-None-DiningTable-17/trial_T20190909_122910_260021/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some plate and put it in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Dresser-217/trial_T20190909_053743_317534/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-RemoteControl-None-Dresser-217/trial_T20190909_053743_317534/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some remotecontrol on dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-KeyChain-None-ArmChair-217/trial_T20190906_213318_485668/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-KeyChain-None-ArmChair-217/trial_T20190906_213318_485668/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two keychain in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-SideTable-21/trial_T20190907_162219_906540/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-SideTable-21/trial_T20190907_162219_906540/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some butterknife and put it in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Pencil-None-Desk-327/trial_T20190907_234611_599540/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Pencil-None-Desk-327/trial_T20190907_234611_599540/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two pencil and put them in desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SprayBottle-None-Toilet-405/trial_T20190908_021323_460782/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SprayBottle-None-Toilet-405/trial_T20190908_021323_460782/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some spraybottle on toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Pot-None-StoveBurner-4/trial_T20190907_151337_109400/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Pot-None-StoveBurner-4/trial_T20190907_151337_109400/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean pot in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-CounterTop-410/trial_T20190908_161608_081694/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-CounterTop-410/trial_T20190908_161608_081694/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-KeyChain-None-ArmChair-213/trial_T20190907_001825_048110/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-KeyChain-None-ArmChair-213/trial_T20190907_001825_048110/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some keychain on armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Cup-None-Microwave-26/trial_T20190907_231104_458307/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Cup-None-Microwave-26/trial_T20190907_231104_458307/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two cup in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-SideTable-326/trial_T20190908_184844_354498/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-SideTable-326/trial_T20190908_184844_354498/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two creditcard in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Candle-None-Drawer-427/trial_T20190909_043917_251333/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Candle-None-Drawer-427/trial_T20190909_043917_251333/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two candle in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-323/trial_T20190909_044736_929512/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-323/trial_T20190909_044736_929512/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the alarmclock with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-TissueBox-None-CoffeeTable-230/trial_T20190909_145815_720431/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-TissueBox-None-CoffeeTable-230/trial_T20190909_145815_720431/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two tissuebox in coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-26/trial_T20190909_014033_250547/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-26/trial_T20190909_014033_250547/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot mug in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Pencil-None-SideTable-322/trial_T20190908_112718_743066/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Pencil-None-SideTable-322/trial_T20190908_112718_743066/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some pencil on sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Fork-None-Drawer-30/trial_T20190908_030733_809636/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Fork-None-Drawer-30/trial_T20190908_030733_809636/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some fork and put it in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-DiningTable-311/trial_T20190908_072852_125912/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-DiningTable-311/trial_T20190908_072852_125912/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two creditcard and put them in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Newspaper-None-DeskLamp-210/trial_T20190906_234518_391010/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Newspaper-None-DeskLamp-210/trial_T20190906_234518_391010/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at newspaper under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-KeyChain-None-Sofa-202/trial_T20190908_102743_595985/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-KeyChain-None-Sofa-202/trial_T20190908_102743_595985/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two keychain and put them in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-RemoteControl-None-ArmChair-223/trial_T20190908_163700_012593/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-RemoteControl-None-ArmChair-223/trial_T20190908_163700_012593/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a remotecontrol in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-HandTowel-None-CounterTop-409/trial_T20190909_065401_647882/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-HandTowel-None-CounterTop-409/trial_T20190909_065401_647882/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two handtowel and put them in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Drawer-329/trial_T20190909_030006_191201/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Drawer-329/trial_T20190909_030006_191201/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two cellphone and put them in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-AlarmClock-None-Desk-310/trial_T20190909_115859_563203/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-AlarmClock-None-Desk-310/trial_T20190909_115859_563203/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some alarmclock on desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Drawer-16/trial_T20190909_024553_470193/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Drawer-16/trial_T20190909_024553_470193/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some ladle and put it in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Egg-None-DiningTable-24/trial_T20190907_185422_664403/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Egg-None-DiningTable-24/trial_T20190907_185422_664403/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean egg in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Plate-None-DiningTable-28/trial_T20190908_012724_604877/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Plate-None-DiningTable-28/trial_T20190908_012724_604877/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot plate in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-430/trial_T20190908_124127_599058/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-430/trial_T20190908_124127_599058/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-409/trial_T20190907_152744_216775/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-409/trial_T20190907_152744_216775/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a toiletpaper in toiletpaperhanger."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Bowl-None-Cabinet-19/trial_T20190908_043325_612655/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Bowl-None-Cabinet-19/trial_T20190908_043325_612655/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool bowl in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-AlarmClock-None-DiningTable-329/trial_T20190909_011821_404731/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-AlarmClock-None-DiningTable-329/trial_T20190909_011821_404731/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some alarmclock on diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Book-None-Dresser-319/trial_T20190906_204305_696118/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Book-None-Dresser-319/trial_T20190906_204305_696118/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a book in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-302/trial_T20190909_150929_316139/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Pillow-None-DeskLamp-302/trial_T20190909_150929_316139/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at pillow under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Pot-None-StoveBurner-26/trial_T20190907_210619_616849/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Pot-None-StoveBurner-26/trial_T20190907_210619_616849/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some pot and put it in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-KeyChain-None-Dresser-317/trial_T20190908_062357_662469/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-KeyChain-None-Dresser-317/trial_T20190908_062357_662469/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some keychain on dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SaltShaker-None-Shelf-20/trial_T20190906_200921_594258/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SaltShaker-None-Shelf-20/trial_T20190906_200921_594258/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two saltshaker and put them in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Pot-None-StoveBurner-4/trial_T20190907_151432_288408/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Pot-None-StoveBurner-4/trial_T20190907_151432_288408/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some pot and put it in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-12/trial_T20190909_032940_018377/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-12/trial_T20190909_032940_018377/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some mug and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-RemoteControl-None-Sofa-212/trial_T20190907_235247_981744/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-RemoteControl-None-Sofa-212/trial_T20190907_235247_981744/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two remotecontrol in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-19/trial_T20190908_121544_758256/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-19/trial_T20190908_121544_758256/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some apple and put it in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-CounterTop-30/trial_T20190909_130401_115312/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-CounterTop-30/trial_T20190909_130401_115312/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot egg in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Box-None-CoffeeTable-230/trial_T20190908_124448_064600/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Box-None-CoffeeTable-230/trial_T20190908_124448_064600/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two box and put them in coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Pillow-None-ArmChair-206/trial_T20190909_011712_191509/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Pillow-None-ArmChair-206/trial_T20190909_011712_191509/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some pillow on armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-DiningTable-21/trial_T20190918_193730_212919/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-DiningTable-21/trial_T20190918_193730_212919/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two peppershaker and put them in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-2/trial_T20190907_044207_650433/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-2/trial_T20190907_044207_650433/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-GarbageCan-408/trial_T20190908_045340_470949/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-GarbageCan-408/trial_T20190908_045340_470949/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some soapbar and put it in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Kettle-None-Shelf-1/trial_T20190907_011711_519188/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Kettle-None-Shelf-1/trial_T20190907_011711_519188/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a kettle in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-HandTowel-None-Toilet-409/trial_T20190909_054134_111298/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-HandTowel-None-Toilet-409/trial_T20190909_054134_111298/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two handtowel and put them in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Pen-None-Drawer-307/trial_T20190909_055453_986512/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Pen-None-Drawer-307/trial_T20190909_055453_986512/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two pen in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-Shelf-20/trial_T20190908_121229_742996/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-Shelf-20/trial_T20190908_121229_742996/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some mug and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-DiningTable-329/trial_T20190909_001332_765357/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-DiningTable-329/trial_T20190909_001332_765357/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two creditcard in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-Shelf-7/trial_T20190907_025034_867100/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-Shelf-7/trial_T20190907_025034_867100/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pot and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Laptop-None-DeskLamp-216/trial_T20190907_185526_145194/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Laptop-None-DeskLamp-216/trial_T20190907_185526_145194/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the laptop with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-TissueBox-None-Toilet-426/trial_T20190909_043641_389014/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-TissueBox-None-Toilet-426/trial_T20190909_043641_389014/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a tissuebox in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Spatula-None-CounterTop-19/trial_T20190906_181322_850030/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Spatula-None-CounterTop-19/trial_T20190906_181322_850030/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean spatula in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Watch-None-CoffeeTable-201/trial_T20190908_124638_700872/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Watch-None-CoffeeTable-201/trial_T20190908_124638_700872/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a watch in coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Newspaper-None-ArmChair-212/trial_T20190907_222321_153992/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Newspaper-None-ArmChair-212/trial_T20190907_222321_153992/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a newspaper in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Book-None-Bed-312/trial_T20190908_103648_829231/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Book-None-Bed-312/trial_T20190908_103648_829231/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a book in bed."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-CounterTop-422/trial_T20190908_125025_238872/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-CounterTop-422/trial_T20190908_125025_238872/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some soapbar and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-GarbageCan-2/trial_T20190908_204114_322747/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-GarbageCan-2/trial_T20190908_204114_322747/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot apple in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Tomato-None-CounterTop-19/trial_T20190918_175616_211298/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Tomato-None-CounterTop-19/trial_T20190918_175616_211298/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two tomato and put them in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Plate-None-DeskLamp-218/trial_T20190907_215235_918119/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Plate-None-DeskLamp-218/trial_T20190907_215235_918119/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at plate under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Statue-None-DiningTable-228/trial_T20190906_222705_543880/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Statue-None-DiningTable-228/trial_T20190906_222705_543880/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two statue and put them in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SoapBottle-None-GarbageCan-411/trial_T20190908_051634_985936/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SoapBottle-None-GarbageCan-411/trial_T20190908_051634_985936/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some soapbottle on garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Cabinet-1/trial_T20190909_091033_436380/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Cabinet-1/trial_T20190909_091033_436380/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some cup and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Tomato-None-Microwave-13/trial_T20190908_125158_098734/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Tomato-None-Microwave-13/trial_T20190908_125158_098734/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a tomato in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Egg-None-Microwave-18/trial_T20190909_113701_595505/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Egg-None-Microwave-18/trial_T20190909_113701_595505/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool egg in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-SideTable-28/trial_T20190908_153259_734590/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-SideTable-28/trial_T20190908_153259_734590/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some tomato and put it in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Bread-None-DiningTable-15/trial_T20190908_195722_260654/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Bread-None-DiningTable-15/trial_T20190908_195722_260654/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool bread in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-Drawer-11/trial_T20190906_215647_678103/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-Drawer-11/trial_T20190906_215647_678103/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean butterknife in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-CounterTop-416/trial_T20190909_090331_330612/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-CounterTop-416/trial_T20190909_090331_330612/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean soapbar in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-ArmChair-206/trial_T20190909_020952_108591/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-ArmChair-206/trial_T20190909_020952_108591/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two creditcard and put them in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Vase-None-SideTable-330/trial_T20190907_052246_310066/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Vase-None-SideTable-330/trial_T20190907_052246_310066/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two vase and put them in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Cup-None-DiningTable-4/trial_T20190909_065136_839164/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Cup-None-DiningTable-4/trial_T20190909_065136_839164/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool cup in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-DiningTable-17/trial_T20190909_042716_008360/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-DiningTable-17/trial_T20190909_042716_008360/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some tomato and put it in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-17/trial_T20190907_033141_630186/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-17/trial_T20190907_033141_630186/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool pot in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-ToiletPaper-None-Toilet-418/trial_T20190910_062201_303964/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-ToiletPaper-None-Toilet-418/trial_T20190910_062201_303964/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two toiletpaper in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Kettle-None-Cabinet-18/trial_T20190918_172244_129893/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Kettle-None-Cabinet-18/trial_T20190918_172244_129893/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some kettle on cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-Fridge-27/trial_T20190908_022348_008779/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-Fridge-27/trial_T20190908_022348_008779/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some egg and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-DiningTable-27/trial_T20190907_062853_238120/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-DiningTable-27/trial_T20190907_062853_238120/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean butterknife in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Pan-None-CounterTop-13/trial_T20190908_113305_154837/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Pan-None-CounterTop-13/trial_T20190908_113305_154837/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some pan and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Bread-None-DiningTable-15/trial_T20190907_030751_816698/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Bread-None-DiningTable-15/trial_T20190907_030751_816698/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot bread in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Cabinet-428/trial_T20190908_014606_560501/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Cabinet-428/trial_T20190908_014606_560501/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean soapbar in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-DiningTable-19/trial_T20190919_024225_570009/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-DiningTable-19/trial_T20190919_024225_570009/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two peppershaker in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Egg-None-CounterTop-12/trial_T20190907_151629_832433/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Egg-None-CounterTop-12/trial_T20190907_151629_832433/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool egg in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Spoon-None-DiningTable-18/trial_T20190909_102050_895053/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Spoon-None-DiningTable-18/trial_T20190909_102050_895053/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean spoon in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-303/trial_T20190908_144950_175895/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-303/trial_T20190908_144950_175895/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at alarmclock under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-KeyChain-None-DeskLamp-309/trial_T20190909_094219_644881/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-KeyChain-None-DeskLamp-309/trial_T20190909_094219_644881/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at keychain under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Bread-None-CounterTop-15/trial_T20190907_000358_854333/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Bread-None-CounterTop-15/trial_T20190907_000358_854333/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot bread in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Cup-None-Shelf-1/trial_T20190908_015321_582840/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Cup-None-Shelf-1/trial_T20190908_015321_582840/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two cup and put them in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-417/trial_T20190908_071856_380211/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-417/trial_T20190908_071856_380211/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-AlarmClock-None-Dresser-319/trial_T20190908_002730_200712/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-AlarmClock-None-Dresser-319/trial_T20190908_002730_200712/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a alarmclock in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Bowl-None-DiningTable-4/trial_T20190908_031155_328143/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Bowl-None-DiningTable-4/trial_T20190908_031155_328143/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool bowl in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Mug-None-CoffeeMachine-1/trial_T20190909_134634_406636/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Mug-None-CoffeeMachine-1/trial_T20190909_134634_406636/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Pencil-None-Shelf-301/trial_T20190909_011323_432966/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Pencil-None-Shelf-301/trial_T20190909_011323_432966/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two pencil in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Potato-None-Fridge-16/trial_T20190907_210941_026899/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Potato-None-Fridge-16/trial_T20190907_210941_026899/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot potato in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Cart-430/trial_T20190907_075807_163356/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Cart-430/trial_T20190907_075807_163356/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some soapbar and put it in cart."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-7/trial_T20190907_051334_995569/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-7/trial_T20190907_051334_995569/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pot and put it in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-Shelf-7/trial_T20190907_200522_086856/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-Shelf-7/trial_T20190907_200522_086856/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some kettle and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-ToiletPaper-None-Shelf-422/trial_T20190908_070044_078336/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-ToiletPaper-None-Shelf-422/trial_T20190908_070044_078336/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two toiletpaper and put them in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-AlarmClock-None-Desk-318/trial_T20190910_021620_491490/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-AlarmClock-None-Desk-318/trial_T20190910_021620_491490/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a alarmclock in desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-CounterTop-409/trial_T20190908_140608_692564/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-CounterTop-409/trial_T20190908_140608_692564/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some cloth and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CreditCard-None-ArmChair-202/trial_T20190909_011645_748929/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CreditCard-None-ArmChair-202/trial_T20190909_011645_748929/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some creditcard on armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-Cabinet-5/trial_T20190906_235356_747730/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-Cabinet-5/trial_T20190906_235356_747730/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pot and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Cabinet-28/trial_T20190909_053018_834213/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Cabinet-28/trial_T20190909_053018_834213/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot cup in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Box-None-DeskLamp-218/trial_T20190909_042617_850108/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Box-None-DeskLamp-218/trial_T20190909_042617_850108/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the box with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Cabinet-3/trial_T20190908_233045_285903/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Cup-None-Cabinet-3/trial_T20190908_233045_285903/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some cup and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Potato-None-CounterTop-15/trial_T20190908_231736_159994/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Potato-None-CounterTop-15/trial_T20190908_231736_159994/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot potato in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-420/trial_T20190908_155546_250341/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-420/trial_T20190908_155546_250341/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some toiletpaper on toiletpaperhanger."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Shelf-5/trial_T20190906_203817_948928/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Shelf-5/trial_T20190906_203817_948928/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some mug and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Pencil-None-DeskLamp-303/trial_T20190909_064550_960291/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Pencil-None-DeskLamp-303/trial_T20190909_064550_960291/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at pencil under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SoapBottle-None-Toilet-408/trial_T20190907_084042_365541/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SoapBottle-None-Toilet-408/trial_T20190907_084042_365541/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a soapbottle in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Bowl-None-DeskLamp-302/trial_T20190908_030636_661532/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Bowl-None-DeskLamp-302/trial_T20190908_030636_661532/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the bowl with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Plate-None-DiningTable-7/trial_T20190907_223811_005665/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Plate-None-DiningTable-7/trial_T20190907_223811_005665/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot plate in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Lettuce-None-CounterTop-1/trial_T20190908_042822_616396/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Lettuce-None-CounterTop-1/trial_T20190908_042822_616396/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool lettuce in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Watch-None-CoffeeTable-217/trial_T20190909_065744_148073/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Watch-None-CoffeeTable-217/trial_T20190909_065744_148073/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two watch and put them in coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-19/trial_T20190907_152710_355664/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-19/trial_T20190907_152710_355664/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some mug and put it in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Laptop-None-DeskLamp-323/trial_T20190908_014255_071929/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Laptop-None-DeskLamp-323/trial_T20190908_014255_071929/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at laptop under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-427/trial_T20190908_121616_357729/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-427/trial_T20190908_121616_357729/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some toiletpaper on toiletpaperhanger."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Candle-None-CounterTop-417/trial_T20190909_142316_108523/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Candle-None-CounterTop-417/trial_T20190909_142316_108523/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some candle on countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Bread-None-CounterTop-11/trial_T20190907_185214_077230/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Bread-None-CounterTop-11/trial_T20190907_185214_077230/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some bread and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SoapBar-None-GarbageCan-416/trial_T20190908_020828_777495/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SoapBar-None-GarbageCan-416/trial_T20190908_020828_777495/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some soapbar on garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CellPhone-None-Bed-324/trial_T20190907_233803_611728/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CellPhone-None-Bed-324/trial_T20190907_233803_611728/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a cellphone in bed."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Vase-None-DiningTable-227/trial_T20190910_073140_762310/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Vase-None-DiningTable-227/trial_T20190910_073140_762310/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two vase and put them in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-KeyChain-None-Desk-310/trial_T20190908_124646_907558/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-KeyChain-None-Desk-310/trial_T20190908_124646_907558/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some keychain on desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-5/trial_T20190908_111700_053859/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-5/trial_T20190908_111700_053859/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool apple in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Bowl-None-CoffeeTable-201/trial_T20190907_171714_885383/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Bowl-None-CoffeeTable-201/trial_T20190907_171714_885383/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a bowl in coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Cup-None-SideTable-3/trial_T20190907_120900_648356/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Cup-None-SideTable-3/trial_T20190907_120900_648356/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some cup and put it in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-TissueBox-None-DiningTable-230/trial_T20190914_012602_275826/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-TissueBox-None-DiningTable-230/trial_T20190914_012602_275826/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two tissuebox in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-11/trial_T20190907_164357_593878/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-11/trial_T20190907_164357_593878/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot mug in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Bed-324/trial_T20190908_063539_748730/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Bed-324/trial_T20190908_063539_748730/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two cellphone in bed."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-327/trial_T20190909_101936_297661/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-327/trial_T20190909_101936_297661/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the alarmclock with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-6/trial_T20190906_214040_587134/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-6/trial_T20190906_214040_587134/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-RemoteControl-None-CoffeeTable-209/trial_T20190909_062307_151182/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-RemoteControl-None-CoffeeTable-209/trial_T20190909_062307_151182/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some remotecontrol on coffeetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CellPhone-None-Desk-305/trial_T20190907_231028_856423/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CellPhone-None-Desk-305/trial_T20190907_231028_856423/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some cellphone on desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-Drawer-15/trial_T20190909_022741_011150/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-Drawer-15/trial_T20190909_022741_011150/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two peppershaker in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SprayBottle-None-Toilet-418/trial_T20190906_190917_905379/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SprayBottle-None-Toilet-418/trial_T20190906_190917_905379/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some spraybottle on toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-Microwave-8/trial_T20190909_113218_601501/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-Microwave-8/trial_T20190909_113218_601501/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some apple and put it in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CellPhone-None-Safe-302/trial_T20190908_122757_136508/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CellPhone-None-Safe-302/trial_T20190908_122757_136508/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some cellphone on safe."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Cloth-None-CounterTop-414/trial_T20190909_065033_930964/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Cloth-None-CounterTop-414/trial_T20190909_065033_930964/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some cloth on countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-15/trial_T20190908_004914_713432/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-15/trial_T20190908_004914_713432/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-CounterTop-8/trial_T20190909_121844_285394/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-CounterTop-8/trial_T20190909_121844_285394/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some ladle and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-316/trial_T20190906_202253_509816/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-AlarmClock-None-DeskLamp-316/trial_T20190906_202253_509816/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the alarmclock with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Pencil-None-Desk-310/trial_T20190909_142857_563593/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Pencil-None-Desk-310/trial_T20190909_142857_563593/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a pencil in desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Bowl-None-Microwave-25/trial_T20190906_180204_213411/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Bowl-None-Microwave-25/trial_T20190906_180204_213411/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool bowl in microwave."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-SoapBottle-None-GarbageCan-411/trial_T20190908_051545_764778/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-SoapBottle-None-GarbageCan-411/trial_T20190908_051545_764778/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some soapbottle on garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CellPhone-None-Safe-323/trial_T20190907_234431_849819/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CellPhone-None-Safe-323/trial_T20190907_234431_849819/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some cellphone on safe."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-1/trial_T20190907_100909_634204/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-1/trial_T20190907_100909_634204/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool mug in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Toilet-411/trial_T20190908_103036_548485/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-SoapBar-None-Toilet-411/trial_T20190908_103036_548485/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some soapbar and put it in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-GarbageCan-8/trial_T20190907_043034_904085/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-GarbageCan-8/trial_T20190907_043034_904085/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some apple and put it in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-DishSponge-None-Shelf-1/trial_T20190908_114111_289794/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-DishSponge-None-Shelf-1/trial_T20190908_114111_289794/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean dishsponge in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Pillow-None-Sofa-221/trial_T20190908_175303_977893/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Pillow-None-Sofa-221/trial_T20190908_175303_977893/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some pillow on sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Lettuce-None-Fridge-4/trial_T20190907_163644_382139/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Lettuce-None-Fridge-4/trial_T20190907_163644_382139/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some lettuce and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Book-None-SideTable-329/trial_T20190908_050528_227725/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Book-None-SideTable-329/trial_T20190908_050528_227725/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some book on sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-GarbageCan-428/trial_T20190909_055155_468865/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-GarbageCan-428/trial_T20190909_055155_468865/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Newspaper-None-Ottoman-203/trial_T20190908_190823_442359/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Newspaper-None-Ottoman-203/trial_T20190908_190823_442359/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a newspaper in ottoman."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-4/trial_T20190906_190623_623711/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-4/trial_T20190906_190623_623711/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool pot in stoveburner."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-Drawer-423/trial_T20190908_140626_609969/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Cloth-None-Drawer-423/trial_T20190908_140626_609969/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean cloth in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-DiningTable-23/trial_T20190912_125143_164636/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-DiningTable-23/trial_T20190912_125143_164636/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot apple in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-CounterTop-411/trial_T20190909_045011_463449/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-CounterTop-411/trial_T20190909_045011_463449/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Book-None-Drawer-307/trial_T20190909_111540_991626/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Book-None-Drawer-307/trial_T20190909_111540_991626/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two book in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Pen-None-Dresser-327/trial_T20190912_025720_775535/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Pen-None-Dresser-327/trial_T20190912_025720_775535/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two pen in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Watch-None-Shelf-326/trial_T20190906_201415_685426/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Watch-None-Shelf-326/trial_T20190906_201415_685426/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two watch and put them in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-422/trial_T20190908_164810_844806/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-422/trial_T20190908_164810_844806/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two spraybottle in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Lettuce-None-GarbageCan-27/trial_T20190908_135424_349613/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Lettuce-None-GarbageCan-27/trial_T20190908_135424_349613/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some lettuce and put it in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-413/trial_T20190909_043758_754672/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-413/trial_T20190909_043758_754672/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some toiletpaper on toiletpaperhanger."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-Shelf-7/trial_T20190908_193015_839594/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-Shelf-7/trial_T20190908_193015_839594/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some mug and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SaltShaker-None-Shelf-20/trial_T20190906_200747_365478/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SaltShaker-None-Shelf-20/trial_T20190906_200747_365478/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two saltshaker in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-KeyChain-None-Dresser-330/trial_T20190908_135832_399583/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-KeyChain-None-Dresser-330/trial_T20190908_135832_399583/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two keychain in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Vase-None-Safe-204/trial_T20190907_023343_425395/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Vase-None-Safe-204/trial_T20190907_023343_425395/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a vase in safe."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SaltShaker-None-Cabinet-26/trial_T20190908_113144_837092/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SaltShaker-None-Cabinet-26/trial_T20190908_113144_837092/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two saltshaker and put them in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-CounterTop-5/trial_T20190907_113507_490654/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-CounterTop-5/trial_T20190907_113507_490654/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some apple and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SoapBottle-None-Toilet-405/trial_T20190909_014710_793462/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SoapBottle-None-Toilet-405/trial_T20190909_014710_793462/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two soapbottle and put them in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-Desk-313/trial_T20190909_104526_715846/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-Desk-313/trial_T20190909_104526_715846/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two creditcard in desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-Drawer-15/trial_T20190909_022815_179570/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-PepperShaker-None-Drawer-15/trial_T20190909_022815_179570/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two peppershaker in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Book-None-Desk-313/trial_T20190909_140547_719284/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Book-None-Desk-313/trial_T20190909_140547_719284/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some book on desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CreditCard-None-Shelf-307/trial_T20190908_141045_644908/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CreditCard-None-Shelf-307/trial_T20190908_141045_644908/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a creditcard in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-30/trial_T20190907_152956_792394/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-30/trial_T20190907_152956_792394/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "put a cool mug in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-CreditCard-None-DeskLamp-324/trial_T20190910_025955_546151/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-CreditCard-None-DeskLamp-324/trial_T20190910_025955_546151/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "look at creditcard under the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Newspaper-None-Sofa-218/trial_T20190907_203939_531678/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Newspaper-None-Sofa-218/trial_T20190907_203939_531678/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two newspaper in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Glassbottle-None-Cabinet-17/trial_T20190906_182200_730638/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Glassbottle-None-Cabinet-17/trial_T20190906_182200_730638/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a glassbottle in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-Fridge-27/trial_T20190906_220808_492885/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Apple-None-Fridge-27/trial_T20190906_220808_492885/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean apple in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Cup-None-Cabinet-2/trial_T20190908_030921_984551/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Cup-None-Cabinet-2/trial_T20190908_030921_984551/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two cup and put them in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-Drawer-213/trial_T20190909_020320_565413/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CreditCard-None-Drawer-213/trial_T20190909_020320_565413/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two creditcard and put them in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Plate-None-Shelf-1/trial_T20190908_012254_327150/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Plate-None-Shelf-1/trial_T20190908_012254_327150/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some plate and put it in shelf."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-GarbageCan-2/trial_T20190909_101236_908258/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Egg-None-GarbageCan-2/trial_T20190909_101236_908258/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot egg in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Laptop-None-Desk-309/trial_T20190907_151029_702790/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Laptop-None-Desk-309/trial_T20190907_151029_702790/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "put two laptop in desk."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Sofa-218/trial_T20190907_232123_370650/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Sofa-218/trial_T20190907_232123_370650/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two cellphone and put them in sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-RemoteControl-None-ArmChair-217/trial_T20190909_120033_039874/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-RemoteControl-None-ArmChair-217/trial_T20190909_120033_039874/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two remotecontrol and put them in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-25/trial_T20190909_095516_427126/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-Cabinet-25/trial_T20190909_095516_427126/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot mug in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-402/trial_T20190911_213113_817208/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-SprayBottle-None-Toilet-402/trial_T20190911_213113_817208/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two spraybottle and put them in toilet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Lettuce-None-SideTable-21/trial_T20190906_180547_003950/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Lettuce-None-SideTable-21/trial_T20190906_180547_003950/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some lettuce and put it in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-CounterTop-12/trial_T20190908_062417_287639/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Pan-None-CounterTop-12/trial_T20190908_062417_287639/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some pan and put it in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-12/trial_T20190909_105752_317389/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-12/trial_T20190909_105752_317389/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean butterknife in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Pencil-None-DeskLamp-319/trial_T20190908_135012_910702/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Pencil-None-DeskLamp-319/trial_T20190908_135012_910702/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the pencil with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-Watch-None-SideTable-217/trial_T20190909_122228_511454/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-Watch-None-SideTable-217/trial_T20190909_122228_511454/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two watch and put them in sidetable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/look_at_obj_in_light-Bowl-None-DeskLamp-316/trial_T20190908_230635_560113/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/look_at_obj_in_light-Bowl-None-DeskLamp-316/trial_T20190908_230635_560113/game.tw-pddl",
+      "task_family": "look_at_obj_in_light",
+      "instruction": "examine the bowl with the desklamp."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-Fridge-12/trial_T20190906_190625_937922/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-Fridge-12/trial_T20190906_190625_937922/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot tomato in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-DiningTable-7/trial_T20190907_144235_625346/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Kettle-None-DiningTable-7/trial_T20190907_144235_625346/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some kettle and put it in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Box-None-Sofa-220/trial_T20190907_165554_112021/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Box-None-Sofa-220/trial_T20190907_165554_112021/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some box on sofa."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Spatula-None-DiningTable-24/trial_T20190909_021050_633083/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Spatula-None-DiningTable-24/trial_T20190909_021050_633083/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some spatula and put it in diningtable."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Book-None-Cabinet-310/trial_T20190908_154222_896076/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Book-None-Cabinet-310/trial_T20190908_154222_896076/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some book on cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Pan-None-Fridge-1/trial_T20190908_105408_717097/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Pan-None-Fridge-1/trial_T20190908_105408_717097/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some pan and put it in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-17/trial_T20190908_234248_429912/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-17/trial_T20190908_234248_429912/game.tw-pddl",
+      "task_family": "pick_cool_then_place_in_recep",
+      "instruction": "cool some apple and put it in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-7/trial_T20190908_123421_558588/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-7/trial_T20190908_123421_558588/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Spoon-None-Drawer-5/trial_T20190911_081633_704611/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Spoon-None-Drawer-5/trial_T20190911_081633_704611/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some spoon and put it in drawer."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-CD-None-Dresser-323/trial_T20190908_005514_476729/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-CD-None-Dresser-323/trial_T20190908_005514_476729/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a cd in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Mug-None-CoffeeMachine-18/trial_T20190909_101205_264895/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Mug-None-CoffeeMachine-18/trial_T20190909_101205_264895/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "clean some mug and put it in coffeemachine."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Cabinet-20/trial_T20190910_071249_405077/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-Cabinet-20/trial_T20190910_071249_405077/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean ladle in cabinet."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-Fridge-6/trial_T20190908_153803_890180/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Apple-None-Fridge-6/trial_T20190908_153803_890180/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "put a hot apple in fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Bowl-None-Fridge-6/trial_T20190906_231022_136645/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Bowl-None-Fridge-6/trial_T20190906_231022_136645/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some bowl on fridge."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-CounterTop-20/trial_T20190907_130746_152534/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_clean_then_place_in_recep-Ladle-None-CounterTop-20/trial_T20190907_130746_152534/game.tw-pddl",
+      "task_family": "pick_clean_then_place_in_recep",
+      "instruction": "put a clean ladle in countertop."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Dresser-330/trial_T20190909_061014_837929/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_two_obj_and_place-CellPhone-None-Dresser-330/trial_T20190909_061014_837929/game.tw-pddl",
+      "task_family": "pick_two_obj_and_place",
+      "instruction": "find two cellphone and put them in dresser."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Box-None-ArmChair-217/trial_T20190907_170757_425284/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Box-None-ArmChair-217/trial_T20190907_170757_425284/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put a box in armchair."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-GarbageCan-16/trial_T20190906_171745_518642/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_heat_then_place_in_recep-Tomato-None-GarbageCan-16/trial_T20190906_171745_518642/game.tw-pddl",
+      "task_family": "pick_heat_then_place_in_recep",
+      "instruction": "heat some tomato and put it in garbagecan."
+    },
+    {
+      "task_id": "train:json_2.1.1/train/pick_and_place_simple-Laptop-None-Ottoman-210/trial_T20190909_021425_508275/game.tw-pddl",
+      "split": "train",
+      "gamefile": "json_2.1.1/train/pick_and_place_simple-Laptop-None-Ottoman-210/trial_T20190909_021425_508275/game.tw-pddl",
+      "task_family": "pick_and_place_simple",
+      "instruction": "put some laptop on ottoman."
+    }
+  ]
+}

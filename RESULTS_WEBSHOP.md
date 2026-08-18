@@ -1,11 +1,22 @@
 # WebShop Memory Content study — Qwen3.5-9B
 
-Run 2026-08-10. 50 evolving tasks (`train`, goal indices ≥ 1500), 100 evaluation
-tasks (`test`, goal indices < 500, disjoint), 1 rollout per task, 15-step
-horizon, seed 42. Full 1.18M-product corpus, 12,087 human-written instructions.
-Model served locally by vLLM; the same model writes memory and acts.
+Run 2026-08-10, extended to 100 evolving episodes 2026-08-11 and to 150 on
+2026-08-13. 50 / 100 / 150 evolving tasks (`train`, goal indices ≥ 1500), 100
+evaluation tasks (`test`, goal indices < 500, disjoint), 1 rollout per task,
+15-step horizon, seed 42. Full 1.18M-product corpus, 12,087 human-written
+instructions. Model served locally by vLLM; the same model writes memory and
+acts.
 
-Raw outputs: `/gpfs/radev/scratch/cohan/jw3278/memsys_results/webshop/{minimal,full}/`.
+Sections 1–5 below describe the 50-episode run and are unchanged. Section 7
+carries all three legs of the *diversity* axis (50 → 100 → 150 distinct tasks)
+and revises the strongest claim the 100-episode leg made — see **"the collapse
+did not hold"**. Section 8 adds the *repetition* axis (the same 50 tasks, three
+times) and compares the two at equal episode budget. Section 9 adds the
+*success-budget* axis — evolve until 100 episodes have succeeded, discarding
+failures — and compares all four conditions.
+
+Raw outputs, one directory per condition:
+`/gpfs/radev/scratch/cohan/jw3278/memsys_results/webshop/{minimal,full}{,_e100,_e150,_x2,_x3,_ok100}/`.
 Reproduce with [RUN_WEBSHOP.md](RUN_WEBSHOP.md).
 
 Read this alongside [RESULTS_ALFWORLD.md](RESULTS_ALFWORLD.md). Same memory
@@ -98,6 +109,37 @@ the purchase that the memory was about to improve. ALFWorld's 50-step horizon ha
 no equivalent squeeze, which is one candidate explanation for why the same
 systems look so different there. The control is to re-run at a longer horizon
 (25 steps) and see whether the arms separate; that ablation has **not** been run.
+
+### The same decomposition at 150 episodes, across both policies
+
+At 50 episodes this trade-off was only demonstrated under `minimal`. At 150 it
+holds for seven of eight arms under both:
+
+| arm | policy | purchase rate | rate given purchase | reward given purchase | mean steps |
+|---|---|---|---|---|---|
+| none | — | 86% | 33.7% | 69.6 | 6.94 |
+| raw | minimal | 85% | 35.3% | 67.1 | 6.42 |
+| reflection | minimal | 73% | 35.6% | 70.5 | 7.67 |
+| rule | minimal | 74% | 35.1% | 67.6 | 7.72 |
+| skill | minimal | 78% | **38.5%** | 70.3 | 8.00 |
+| raw | full | 82% | 37.8% | 70.4 | 6.98 |
+| reflection | full | 79% | 31.6% | 65.7 | 7.58 |
+| rule | full | 70% | **38.6%** | 68.7 | 8.04 |
+| skill | full | **87%** | 35.6% | 68.0 | 6.95 |
+
+Seven of eight arms shop better than the baseline and seven of eight finish less
+often. `reflection/full` is the sole arm below baseline on quality (31.6%),
+consistent with §5.
+
+The two extremes make the mechanism unusually legible. **`rule/full` is the best
+shopper in the run** (38.6% success given purchase) and the worst finisher (70%),
+spending 8.04 of its 15 steps — net 27/100, below baseline. **`skill/full` is the
+only arm that buys more often than the baseline** (87%) at essentially baseline
+step cost (6.95), and it is the best arm at 31/100. Their stores are 10 entries
+against 2, and their injected blocks 372 tokens against 538 — so this is not
+about block size but about what the block makes the agent *do*. Memory that
+provokes extra exploration converts a step budget into shopping quality it then
+cannot cash in.
 
 ## 2. More write mechanism helped here — the opposite of ALFWorld
 
@@ -231,7 +273,7 @@ exploratory.
 point on `electronics`. No arm improves `electronics`, the hardest department for
 the baseline (4/20).
 
-## 6. Doubling the evolving experience helped nothing, and broke the best arm
+## 7. More evolving experience helped nothing — and the one "significant" result did not hold
 
 Each arm resumed its own 50-episode store and evolved the *next* 50 tasks of the
 same seeded permutation (`manifests/webshop_evolve_train_50to100_seed42.json`),
@@ -279,6 +321,70 @@ the most; the two furthest below (`reflection/full` 25.0, `skill/full` 28.0)
 rose. With one seed and no measured noise floor, that accounts for everything
 here except `raw/full`, whose 16 points are too large for it.
 
+### The third leg: the collapse did not hold
+
+A third leg carried every arm to 150 evolving episodes, resuming each 100-episode
+store over `manifests/webshop_evolve_train_100to150_seed42.json` and re-running
+the identical evaluation. **`raw/full` went back up.**
+
+| arm | policy | e50 | e100 | e150 | score 50 → 100 → 150 | store 50 → 100 → 150 |
+|---|---|---|---|---|---|---|
+| raw | minimal | 30.0% | 31.0% | 30.0% | 58.1 → 57.6 → 57.0 | 16 → 28 → 40 |
+| reflection | minimal | 28.0% | 25.0% | 26.0% | 51.2 → 53.6 → 51.4 | 18 → 38 → 68 |
+| rule | minimal | 31.0% | 25.0% | 26.0% | 57.0 → 56.2 → **50.1** | 31 → 52 → 79 |
+| skill | minimal | 32.0% | 29.0% | 30.0% | 55.9 → 54.9 → 54.9 | 4 → 5 → 6 |
+| **raw** | **full** | **37.0%** | **21.0%** | **31.0%** | 62.0 → 52.0 → 57.7 | 17 → 18 → 29 |
+| reflection | full | 25.0% | 28.0% | 25.0% | 52.8 → 57.9 → 51.9 | 13 → 24 → 35 |
+| rule | full | 35.0% | 31.0% | 27.0% | 58.8 → 56.4 → **48.1** | 7 → 3 → 10 |
+| skill | full | 28.0% | 30.0% | **31.0%** | 61.6 → 59.0 → 59.2 | 1 → 1 → 2 |
+
+`raw/full` oscillates **37 → 21 → 31** while its store only ever grows,
+17 → 18 → 29. The section above spent four paragraphs on whether the e100 drop
+was a deletion effect — 4 entries deleted, 5 admitted, against `raw/minimal`
+which kept all 16 and did not fall. **That reading is now much harder to
+sustain.** A deletion that destroyed 16 points of performance does not undo
+itself in the next 50 episodes without the deleted entries coming back. The
+simpler account is the one this document already offered for the other seven
+rows and then exempted `raw/full` from: it is noise, and the exemption was
+granted only because 16 points seemed too large. Across three legs `raw/full`'s
+spread is 16 points with no monotone driver, which is better evidence about the
+benchmark's variance than about deletion.
+
+**At 150, no arm is more than 4 points from baseline in either direction**, and
+the largest paired p-value in the table is 0.48 — everything is null:
+
+| arm | policy | rate | Δ | score | b/c | McNemar p | store | inj. tok |
+|---|---|---|---|---|---|---|---|---|
+| none | — | 29.0% | — | 59.8 | — | — | — | 0 |
+| raw | minimal | 30.0% | +1.0 | 57.0 | 7/8 | 1.000 | 40 | 1129 |
+| reflection | minimal | 26.0% | −3.0 | 51.4 | 10/7 | 0.629 | 68 | 1102 |
+| rule | minimal | 26.0% | −3.0 | 50.1 | 10/7 | 0.629 | 79 | 475 |
+| skill | minimal | 30.0% | +1.0 | 54.9 | 8/9 | 1.000 | 6 | 1419 |
+| raw | full | 31.0% | +2.0 | 57.7 | 7/9 | 0.804 | 29 | 1142 |
+| reflection | full | 25.0% | −4.0 | 51.9 | 11/7 | 0.481 | 35 | 1015 |
+| rule | full | 27.0% | −2.0 | 48.1 | 9/7 | 0.804 | 10 | 372 |
+| skill | full | **31.0%** | +2.0 | **59.2** | 8/10 | 0.815 | 2 | 538 |
+
+Three things the third leg establishes that two legs could not:
+
+1. **Every arm's graded score is now below baseline** — all eight, 48.1 to 59.2
+   against 59.8. At e50 two arms were above it (`raw/full` 62.0, `skill/full`
+   61.6). The score advantage §2 reported for `full` has not survived; what
+   survives is that `full` still beats `minimal` on score for three of four
+   content types (skill +4.3, raw +0.7, reflection +0.5, rule −2.0).
+2. **`rule` decays monotonically on score under both policies** — 57.0 → 56.2 →
+   50.1 and 58.8 → 56.4 → 48.1 — the only arm with a consistent direction across
+   three legs on either metric. Its `minimal` store grew 31 → 52 → 79. This is
+   the one trend in the WebShop study that more episodes made clearer rather
+   than muddier, and it points the same way as §3: accumulation without useful
+   consolidation costs the graded reward even when it leaves the strict rate
+   alone.
+3. **`skill/full` is now the best arm**, at 31.0% and 59.2 — the only score
+   within a point of baseline — on a store of **2 entries** and 538 injected
+   tokens. §3 called `skill/full`'s single consolidated skill "true but
+   vacuous"; at 150 it holds two, and it is the only configuration that is at or
+   above baseline on both metrics at every leg it was measured.
+
 ### The axis is confounded: phase 2 was a worse 50 tasks
 
 
@@ -306,12 +412,197 @@ what a working memory predicts. Distinguishing them needs a no-memory control ru
 over the phase-2 tasks, which `none` does not provide because it has no evolving
 phase.
 
+## 8. Repetition vs diversity: 150 episodes spent either way is the same
+
+§7 spent 150 evolving episodes on 150 *distinct* tasks. This section spends the
+same 150 on the *same 50 tasks, three times* — each epoch resumes the store the
+previous one left behind and re-runs the identical frozen 100-task evaluation.
+Everything that differs between epoch k and k+1 is memory state, not the task
+draw. That makes the two chains a controlled pair: equal episode budget, equal
+evaluation, and only task diversity varying.
+
+On epoch 2 the nearest neighbour of a task is usually the agent's own epoch-1
+memory of *that same task*, which for `raw` is a near-verbatim replay of its own
+trajectory. That is the phenomenon under test.
+
+| arm | policy | epoch 1 | epoch 2 | epoch 3 | score 1 → 2 → 3 | store 1 → 2 → 3 |
+|---|---|---|---|---|---|---|
+| raw | minimal | 30.0% | 33.0% | 29.0% | 58.1 → 57.6 → 58.4 | 16 → 23 → 27 |
+| reflection | minimal | 28.0% | 27.0% | 27.0% | 51.2 → 54.3 → 54.6 | 18 → 47 → **78** |
+| rule | minimal | 31.0% | 31.0% | 27.0% | 57.0 → 56.8 → 54.2 | 31 → 39 → 45 |
+| skill | minimal | 32.0% | 32.0% | 30.0% | 55.9 → 56.1 → 54.7 | 4 → 5 → 6 |
+| raw | full | **37.0%** | 30.0% | **26.0%** | 62.0 → 57.6 → **51.4** | 17 → 22 → 27 |
+| reflection | full | 25.0% | 30.0% | 25.0% | 52.8 → 57.5 → 51.0 | 13 → 32 → 33 |
+| rule | full | 35.0% | 24.0% | 25.0% | 58.8 → 52.4 → 52.8 | 7 → 2 → 6 |
+| skill | full | 28.0% | 28.0% | 29.0% | 61.6 → 57.4 → 55.3 | 1 → 2 → 3 |
+
+### The controlled comparison
+
+Both chains end at 150 episodes and evaluate the same 100 tasks, so the
+comparison is paired arm by arm:
+
+| arm | policy | 50 tasks × 3 | 150 distinct | diff | b/c | SD |
+|---|---|---|---|---|---|---|
+| raw | minimal | 29 | 30 | +1 | 7/8 | 3.9 |
+| reflection | minimal | 27 | 26 | −1 | 9/8 | 4.1 |
+| rule | minimal | 27 | 26 | −1 | 10/9 | 4.4 |
+| skill | minimal | 30 | 30 | 0 | 7/7 | 3.7 |
+| raw | full | 26 | 31 | +5 | 5/10 | 3.9 |
+| reflection | full | 25 | 25 | 0 | 5/5 | 3.2 |
+| rule | full | 25 | 27 | +2 | 7/9 | 4.0 |
+| skill | full | 29 | 31 | +2 | 4/6 | 3.2 |
+| **mean** | | **27.25** | **28.25** | **+1.0** | | |
+
+**Not one arm differs by more than its own paired SD.** Mean rate 27.25 against
+28.25; mean graded score 54.0 against 53.8. **At a fixed episode budget, on this
+benchmark, it does not matter whether the episodes are 150 different tasks or 50
+tasks seen three times.** Both land about 1.5 points below the 29.0% no-memory
+baseline and about 6 points below its score.
+
+That is a stronger negative than either chain alone. §7 could only say more
+episodes did not help; together the two say the *composition* of those episodes
+does not matter either — which is what one would expect if the evolving phase is
+contributing little on WebShop regardless of what it is fed.
+
+### Two things the repetition axis shows that the diversity axis could not
+
+**`raw/full` decays monotonically under repetition: 37 → 30 → 26**, and on score
+too, 62.0 → 57.6 → 51.4. Both metrics, three points, one direction. Compare §7,
+where the same arm on new tasks went 37 → 21 → 31 with no direction at all. The
+contrast is informative about §7's collapse: on the diversity axis `raw/full`
+oscillates over a 16-point range, and on the repetition axis it slides steadily.
+Only the second looks like a mechanism, and the mechanism it suggests is
+straightforward — `raw` stores trajectories, re-seeing a task retrieves the
+agent's own prior attempt at it, and re-reading your own mediocre attempt is not
+useful. Its store grows 17 → 22 → 27 on 50 tasks it has already solved or failed.
+
+**Reflection accumulates *faster* on repeated tasks than on new ones.** Its
+`minimal` store reaches **78 entries from 50 distinct tasks seen three times**,
+against **68 from 150 distinct tasks seen once**. Re-reflecting on a task the
+agent has already reflected on produces a new entry more often than reflecting on
+a task it has never seen. The dedup and merge checks are evidently not keyed on
+anything that recognises "I have already written this task up" — the second and
+third passes differ in trajectory detail, and that is enough to get past them.
+This is the clearest evidence in the study that reflection's growth is not
+tracking new information.
+
+`skill` is the counter-example on both counts, and the same one §7 found: 4 → 5 →
+6 entries under `minimal`, 1 → 2 → 3 under `full`, and `skill/full` is the only
+arm in either chain whose rate does not decline (28 → 28 → 29). Whatever its
+grounding and dedup checks are keyed on, they do recognise a repeat.
+
+## 9. A memory built from 100 successes, with failures discarded
+
+§7 and §8 both hold the number of *attempts* fixed and let the amount of
+successful experience float. This section inverts that: keep evolving until
+**100 episodes have succeeded**, and let only those 100 reach the memory system.
+Failed episodes are still attempted — the agent runs them, and they still shape
+what it retrieves next — but they are discarded before `observe`, so they produce
+no writer call, no utility signal, and do not advance the induction cadence.
+
+It cost 335 to 417 tasks per arm to buy 100 successes (24.0% to 29.9% evolving
+success rate), from a 600-task pool; no arm exhausted it.
+
+| arm | policy | tasks | succ % | rate | Δ | score | b/c | McNemar p | store | inj. tok | writer calls |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| none | — | — | — | 29.0% | — | 59.8 | — | — | — | 0 | — |
+| raw | minimal | 360 | 27.8 | **32.0%** | +3.0 | 55.5 | 6/9 | 0.607 | **100** | 1180 | — |
+| reflection | minimal | 356 | 28.1 | 26.0% | −3.0 | 53.0 | 10/7 | 0.629 | 55 | 984 | 126 |
+| rule | minimal | 335 | 29.9 | 29.0% | +0.0 | 50.1 | 10/10 | 1.000 | 36 | 495 | 143 |
+| skill | minimal | 357 | 28.0 | **24.0%** | −5.0 | 52.8 | 11/6 | 0.332 | **38** | 1380 | 103 |
+| raw | full | 343 | 29.2 | 27.0% | −2.0 | 56.1 | 9/7 | 0.804 | **100** | 1181 | — |
+| reflection | full | 394 | 25.4 | 26.0% | −3.0 | 52.1 | 11/8 | 0.648 | 66 | 987 | 282 |
+| rule | full | 417 | 24.0 | 25.0% | −4.0 | 48.8 | 10/6 | 0.454 | 9 | 502 | 323 |
+| skill | full | 372 | 26.9 | 26.0% | −3.0 | 54.7 | 11/8 | 0.648 | **48** | 1399 | 227 |
+
+**Nothing reaches significance, and the mean is the lowest of any condition
+tried.** Across the four ways of spending an evolving budget, all evaluated on
+the same frozen 100 tasks:
+
+| arm | policy | 50 attempts | 150 attempts | 50×3 epochs | **100 successes** |
+|---|---|---|---|---|---|
+| raw | minimal | 30 | 30 | 29 | 32 |
+| reflection | minimal | 28 | 26 | 27 | 26 |
+| rule | minimal | 31 | 26 | 27 | 29 |
+| skill | minimal | 32 | 30 | 30 | **24** |
+| raw | full | **37** | 31 | 26 | 27 |
+| reflection | full | 25 | 25 | 25 | 26 |
+| rule | full | **35** | 27 | 25 | 25 |
+| skill | full | 28 | 31 | 29 | 26 |
+| **mean** | | **30.75** | 28.25 | 27.25 | **26.88** |
+
+The condition with the *most* successful experience and the *most* distinct
+tasks — 100 successes drawn from ~350 tasks — is the worst of the four, and the
+only one where the mean sits clearly below the 29.0% no-memory baseline. The
+cheapest condition, 50 attempts, is the only one above it.
+
+Three arms fell far enough from their 50-attempt selves to be worth naming:
+`raw/full` 37 → 27 (b/c 4/14, SD 4.2), `rule/full` 35 → 25 (3/13, SD 4.0),
+`skill/minimal` 32 → 24 (4/12, SD 4.0) — all about 2σ. But the first two were
+the two highest values in the 50-attempt run, so §7's regression-to-the-mean
+caveat applies to them exactly as before. `skill/minimal` is the one that is
+not explained that way, and it has a mechanism.
+
+### Restricting writes to successes made `skill` write *more*, not less
+
+`skill` has been the study's minimal-store arm everywhere: 4 entries at 50
+attempts, 6 after three epochs, 1–3 under `full`. §8 read that as its grounding
+and dedup checks being unusually selective. **Here it writes 38 entries under
+`minimal` and 48 under `full`** — an order of magnitude more, in the one
+condition that fed it *only* successes.
+
+Both readings are right, and together they say something sharper. `skill` can
+only write from a successful episode, so its store size was never a measure of
+how selective it is — it was a measure of **how few successes it was being
+offered**. Fifty attempts yield ~15 successes; three epochs over the same 50
+tasks yield repeats, which dedup correctly rejects (4 → 5 → 6 in §8). One
+hundred *distinct* successes yield 38 skills, because they are genuinely
+different. The dedup check was doing its job on repeats and was never the
+binding constraint on novel material.
+
+And the result got worse: **24/100 is `skill/minimal`'s lowest score in any
+condition** (32, 30, 30, 24), on its largest store and its largest injected block
+(1380 tokens). §3 argued `skill`'s value was a handful of tactical recovery
+procedures; 38 of them is not a bigger version of that.
+
+### `full`'s deletion machinery went silent
+
+`raw`'s store is **exactly 100 under both policies** — one entry per successful
+episode, nothing pruned. In every other run `raw/full` is smaller than `raw/minimal`
+because `full` deletes (17 at 50 attempts, 29 at 150, 27 across epochs, and the
+§7 table records 4 entries deleted between legs). Here it deleted nothing.
+
+This is the designed-in consequence of discarding failures, and it is worth
+stating plainly because it limits what this section can be compared against:
+`full`'s utility-based deletion demotes entries that get retrieved into episodes
+that then **fail**. With no failed episode ever reaching `observe`, that signal
+does not exist, and the mechanism has nothing to act on. `rule/full` still
+shrank to 9 entries and `skill/full` to 48, because batch induction and
+dedup-on-write are independent of it — but the deletion half of `full` was
+effectively disabled for the whole of this section.
+
+So this run answers "does memory built purely from successes help?" (no) but it
+does **not** cleanly answer "is `full` better than `minimal` when failures are
+discarded?", because discarding failures removes one of `full`'s mechanisms. A
+variant that keeps the utility signal from failures while still refusing to write
+from them would separate the two; it has not been run.
+
 ## Threats to validity
 
 - **n = 100, single seed, and the effects are small.** Nothing here is
-significant at 0.05. The strongest result (`raw/full`, +8.0) is p = 0.096 and
-would need roughly 300 tasks to resolve at this effect size. Read the paired
-tests, not the deltas.
+significant at 0.05 except the `raw/full` e100 drop, and §7 shows that one
+reversed on the next leg. The strongest positive result (`raw/full` at e50,
++8.0) is p = 0.096 and would need roughly 300 tasks to resolve at this effect
+size. Read the paired tests, not the deltas.
+- **The paired noise floor is ≈ 4 points, which swallows every result at 150.**
+No true replicate exists here — unlike SpreadsheetBench, no arm ever held its
+memory fixed across two legs (`skill/full` came closest and still moved 249 →
+310 → 538 injected tokens), so this is not a measured run-to-run σ. But the
+discordant counts bound it: at 150 the eight arms disagree with the baseline on
+15 to 18 tasks, so the SD of the paired difference is √(15…18) = **3.9 to 4.2
+points**. Every delta in the 150 table is ≤ 4.0. A dedicated repeat of the
+`none` baseline is still the missing measurement, and on this benchmark it is
+cheap.
 - **The noise floor was never measured on this benchmark.** Everything above is
 computed against a *single* no-memory run. The AppWorld study
 ([RESULTS_APPWORLD.md](RESULTS_APPWORLD.md)) later ran its baseline twice under
@@ -343,15 +634,34 @@ consolidation produced a generic skill (§3).
 
 ## What to run next
 
-1. **A second no-memory baseline run.** Now the highest-value measurement, and
+1. **A second no-memory baseline run.** Still the highest-value measurement, and
   the cheapest: one run, ~25 minutes. On AppWorld the equivalent replicate moved
    the reference by 5 points and nullified the entire table. Until it exists,
-   every delta above is uncalibrated.
+   every delta above is uncalibrated — and §7 has now shown this benchmark
+   producing a 16-point swing on one arm with no mechanism behind it.
 2. **The 25-step horizon control.** The one confound that touches every number
-  above. If the arms separate, §1's mechanism is confirmed and the content
-   comparison becomes interpretable.
-3. **≥ 3 seeds on** `raw/full` **and** `rule/full`**.** The two arms with lopsided
-  discordant counts are the only candidates for a real effect.
-4. `equal_item_count` to separate rule's small injected block (294 tokens)
-  from its content, the same control ALFWorld's §5 called for.
+  above, and the third leg strengthened the case for it: §1's trade-off now
+   holds for seven of eight arms under both policies, with `rule/full` and
+   `skill/full` at opposite extremes of the same step budget. If the arms
+   separate at 25 steps, the mechanism is confirmed and the content comparison
+   becomes interpretable.
+3. **Stop spending compute on more evolving episodes, in any composition.**
+  Four conditions — 50 attempts, 150 attempts, 50 tasks × 3 epochs, and 100
+   successes from ~350 tasks — rank 30.75, 28.25, 27.25, 26.88 on mean rate,
+   against a 29.0% baseline. The cheapest is the best and the most expensive is
+   the worst. The horizon control and the baseline replicate are where the
+   remaining uncertainty actually lives.
+4. **The failure-utility variant.** §9 discarded failed episodes entirely, which
+  also removed the negative-utility signal `full`'s deletion depends on — its
+   `raw` store came out at exactly 100, unpruned. Keeping that signal while
+   still refusing to write from failures would separate "failures are bad
+   training data" from "failures are needed to prune", and it is a one-flag
+   change.
+5. **≥ 3 seeds on** `skill/full`**.** It replaces `raw/full` as the candidate for
+  a real effect: it is the only arm at or above baseline on both metrics at
+   every leg, and it does it on a 2-entry store. `raw/full`, the previous
+   candidate, went 37 → 21 → 31 and is now better read as a variance
+   demonstration.
+6. `equal_item_count` to separate rule's small injected block (372 tokens at
+  150) from its content, the same control ALFWorld's §5 called for.
 

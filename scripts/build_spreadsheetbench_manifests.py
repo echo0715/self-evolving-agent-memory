@@ -71,7 +71,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from memsys.adapters.spreadsheetbench import TaskSpec, find_test_cases  # noqa: E402
 
-SPLITS = ("train", "val", "test")
+#: `rest` is not one of SkillOpt's splits -- it is everything in the 912 release
+#: that the 400-task Verified id split does not cover. It exists for one job: an
+#: outcome budget that needs more evolving tasks than the split can supply (100
+#: *successes* costs 420-480 tasks at this benchmark's 21-24% evolve-time
+#: success rate, against 297 selectable in train+val+test). It is only ever
+#: legitimate as the last overflow pool, never as an evaluation split, and the
+#: group filter still applies -- so the frozen eval set stays disjoint from it by
+#: task id and by source workbook, which is the property that matters.
+SPLITS = ("train", "val", "test", "rest")
 
 
 def read_dataset(data_root: Path) -> dict[str, dict]:
@@ -82,7 +90,16 @@ def read_dataset(data_root: Path) -> dict[str, dict]:
     return {str(r["id"]): r for r in rows}
 
 
-def read_id_split(id_split_dir: Path, split: str) -> list[str]:
+def read_id_split(id_split_dir: Path, split: str, dataset: dict[str, dict] | None = None
+                  ) -> list[str]:
+    if split == "rest":
+        # Everything in the release that the published split does not cover. Not
+        # a split of SkillOpt's; see the SPLITS comment.
+        if dataset is None:
+            raise ValueError("the 'rest' pool needs the dataset to subtract the split from")
+        covered = {tid for s in ("train", "val", "test")
+                   for tid in read_id_split(id_split_dir, s)}
+        return sorted(set(dataset) - covered)
     path = id_split_dir / split / "items.json"
     if not path.is_file():
         raise FileNotFoundError(f"no such id split file: {path}")
@@ -242,14 +259,19 @@ def main() -> None:
                     help="keep tasks whose source workbook is used by the other set")
     args = ap.parse_args()
 
+    if args.eval_split == "rest":
+        # `rest` is un-curated relative to the Verified subset the study evaluates
+        # on; evaluating there would change what the numbers mean.
+        raise SystemExit("--eval-split rest is not allowed: `rest` is an evolving-only pool")
+
     data_root = Path(args.data_root).expanduser().resolve()
     id_split_dir = Path(args.id_split_dir).expanduser().resolve()
     dataset = read_dataset(data_root)
     out_dir = Path(args.out)
 
-    pools = [(args.evolve_split, read_id_split(id_split_dir, args.evolve_split))]
+    pools = [(args.evolve_split, read_id_split(id_split_dir, args.evolve_split, dataset))]
     for extra in args.evolve_overflow_split or []:
-        pools.append((extra, read_id_split(id_split_dir, extra)))
+        pools.append((extra, read_id_split(id_split_dir, extra, dataset)))
 
     excluded = manifest_groups(args.exclude_groups_from) if args.exclude_groups_from else set()
     span = (f"_{args.evolve_count}" if not args.evolve_skip

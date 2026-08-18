@@ -12,4 +12,4 @@ without ALFWorld / TextWorld / openai installed.
 
 from __future__ import annotations
 
-__all__ = ["alfworld", "webshop"]
+__all__ = ["alfworld", "appworld", "mind2web", "scienceworld", "spreadsheetbench", "webshop"]

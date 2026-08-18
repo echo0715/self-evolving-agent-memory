@@ -106,6 +106,63 @@ bash scripts/run_sweep.sh full_x3    # ... and a third time      -> full_x3/
 They measure different things and their numbers are not interchangeable —
 `*100` varies amount of experience, `_x2`/`_x3` vary repetition over fixed
 experience (RESULTS_ALFWORLD.md §6 vs §7). `_x3` requires `_x2` to exist.
+`*150` continues the first family to positions [100,150) and requires `*100`.
+
+A third pair crosses the two axes at a fixed episode budget:
+
+```bash
+bash scripts/run_sweep.sh full75     # 75 tasks from an EMPTY store -> full_e75/
+bash scripts/run_sweep.sh full75_x2  # the SAME 75 again            -> full_e75_x2/
+```
+
+75 × 2 spends the same 150 evolving episodes as `*150` (150 distinct tasks) and
+as `_x3` (50 × 3), differing only in how many distinct tasks they cover, which
+is what makes diversity and repetition separable (§8). Note that `full75` starts
+from an empty store — it is a new chain, not a continuation — so the manifest
+`evolve_train_75_seed42.json` is positions [0,75) and nests inside the 50/100/150
+sets. Build it without re-resolving goal text, since it is exactly the 50-task
+manifest plus the first 25 entries of the 50→100 one; verify with
+`random.Random(42).shuffle` over the sorted gamefile list before trusting the
+concatenation.
+
+A fourth pair budgets by *outcome* instead of by task count (RESULTS §10, §11):
+
+```bash
+bash scripts/run_sweep.sh full_succ100   # evolve until 100 episodes SUCCEED, write only those
+bash scripts/run_sweep.sh full_fail100   # evolve until 100 episodes FAIL,    write only those
+```
+
+Both start from an empty store over `evolve_train_600_seed42.json` (a nested
+superset of every earlier manifest — verify with the prefix check below before
+trusting it), and both stop on an outcome count, so the number of tasks spent
+differs per arm: ~135–176 for 100 successes, ~184–257 for 100 failures. The
+runner *warns* rather than finishing short if the manifest runs out first, so
+grep the arm logs for `WARNING: manifest exhausted` before reading any number.
+
+`raw` is excluded from both (the default arm list for these modes drops it):
+`RawTrajectorySystem.observe` keeps only `best_success()`, so the success filter
+is a no-op for it and the failure filter leaves it with an empty store. Two
+further degeneracies are worth knowing before spending the GPU-hours, because
+both produce a complete-looking summary:
+
+- **`skill` + `--failure-only-writes` never calls the writer.**
+  `SkillWriter.propose` returns early without a successful rollout, so at one
+  rollout per task the arm makes zero LLM calls and evaluates an empty store.
+- **`full` + `--failure-only-writes` deletes almost everything.**
+  `record_usage` only ever sees `success=False`, so every entry hits the
+  `utility < 0.20` floor on its fifth retrieval. Stores end at ~2 live entries.
+
+```bash
+python - <<'EOF'   # every earlier manifest must be a slice of the 600
+import json
+b=[t['task_id'] for t in json.load(open('manifests/evolve_train_600_seed42.json'))['tasks']]
+for p,(i,j) in {'evolve_train_50_seed42':(0,50), 'evolve_train_50to100_seed42':(50,100),
+                'evolve_train_100to150_seed42':(100,150), 'evolve_train_150to200_seed42':(150,200),
+                'evolve_train_300_seed42':(0,300)}.items():
+    o=[t['task_id'] for t in json.load(open(f'manifests/{p}.json'))['tasks']]
+    print(p, 'nested' if o==b[i:j] else 'MISMATCH')
+EOF
+```
 
 The two policies are independent chains, so on two allocations they run in
 parallel — one policy per node, ~10 h each for both extra epochs:
@@ -130,6 +187,60 @@ python scripts/run_alfworld.py --arm rule --policy full \
   --eval-manifest   manifests/eval_valid_unseen_100_seed42.json \
   --out $MEMSYS_RESULTS_ROOT/full/rule_full --agent-base-url http://localhost:8000/v1
 ```
+
+### Varying the *writer* model (the Memory Writing Model axis)
+
+Everything above uses one model for both jobs: Qwen3.5-9B acts *and* writes the
+memory. `--writer-model` separates them, holding the actor fixed so any delta is
+attributable to what was written rather than to who acted.
+
+```bash
+srun --jobid=<job> --overlap -N1 -n1 bash scripts/drive_gpt56_writer.sh
+```
+
+That driver serves the two local Qwen servers for the agent, smoke-tests, and
+then runs `minimal` with the writer pointed at `openai/gpt-5.6-terra`. Its
+knobs are plain environment variables on `run_sweep.sh`:
+
+| Variable | Value used here |
+| --- | --- |
+| `MEMSYS_WRITER_MODEL` | `openai/gpt-5.6-terra` |
+| `MEMSYS_WRITER_BASE_URL` | `https://api.perplexity.ai/v1` |
+| `MEMSYS_WRITER_API` | `responses` |
+| `MEMSYS_WRITER_API_KEY_ENV` | `perplexity_api_key` (read from `.env`) |
+| `MEMSYS_TAG_SUFFIX` | `_gpt56terra` |
+
+Four things about that endpoint are not guessable and each costs a run to find:
+
+- **The gateway speaks only the Responses API.** `pplx-*` keys reach two
+  different services on one host. `POST /chat/completions` is Perplexity's own
+  Sonar API and answers every gateway model id with
+  `invalid_model`; `POST /v1/responses` is the multi-provider gateway and serves
+  `openai/gpt-5.6-{luna,terra,sol}`, `anthropic/*`, `google/*`, `xai/*`
+  (`GET /v1/models` lists them with per-token prices). `/v1/chat/completions`
+  is a 404. `OpenAIChatClient` therefore cannot be pointed at it at all — hence
+  `OpenAIResponsesClient` and the `--writer-api` switch.
+- **`text.format={"type":"json_object"}` is rejected** (400 `invalid request`),
+  so there is no constrained-decoding path here. The writers' own JSON repair
+  carries the parse rate; do not pass `--writer-json-mode`-style flags.
+- **A reasoning model can spend its whole output budget thinking** and return
+  `status="incomplete"` with empty text. That is silent — `parse_ops("")` is
+  `[]`, so the arm logs writer calls, zero ops, no error, and finishes with an
+  empty store that reads exactly like the `none` baseline. `OpenAIResponsesClient`
+  retries with a doubled `max_output_tokens` instead of returning the blank.
+- **`MEMSYS_TAG_SUFFIX` is not optional.** Without it a writer-model sweep
+  writes into `memsys_results/minimal/`, on top of the Qwen-writer numbers it
+  exists to be compared against.
+
+`none` and `raw` never call a writer LLM (`RawTrajectorySystem` stores the
+trajectory verbatim), so the writer model cannot move them and the driver does
+not re-run them — compare against `minimal/{none,raw}_minimal`. Only
+`reflection`, `rule` and `skill` are re-measured.
+
+Cost is small enough not to plan around: the 50-task `minimal` sweep is ~385k
+prompt + ~52k completion tokens across the three arms, about **$1.50** at
+terra's $2/$12 per 1M. `summary.json` now carries `writer_model` alongside
+`model` so the two runs are distinguishable after the fact.
 
 ### Parallelism rules (they are not the same in both phases)
 
@@ -156,6 +267,47 @@ on this benchmark that was **p = 0.383** — pure churn in both directions.
 
 ## 5. Failures that cost time here
 
+- **`pkill -f` in a teardown script is a node-wide weapon, and a dead vLLM
+  produces completed runs.** A 4-GPU node holds two 2-GPU jobs. On 2026-08-13 a
+  finishing job ran `pkill -9 -f 'VLLM::EngineCore'` on its way out and killed
+  the servers of an unrelated run on the same host. The victim then evaluated
+  for two hours against nothing and **reported `rc=0` with complete
+  `summary.json` files**: the agent swallows the connection error, every episode
+  scores a failure, and `Connection error` appears zero times in the arm log.
+  `reflection/full` came back 10.0% where a clean re-run gives 65.0%. The only
+  tell is timing — eval episodes finishing in 4–5 s instead of 200–300 s — so
+  check `[eval` line durations before believing any number, and compare
+  `summary.json` mtimes against when the servers were last known healthy.
+  Teardown must kill recorded PIDs (plus `pkill -P` for the renamed
+  `VLLM::EngineCore` child), never a pattern; startup must refuse a busy port
+  rather than clearing it. Note that a *process-group* kill is not the fix
+  either: `serve_qwen.sh` backgrounds with `nohup` and not `setsid`, so the
+  servers share the driver's pgid and `kill -- -PGID` takes the driver with them
+  — one batch job finished everything, wrote its `RESULTS.md`, and still
+  reported `FAILED` with `ExitCode 0:9`.
+- **A driver must not export `HF_HOME` before calling `serve_qwen.sh`.** There
+  are two caches and they are not interchangeable: `$SCRATCH/hf_cache` holds the
+  Qwen3.5-9B snapshot, `$SCRATCH/.hf_home` holds sentence-transformers' encoder
+  and is what the sweep scripts export for their own python. `serve_qwen.sh`
+  takes `HF_HOME` from the environment (`${HF_HOME:-$SCRATCH/hf_cache}`), so a
+  driver that sets the sweep's value up front points vLLM at a cache with no
+  model in it. With `HF_HUB_OFFLINE=1` that is a `LocalEntryNotFoundError`
+  *seconds after* `[serve] started (PID …)` prints — the driver reports a healthy
+  PID, `nvidia-smi` shows 0 MiB, and the health-check loop then sits there for
+  its full timeout. Set `HF_HOME` per-command on the memsys python invocation, or
+  `unset` it before serving. Cost on 2026-08-15: one Mind2Web preflight.
+- **A driver that starts vLLM must check the port first.** `serve_qwen.sh`
+  backgrounds the server and returns; the health-check loop that follows then
+  passes *immediately* if a previous allocation's servers are still listening on
+  8000/8001, and the duplicates it just launched sit there trying to take 90% of
+  a GPU that is already spoken for. On 2026-08-14 that happened on the second
+  node of the `fail100` sweep: two extra `vllm serve` processes, no ports, no
+  GPU memory, and a driver log that read `servers healthy` in the same second it
+  started them. The tell is the timestamp — a real cold start is 4–5 minutes.
+  Kill the duplicates by *recorded PID* (`pkill -P $pid` first for the renamed
+  `VLLM::EngineCore` child), never by pattern, then confirm with
+  `nvidia-smi --query-compute-apps` that the survivors are the ones holding the
+  memory.
 - **ALFWorld's PDDL backend is not thread-safe, in two separate places.**
   Loading a game parses the grammar with a *module-level* tatsu parser, and
   stepping goes through textworld's PDDL layer. Running evaluation 2-wide with

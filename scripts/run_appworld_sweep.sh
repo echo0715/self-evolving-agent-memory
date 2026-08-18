@@ -62,12 +62,51 @@ case "$MODE" in
   minimal|full)
     POLICIES=("$MODE"); EVOLVE_LIMIT=0; EVAL_LIMIT=0
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="$MODE" ;;
+  # A *smaller* evolving budget, and the cheapest possible one to state exactly:
+  # `--evolve-limit 25` truncates the same 50-task manifest, and run_appworld.py
+  # slices it as a prefix, so these 25 tasks are literally the first 25 episodes
+  # of the 50-task run in the same order. No new manifest, and 25 / 50 / 100 stay
+  # one nested sequence rather than three independent draws.
+  minimal25|full25)
+    POLICIES=("${MODE%25}"); EVOLVE_LIMIT=25; EVAL_LIMIT=0
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%25}_e25" ;;
+  # 20 distinct tasks x K epochs -- the repetition axis, which this benchmark did
+  # not have at all. `--evolve-limit 20` truncates the same 50-task manifest, so
+  # these are the first 20 tasks of the one seeded permutation and epoch 1 nests
+  # inside the 25 / 50 / 100 sequence rather than being an independent draw.
+  #
+  # 20 x 5 = 100 evolving episodes, the same budget as the `*100` chain (100
+  # distinct tasks) -- so the pair separates task diversity from repetition at a
+  # fixed episode count. They are comparable because both evaluate the same
+  # frozen `test_normal` 100, which nothing here writes.
+  #
+  # Worth stating for this benchmark in particular: at 25 episodes the `skill`
+  # arm made only 3 writer calls, because it writes from successful episodes and
+  # AppWorld's evolve-time success rate is low. Repetition is the axis most
+  # likely to change that -- the agent gets five attempts at each task -- which
+  # is also why a flat epoch curve here would be an informative result rather
+  # than a null one.
+  #
+  # Epoch 1 is `minimal20`; epoch K > 1 is `minimal20_xK`, resuming epoch K-1's
+  # store and carrying the step offset so `full`'s batch induction fires where an
+  # uninterrupted 100-episode run would have fired it. Epoch 1 starts from an
+  # EMPTY store -- a new chain, not a continuation of the 50-task one.
+  minimal20|full20)
+    POLICIES=("${MODE%20}"); EVOLVE_LIMIT=20; EVAL_LIMIT="${MEMSYS_EVAL_LIMIT:-0}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%20}_e20" ;;
+  minimal20_x[2-9]|full20_x[2-9])
+    EPOCH="${MODE##*_x}"; EPOL="${MODE%%20_x*}"
+    POLICIES=("$EPOL"); EVOLVE_LIMIT=20; EVAL_LIMIT="${MEMSYS_EVAL_LIMIT:-0}"
+    EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${EPOL}_e20_x${EPOCH}"
+    PREV_TAG="${EPOL}_e20"
+    if (( EPOCH > 2 )); then PREV_TAG="${EPOL}_e20_x$((EPOCH-1))"; fi
+    RESUME_ROOT="$OUT_ROOT/$PREV_TAG"; EVOLVE_OFFSET=$(( 20 * (EPOCH - 1) )) ;;
   minimal100|full100)
     POLICIES=("${MODE%100}"); EVOLVE_LIMIT=0; EVAL_LIMIT=0
     EMBEDDER="${MEMSYS_EMBEDDER:-st}"; TAG="${MODE%100}_e100"
     EVOLVE_MANIFEST="$REPO/manifests/appworld_evolve_train+dev_50to100_seed42.json"
     RESUME_ROOT="$OUT_ROOT/${MODE%100}"; EVOLVE_OFFSET=50 ;;
-  *) echo "usage: $0 {smoke|minimal|full|minimal100|full100}" >&2; exit 2 ;;
+  *) echo "usage: $0 {smoke|minimal|full|{minimal,full}{25,100}|{minimal,full}20[_x{2..9}]}" >&2; exit 2 ;;
 esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})

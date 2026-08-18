@@ -1,0 +1,194 @@
+[
+  {
+    "task": "find-non-living-thing",
+    "variation": 0,
+    "split": "train",
+    "provenance": "ScienceWorld gold action sequence (env.get_gold_action_sequence()), observations verbatim from the simulator; the Thought lines are written for this study.",
+    "example": [
+      {
+        "role": "user",
+        "content": "Task: Your task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the red box in the kitchen.\n\nThis room is called the hallway. In it, you see: \n\tthe agent\n\ta substance called air\n\ta picture\nYou also see:\n\tA door to the art studio (that is closed)\n\tA door to the bedroom (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)\n\tA door to the living room (that is closed)\n\tA door to the workshop (that is closed)"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The target container is the red box in the kitchen, so I should work in the kitchen -- it is also full of ordinary objects that are clearly non-living. Doors start closed and must be opened before I can walk through them.\nAction: open door to kitchen"
+      },
+      {
+        "role": "user",
+        "content": "Observation: The door is now open."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The door is open, so I can move into the kitchen now.\nAction: go to kitchen"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You move to the kitchen."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: I need to see what is actually in this room before I commit to a target. Focusing on the wrong kind of thing ends the task immediately, so I look first rather than guessing.\nAction: look around"
+      },
+      {
+        "role": "user",
+        "content": "Observation: This room is called the kitchen. In it, you see: \n\tthe agent\n\ta substance called air\n\ta chair. On the chair is: nothing.\n\ta counter. On the counter is: a bowl (containing a red apple, a banana, an orange, a potato), a drawer.\n\ta cupboard. The cupboard door is closed. \n\ta glass jar (containing a substance called sodium chloride)\n\ta red box (containing nothing)\n\ta table. On the table is: a glass cup (containing nothing)"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The glass cup is an obvious non-living thing -- unlike the apple, banana or potato, which are parts of plants and would be the wrong answer here. I will focus on the cup.\nAction: focus on cup containing nothing in table"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You focus on the glass cup."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The focus was accepted, so the cup is the recognised target. The second half of the task is to move it to the red box in this room.\nAction: move cup containing nothing in table to red box"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You move the glass cup to the red box."
+      }
+    ]
+  },
+  {
+    "task": "test-conductivity",
+    "variation": 0,
+    "split": "train",
+    "provenance": "ScienceWorld gold action sequence (env.get_gold_action_sequence()), observations verbatim from the simulator; the Thought lines are written for this study.",
+    "example": [
+      {
+        "role": "user",
+        "content": "Task: Your task is to determine if aluminum foil is electrically conductive. The aluminum foil is located around the workshop. First, focus on the aluminum foil. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.\n\nThis room is called the hallway. In it, you see: \n\tthe agent\n\ta substance called air\n\ta picture\nYou also see:\n\tA door to the art studio (that is closed)\n\tA door to the bedroom (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)\n\tA door to the living room (that is closed)\n\tA door to the workshop (that is closed)"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The task says the aluminum foil is in the workshop, which is also where the electrical parts live. I need to open the door before I can go there.\nAction: open door to workshop"
+      },
+      {
+        "role": "user",
+        "content": "Observation: The door is now open."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: Now I can walk into the workshop.\nAction: go to workshop"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You move to the workshop."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The task names the object explicitly, so I can pick it up directly.\nAction: pick up aluminum foil"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You move the aluminum foil to the inventory."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The task told me exactly what to focus on, so this is safe to do now.\nAction: focus on aluminum foil"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You focus on the aluminum foil."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: To wire the foil into a circuit it has to be in the room rather than in my inventory, so I put it down again.\nAction: drop aluminum foil"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You move the aluminum foil to the workshop."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: I need to see which components are available before wiring anything.\nAction: look around"
+      },
+      {
+        "role": "user",
+        "content": "Observation: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\tA aluminum foil\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The standard conductivity test is a circuit of battery, bulb and the unknown object in series: if the bulb lights, the object conducts. I will build it one connection at a time, starting from the battery anode.\nAction: connect battery anode to blue wire terminal 1"
+      },
+      {
+        "role": "user",
+        "content": "Observation: anode on battery is now connected to terminal 1 on blue wire"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: Now the other battery terminal, which will eventually reach the foil.\nAction: connect battery cathode to black wire terminal 1"
+      },
+      {
+        "role": "user",
+        "content": "Observation: cathode on battery is now connected to terminal 1 on black wire"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The blue wire carries the anode side to the light bulb.\nAction: connect blue wire terminal 2 to cathode in red light bulb"
+      },
+      {
+        "role": "user",
+        "content": "Observation: terminal 2 on blue wire is now connected to cathode on red light bulb"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The orange wire will run from the bulb back towards the foil, closing the loop.\nAction: connect orange wire terminal 2 to anode in red light bulb"
+      },
+      {
+        "role": "user",
+        "content": "Observation: terminal 2 on orange wire is now connected to anode on red light bulb"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: Now I put the aluminum foil in series between the black wire and the orange wire, so current can only flow if the foil conducts.\nAction: connect aluminum foil terminal 1 to black wire terminal 2"
+      },
+      {
+        "role": "user",
+        "content": "Observation: terminal 1 on aluminum foil is now connected to terminal 2 on black wire"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The final connection closes the circuit.\nAction: connect aluminum foil terminal 2 to orange wire terminal 1"
+      },
+      {
+        "role": "user",
+        "content": "Observation: terminal 2 on aluminum foil is now connected to terminal 1 on orange wire"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The simulator needs a tick or two before the bulb state updates, so I wait rather than reading it immediately.\nAction: wait1"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You decide to wait for 1 iterations."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: One more tick to be safe, then I will read the bulb.\nAction: wait1"
+      },
+      {
+        "role": "user",
+        "content": "Observation: You decide to wait for 1 iterations."
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: Now I check whether the red light bulb turned on.\nAction: look around"
+      },
+      {
+        "role": "user",
+        "content": "Observation: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\tA aluminum foil\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is on\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off"
+      },
+      {
+        "role": "assistant",
+        "content": "Thought: The red light bulb is on, so current flowed through the foil and the foil is electrically conductive. The task says a conductive object goes in the red box.\nAction: move aluminum foil to red box"
+      },
+      {
+        "role": "user",
+        "content": "Observation: (disconnecting aluminum foil)You move the aluminum foil to the red box."
+      }
+    ]
+  }
+]

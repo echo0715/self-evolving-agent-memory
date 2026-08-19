@@ -38,6 +38,20 @@ MODEL="${MEMSYS_MODEL:-Qwen/Qwen3.5-9B}"
 URL_A="${MEMSYS_URL_A:-http://localhost:8000/v1}"
 URL_B="${MEMSYS_URL_B:-http://localhost:8001/v1}"
 
+# --- writer model (the Memory Writing Model axis) -------------------------
+# Unset, the writer is the agent's own local Qwen on the same vLLM server. Set
+# MEMSYS_WRITER_MODEL to vary the writer alone; the actor stays on $MODEL so any
+# delta is attributable to what was written and not to who acted. The Perplexity
+# gateway that serves openai/gpt-5.6-* speaks only the Responses API, so
+# MEMSYS_WRITER_API=responses is not optional there.
+WRITER_ARGS=()
+[[ -n "${MEMSYS_WRITER_MODEL:-}"       ]] && WRITER_ARGS+=(--writer-model "$MEMSYS_WRITER_MODEL")
+[[ -n "${MEMSYS_WRITER_BASE_URL:-}"    ]] && WRITER_ARGS+=(--writer-base-url "$MEMSYS_WRITER_BASE_URL")
+[[ -n "${MEMSYS_WRITER_API:-}"         ]] && WRITER_ARGS+=(--writer-api "$MEMSYS_WRITER_API")
+[[ -n "${MEMSYS_WRITER_API_KEY_ENV:-}" ]] && WRITER_ARGS+=(--writer-api-key-env "$MEMSYS_WRITER_API_KEY_ENV")
+[[ -n "${MEMSYS_WRITER_REASONING:-}"   ]] && WRITER_ARGS+=(--writer-reasoning-effort "$MEMSYS_WRITER_REASONING")
+[[ -n "${MEMSYS_WRITER_MAX_TOKENS:-}"  ]] && WRITER_ARGS+=(--writer-max-tokens "$MEMSYS_WRITER_MAX_TOKENS")
+
 APPWORLD_BASE_PORT="${APPWORLD_BASE_PORT:-9000}"
 SERVERS_PER_ARM="${MEMSYS_SERVERS_PER_ARM:-4}"
 ARM_CONCURRENCY="${MEMSYS_ARM_CONCURRENCY:-4}"
@@ -111,6 +125,15 @@ esac
 
 ARMS=(${MEMSYS_ARMS:-none raw reflection rule skill})
 
+# A run that differs only in the writer model must not land in the directory the
+# Qwen-writer run owns -- same mode, same manifests, different independent
+# variable. MEMSYS_TAG_SUFFIX keeps it in its own tree, and the resume root
+# carries it too so a `*100` leg continues the stores its OWN writer wrote
+# rather than silently inheriting the Qwen chain's.
+TAG="${TAG}${MEMSYS_TAG_SUFFIX:-}"
+[[ -n "$RESUME_ROOT" ]] && RESUME_ROOT="${RESUME_ROOT}${MEMSYS_TAG_SUFFIX:-}"
+echo "[sweep] mode=$MODE tag=$TAG writer=${MEMSYS_WRITER_MODEL:-<agent model>}${RESUME_ROOT:+ resume=$RESUME_ROOT offset=$EVOLVE_OFFSET}"
+
 for url in "$URL_A" "$URL_B"; do
   curl -sf -m 5 -o /dev/null "${url%/v1}/health" \
     || { echo "[sweep] FAILED: no vLLM at $url (run scripts/serve_qwen.sh)"; exit 1; }
@@ -163,6 +186,7 @@ run_arm() {  # $1=arm $2=policy $3=vllm_url $4=slot index
     --eval-manifest "$EVAL_MANIFEST" --eval-limit "$EVAL_LIMIT" \
     "${server_args[@]}" --out "$out" \
     --model "$MODEL" --agent-base-url "$url" \
+    ${WRITER_ARGS+"${WRITER_ARGS[@]}"} \
     --embedder "$EMBEDDER" \
     --experiment-name "memsys_${arm}_${TAG}" \
     > "$log" 2>&1

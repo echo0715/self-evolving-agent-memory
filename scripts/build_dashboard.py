@@ -77,6 +77,7 @@ GROUPS = [
         ("fail100", "failure-budget 100", "100 failed episodes, successes discarded"),
     ]),
     ("Writer model", "Actor stays Qwen3.5-9B; only the model that writes memory changes to gpt-5.6-terra.", [
+        ("gpt_e25", "gpt-5.6 writer, 25", "minimal policy only"),
         ("gpt_e50", "gpt-5.6 writer, 50", "minimal policy only"),
         ("gpt_e100", "gpt-5.6 writer, 100", "minimal policy only"),
         ("gpt_e150", "gpt-5.6 writer, 150", "minimal policy only"),
@@ -101,7 +102,8 @@ def axis_of(cond):
             rest = c[len(pol):].lstrip("_")
             axis = CONDMAP.get(rest)
             if axis and writer != "qwen":
-                axis = {"e50": "gpt_e50", "e100": "gpt_e100", "e150": "gpt_e150"}.get(axis)
+                axis = {"e25": "gpt_e25", "e50": "gpt_e50",
+                        "e100": "gpt_e100", "e150": "gpt_e150"}.get(axis)
             return axis, pol, writer
     return None, None, None
 
@@ -351,6 +353,11 @@ NOTES = {
  ("Mind2Web", "gpt_e50"): "Not in RESULTS_MIND2WEB.md. A frontier writer does not rescue this benchmark either: reflection is 3.2 points below baseline (p = 0.020) and the other two are inside the floor.",
  ("ScienceWorld", "e25"): "Not written up anywhere. Every arm lands below the 33/100 baseline.",
  ("ScienceWorld", "e50"): "Not written up. rule/minimal at 38/100 is the only cell above baseline and it does not clear the floor.",
+ ("AppWorld", "gpt_e50"): "Not written up. The writer swap moves this benchmark: rule/minimal 25 -> 35/100, +15.0 against the 20 baseline draw and +10.0 against the 25 draw (p = 0.003), and reflection 22 -> 29. skill 25 -> 29 stays inside the 5-point floor. raw and none are byte-identical copies of the Qwen leg \u2014 neither uses a writer, so this axis cannot move them.",
+ ("AppWorld", "gpt_e100"): "Not written up. reflection holds at 28/100 where the Qwen-written chain collapsed to 17 \u2014 the writer swap removes that collapse rather than adding a gain (its own 50 -> 100 change is p = 1.000). rule does the opposite of its Qwen twin, 35 -> 22 against 25 -> 34, and that drop is one of the few paired 50 -> 100 changes in the study that is real: b/c 19/6, p = 0.015. Fifty more episodes made this writer\u0027s rule memory worse.",
+ ("ScienceWorld", "gpt_e25"): "Not written up. Head of the gpt-5.6 chain, and it has to exist: the e50 leg resumes this store, so the chain cannot inherit the Qwen writer\u0027s. Same shape as everything else on this benchmark \u2014 all four arms below the 33/100 baseline. Only raw (-9.0) is outside the 5-point floor, and raw uses no writer.",
+ ("ScienceWorld", "gpt_e50"): "Not written up. reflection/minimal at 34/100 (+1.0) is the only arm above baseline and is well inside the floor. rule drops to 26 from 31 at e25 while its store more than doubles to 44 entries.",
+ ("ScienceWorld", "gpt_e100"): "Not written up. A frontier writer does not rescue this benchmark. reflection and rule improve on their Qwen-written twins (26 -> 34 and 24 -> 29) while skill drops 26 -> 22, and not one arm beats raw \u2014 which uses no writer at all. skill at 22/100 (-11.0, p = 0.052) is the only excursion past the 5-point floor and it is downward; its own 50 -> 100 change is not significant (p = 0.167). Chain finished 2026-08-18.",
  ("ScienceWorld", "e100"): "Not written up. raw is the only arm at or above baseline (+3, p = 0.71) and every structured arm loses 7-9 points. Chain finished 2026-08-17.",
 }
 

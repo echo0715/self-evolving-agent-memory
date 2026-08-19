@@ -41,6 +41,7 @@ from memsys import (  # noqa: E402
     MemoryConfig,
     MemoryStore,
     OpenAIChatClient,
+    OpenAIResponsesClient,
     RunLogger,
     WritePolicy,
     build_system,
@@ -142,6 +143,67 @@ def make_agent(args, base_url: str, app_descriptions: str) -> AppWorldAgent:
     )
 
 
+def _dotenv(name: str) -> str | None:
+    """Read one key from the repo's .env, which is gitignored and holds the
+    gateway credential. Real environment variables win over the file."""
+    if os.environ.get(name):
+        return os.environ[name]
+    path = Path(__file__).resolve().parent.parent / ".env"
+    if not path.exists():
+        return None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line.startswith("#") or "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        if k.strip() == name:
+            return v.strip().strip("'\"")
+    return None
+
+
+def build_writer_llm(args, writer_url: str):
+    """The memory writer's client, deliberately independent of the agent's:
+    `--writer-model` is the independent variable of the Memory Writing Model
+    study, while the actor stays fixed at `--model` so any delta is attributable
+    to what was written and not to who acted.
+
+    `json_mode` only reaches the chat path. It is vLLM guided decoding, and the
+    gateway that serves the frontier writers rejects `text.format` outright (see
+    OpenAIResponsesClient); those models are asked for JSON in the prompt and
+    lean on the writers' own repair pass instead.
+    """
+    model = args.writer_model or args.model
+    key = "EMPTY"
+    if args.writer_api_key_env:
+        key = _dotenv(args.writer_api_key_env)
+        if not key:
+            # Failing here is the point: an unauthenticated writer would 401 on
+            # every call, and `parse_ops` turns that into an empty store rather
+            # than an error, so the arm would finish and report a number.
+            raise SystemExit(
+                f"--writer-api-key-env {args.writer_api_key_env!r} is set but no such key "
+                f"is in the environment or .env")
+    if args.writer_api == "responses":
+        return OpenAIResponsesClient(
+            model, base_url=writer_url, api_key=key,
+            temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
+            reasoning_effort=args.writer_reasoning_effort,
+        )
+    return OpenAIChatClient(
+        model, base_url=writer_url, api_key=key,
+        temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
+        # On AppWorld this is not a nicety. The writer is asked to quote the
+        # trajectory verbatim into `evidence`, and AppWorld trajectories are
+        # Python code and API docs full of quotes and backslashes; Qwen3.5-9B
+        # loses the escaping partway through the string and the whole response
+        # parses to nothing. Measured on the smoke run: the skill arm made writer
+        # calls on every successful episode and produced zero entries, ending
+        # with an empty store -- an arm silently identical to `none`. See
+        # memsys/llm.py for why no repair pass fixes it.
+        json_mode=args.writer_json_mode,
+    )
+
+
 def episode_row(ep: Episode, seconds: float) -> dict:
     return {
         "task_id": ep.task_id,
@@ -184,7 +246,21 @@ def main() -> None:
 
     ap.add_argument("--model", default="Qwen/Qwen3.5-9B")
     ap.add_argument("--agent-base-url", default="http://localhost:8000/v1")
-    ap.add_argument("--writer-base-url", default=None)
+    ap.add_argument("--writer-base-url", default=None,
+                    help="defaults to --agent-base-url; point elsewhere to split GPUs "
+                         "or at a remote gateway")
+    ap.add_argument("--writer-model", default=None,
+                    help="memory-writing model; defaults to --model (the agent's). Set this "
+                         "to vary the writer independently of the actor, which is the point "
+                         "of the Memory Writing Model study")
+    ap.add_argument("--writer-api", choices=("chat", "responses"), default="chat",
+                    help="wire protocol for the writer endpoint. vLLM speaks 'chat'; the "
+                         "Perplexity gateway serving openai/gpt-5.6-* speaks only 'responses'")
+    ap.add_argument("--writer-api-key-env", default=None,
+                    help="environment variable holding the writer API key (also read from "
+                         "the repo .env). Local vLLM needs none")
+    ap.add_argument("--writer-reasoning-effort", default=None,
+                    help="reasoning effort for a 'responses' writer, e.g. low/medium/high")
     ap.add_argument("--timeout", type=float, default=300.0)
     ap.add_argument("--env-timeout", type=float, default=900.0)
 
@@ -242,19 +318,7 @@ def main() -> None:
 
     system = None
     if args.arm != "none":
-        llm = OpenAIChatClient(
-            args.model, base_url=writer_url, api_key="EMPTY",
-            temperature=0.0, max_tokens=args.writer_max_tokens, timeout=args.timeout,
-            # On AppWorld this is not a nicety. The writer is asked to quote the
-            # trajectory verbatim into `evidence`, and AppWorld trajectories are
-            # Python code and API docs full of quotes and backslashes; Qwen3.5-9B
-            # loses the escaping partway through the string and the whole
-            # response parses to nothing. Measured on the smoke run: the skill
-            # arm made writer calls on every successful episode and produced zero
-            # entries, ending with an empty store -- an arm silently identical to
-            # `none`. See memsys/llm.py for why no repair pass fixes it.
-            json_mode=args.writer_json_mode,
-        )
+        llm = build_writer_llm(args, writer_url)
         system = build_system(args.arm, llm=llm, config=config, store=build_store(args, config))
         if args.resume_store:
             # Continue a previous run's memory rather than starting empty. Item
@@ -387,6 +451,11 @@ def main() -> None:
         "evolve_score": _mean(r["score"] for r in evolve_rows) if evolve_rows else None,
         "evolve_outcomes": _counts(r["outcome"] for r in evolve_rows),
         "store": system.store.summary() if getattr(system, "store", None) is not None else None,
+        # The actor and the writer are separate variables; recording only one of
+        # them makes two runs that differ in the writer indistinguishable in the
+        # summary. `none`/`raw` have no writer LLM at all, hence the empty string.
+        "writer_model": getattr(
+            getattr(getattr(system, "writer", None), "llm", None), "model", ""),
         "writer_usage": (
             system.writer.llm.usage.to_dict()
             if getattr(system, "writer", None) is not None else None

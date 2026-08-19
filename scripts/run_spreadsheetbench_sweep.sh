@@ -71,6 +71,11 @@ WRITER_ARGS=()
 [[ -n "${MEMSYS_WRITER_API_KEY_ENV:-}" ]] && WRITER_ARGS+=(--writer-api-key-env "$MEMSYS_WRITER_API_KEY_ENV")
 [[ -n "${MEMSYS_WRITER_REASONING:-}"   ]] && WRITER_ARGS+=(--writer-reasoning-effort "$MEMSYS_WRITER_REASONING")
 [[ -n "${MEMSYS_WRITER_MAX_TOKENS:-}"  ]] && WRITER_ARGS+=(--writer-max-tokens "$MEMSYS_WRITER_MAX_TOKENS")
+# Per-request timeout, shared by the agent and the writer clients. The 300s
+# default is sized for local vLLM; a remote reasoning writer on this benchmark's
+# long prompts can exceed it, and three consecutive timeouts raise and kill the
+# arm outright (kimi-k3 did exactly that at evolve 24/50 on 2026-08-19).
+[[ -n "${MEMSYS_TIMEOUT:-}"            ]] && WRITER_ARGS+=(--timeout "$MEMSYS_TIMEOUT")
 
 EVOLVE_MANIFEST="$REPO/manifests/spreadsheetbench_evolve_train_50_seed42.json"
 EVAL_MANIFEST="$REPO/manifests/spreadsheetbench_eval_test_100_seed42.json"

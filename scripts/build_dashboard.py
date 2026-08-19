@@ -76,11 +76,19 @@ GROUPS = [
         ("succ100", "success-budget 100", "100 solved episodes, failures discarded"),
         ("fail100", "failure-budget 100", "100 failed episodes, successes discarded"),
     ]),
-    ("Writer model", "Actor stays Qwen3.5-9B; only the model that writes memory changes to gpt-5.6-terra.", [
-        ("gpt_e25", "gpt-5.6 writer, 25", "minimal policy only"),
-        ("gpt_e50", "gpt-5.6 writer, 50", "minimal policy only"),
-        ("gpt_e100", "gpt-5.6 writer, 100", "minimal policy only"),
-        ("gpt_e150", "gpt-5.6 writer, 150", "minimal policy only"),
+    ("Writer model: gpt-5.6-terra", "Actor stays Qwen3.5-9B; only the model that writes memory changes. Responses API via the Perplexity gateway, writer budget 1024 tokens.", [
+        ("gpt_e25", "gpt-5.6, 25", "minimal policy only"),
+        ("gpt_e50", "gpt-5.6, 50", "minimal policy only"),
+        ("gpt_e100", "gpt-5.6, 100", "minimal policy only"),
+        ("gpt_e150", "gpt-5.6, 150", "minimal policy only"),
+    ]),
+    ("Writer model: gemini-3.7-flash", "Same swap, same actor. Writer budget 4096 tokens rather than 1024: measured on the real prompt, this model spends up to 1214 completion tokens on a skill entry and the JSON is cut off at the old cap.", [
+        ("gem_e50", "gemini-3.7, 50", "minimal policy only"),
+        ("gem_e100", "gemini-3.7, 100", "minimal policy only"),
+    ]),
+    ("Writer model: kimi-k3", "Same swap, same actor, same 4096-token budget (it spends 1048-2363). Reads against the 400-token content cap more than any other writer -- most cells here reject more entries than they accept.", [
+        ("kimi_e50", "kimi-k3, 50", "minimal policy only"),
+        ("kimi_e100", "kimi-k3, 100", "minimal policy only"),
     ]),
 ]
 AXES = {k: (lbl, sub) for _, _, rows in GROUPS for k, lbl, sub in rows}
@@ -94,16 +102,32 @@ CONDMAP = {
 }
 
 
+# tag suffix -> (writer name for the tables, axis prefix for the matrix). A run
+# that differs only in the writer lives in its own directory under the same mode
+# name, so the suffix is the only thing separating it from the Qwen stream-length
+# cells -- an unrecognised suffix would silently land on top of them.
+WRITERS = {
+    "_gpt56terra": ("gpt-5.6-terra", "gpt"),
+    "_gemini37f": ("gemini-3.7-flash", "gem"),
+    "_kimik3": ("kimi-k3", "kimi"),
+}
+
+
 def axis_of(cond):
-    writer = "gpt-5.6-terra" if "gpt56terra" in cond else "qwen"
-    c = re.sub(r"_cont$", "", cond.replace("_gpt56terra", ""))
+    writer, prefix, c = "qwen", "", re.sub(r"_cont$", "", cond)
+    for suffix, (name, pre) in WRITERS.items():
+        if suffix in c:
+            writer, prefix, c = name, pre, c.replace(suffix, "")
+            break
     for pol in ("minimal", "full"):
         if c == pol or c.startswith(pol + "_"):
             rest = c[len(pol):].lstrip("_")
             axis = CONDMAP.get(rest)
-            if axis and writer != "qwen":
-                axis = {"e25": "gpt_e25", "e50": "gpt_e50",
-                        "e100": "gpt_e100", "e150": "gpt_e150"}.get(axis)
+            if axis and prefix:
+                # Only the budgets a writer chain actually ran get a cell; an
+                # axis with no column (e.g. a repetition leg) stays unmapped
+                # rather than colliding with the Qwen one.
+                axis = f"{prefix}_{axis}" if f"{prefix}_{axis}" in AXES else None
             return axis, pol, writer
     return None, None, None
 
@@ -355,6 +379,16 @@ NOTES = {
  ("ScienceWorld", "e50"): "Not written up. rule/minimal at 38/100 is the only cell above baseline and it does not clear the floor.",
  ("AppWorld", "gpt_e50"): "Not written up. The writer swap moves this benchmark: rule/minimal 25 -> 35/100, +15.0 against the 20 baseline draw and +10.0 against the 25 draw (p = 0.003), and reflection 22 -> 29. skill 25 -> 29 stays inside the 5-point floor. raw and none are byte-identical copies of the Qwen leg \u2014 neither uses a writer, so this axis cannot move them.",
  ("AppWorld", "gpt_e100"): "Not written up. reflection holds at 28/100 where the Qwen-written chain collapsed to 17 \u2014 the writer swap removes that collapse rather than adding a gain (its own 50 -> 100 change is p = 1.000). rule does the opposite of its Qwen twin, 35 -> 22 against 25 -> 34, and that drop is one of the few paired 50 -> 100 changes in the study that is real: b/c 19/6, p = 0.015. Fifty more episodes made this writer\u0027s rule memory worse.",
+ ("ALFWorld", "gem_e50"): "Not written up. Every arm clears the floor and beats raw: reflection 85.0% (+27.0), skill 79.0% (+21.0), rule 77.0% (+19.0), all p < 0.002. reflection does it from a SEVEN-entry store against the Qwen writer\u0027s 39 and 546 injected tokens against its 1022 -- on this benchmark the better writer writes less and wins by more.",
+ ("ALFWorld", "gem_e100"): "Not written up, and the high-water mark of the entire study: reflection/minimal 91.0%, +33.0 over the no-memory baseline, b/c 3/36, p = 1e-8, from a twelve-entry store. All three writer arms are significant and all three beat raw, which only the gpt-5.6 e150 cell had managed before. reflection is also monotone across its own chain (85 -> 91), which most cells in this study are not.",
+ ("ALFWorld", "kimi_e50"): "Not written up. The weakest ALFWorld writer of the four: reflection +6.0 (p = 0.392) and rule +9.0 (p = 0.163) both miss significance, and skill lands at 57.0%, one point BELOW having no memory at all. The skill number is not a memory result -- 34 writer calls produced 2 accepted entries against 26 rejections (23 `content too long`, 10 `missing field`), so the arm evaluates a two-entry store. kimi-k3 writes procedures the 400-token content cap will not admit.",
+ ("AppWorld", "gem_e50"): "Not written up. Nothing clears the +/-5 floor: rule +9.0 (p = 0.136) is the best of it. The stores are the smallest anywhere on this benchmark -- 8, 5 and 1 entries, 176-663 injected tokens -- and the writer logged ZERO schema rejections, so this is the model declining to write rather than being filtered. Compare kimi_e50, which wrote 51 rule entries into the same slot and scored the same.",
+ ("AppWorld", "gem_e100"): "Not written up. skill/minimal 30.0% (+10.0, p = 0.064) is the largest delta this writer produces on AppWorld and it still does not reach significance, from a six-entry store against reflection\u0027s 17 and rule\u0027s 12. Four writers have now been run at this budget and only gpt-5.6\u0027s e50 rule has ever cleared the floor here.",
+ ("AppWorld", "kimi_e50"): "Not written up. rule/minimal +7.0 (p = 0.210) is the best cell and misses. skill is 20/100 -- exactly the baseline, b/c 9/9 -- because 13 writer calls yielded 2 accepted entries; like ALFWorld kimi_e50, that arm measures an almost-empty store, not skill memory.",
+ ("AppWorld", "kimi_e100"): "Not written up. The clearest store-size null in the study: rule ends with NINETY live entries, the largest store on this benchmark by a factor of three, and scores 22/100 (+2.0, p = 0.839) -- the same as gemini\u0027s twelve-entry rule (24/100) and worse than its own six-entry skill (26.0%). Writing more did not help, and the 90 entries are what SURVIVED 32 rejections.",
+ ("SpreadsheetBench", "gem_e50"): "Not written up. rule/minimal 26/100 (+13.0, p = 0.015) is the only cell past the 4.7-point floor, and the third consecutive lift of this one arm as the writer improves: Qwen 17, gpt-5.6 24, gemini 26 -- from an eleven-entry store. reflection and skill sit at 20 each.",
+ ("SpreadsheetBench", "gem_e100"): "Not written up. The e50 ordering does not survive fifty more episodes: rule falls 26 -> 18 and skill rises 20 -> 24 (+11.0, p = 0.019), which is the same swap between those two arms that the gpt-5.6 chain made. Against a 4.7-point floor neither move should be read from the point estimates alone.",
+ ("SpreadsheetBench", "kimi_e50"): "IN FLIGHT -- do not quote. reflection died at evolve 24/50 (three consecutive 300s gateway timeouts raise, killing the arm) and is being re-run at a 900s timeout; `none` and `raw` are not seeded until the leg completes, so this cell has no baseline and no delta column yet. What is already visible: skill wrote NOTHING in 50 episodes (9 calls, 0 accepted, empty store, 0 injected tokens), so its 23/100 is an extra no-memory draw rather than a result.",
  ("ScienceWorld", "gpt_e25"): "Not written up. Head of the gpt-5.6 chain, and it has to exist: the e50 leg resumes this store, so the chain cannot inherit the Qwen writer\u0027s. Same shape as everything else on this benchmark \u2014 all four arms below the 33/100 baseline. Only raw (-9.0) is outside the 5-point floor, and raw uses no writer.",
  ("ScienceWorld", "gpt_e50"): "Not written up. reflection/minimal at 34/100 (+1.0) is the only arm above baseline and is well inside the floor. rule drops to 26 from 31 at e25 while its store more than doubles to 44 entries.",
  ("ScienceWorld", "gpt_e100"): "Not written up. A frontier writer does not rescue this benchmark. reflection and rule improve on their Qwen-written twins (26 -> 34 and 24 -> 29) while skill drops 26 -> 22, and not one arm beats raw \u2014 which uses no writer at all. skill at 22/100 (-11.0, p = 0.052) is the only excursion past the 5-point floor and it is downward; its own 50 -> 100 change is not significant (p = 0.167). Chain finished 2026-08-18.",
